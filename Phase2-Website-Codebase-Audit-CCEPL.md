@@ -22,21 +22,21 @@ The current system is a **recently built, well-structured but thin prototype**: 
 
 ## 2. TECHNICAL STACK (verified from repository)
 
-| Layer | Technology | Evidence |
-|---|---|---|
-| Framework | **TanStack Start v1.168/1.170** (SSR file-based routing, server functions), **React 19.2**, **TypeScript 5.8** | `package.json`, `src/router.tsx`, `src/routes/*`, `vite.config.ts` |
-| Build | **Vite 8** via `@lovable.dev/vite-tanstack-config` (bundles TanStack plugins, nitro targeting Cloudflare by default) | `vite.config.ts`, `devDependencies` |
-| Styling | **Tailwind CSS 4.2** (`@theme inline`, `@utility` custom CSS), `tw-animate-css`; design tokens in `src/styles.css` | `src/styles.css` |
-| Fonts | Google Fonts: **Space Grotesk** (display) + **Inter** (body), loaded via `<link>` in root head | `__root.tsx` head |
-| State/data | **TanStack Query v5** (`useQuery`/`useSuspenseQuery`/`queryOptions`) — no global state library | all routes |
-| Forms | Native `<form>` + `FormData` on public site; **no react-hook-form usage** despite dependency | `index.tsx` Contact |
-| Backend API | TanStack **server functions** (`createServerFn`) calling Supabase REST directly; no separate API framework | `src/lib/cms.functions.ts` |
-| Database/Auth/Storage | **Supabase** (Postgres, RLS, Auth, Storage bucket `media`); PostgREST v14.5; typed client via generated `types.ts` | `src/integrations/supabase/*`, migrations |
-| Validation | **Zod 3.24** on the two public server functions only | `cms.functions.ts` |
-| Admin UI | Hand-rolled admin at `/admin` (no UI framework beyond basic inputs + sonner toasts) | `src/routes/_authenticated/admin/*` |
-| Hosting | Lovable Cloud (preview URLs `*.lovable.app`); nitro `cloudflare` default target; R2 for Lovable asset CDN (`/__l5e/assets-v1/…`) | `vite.config.ts` comment, asset manifests |
-| CI/CD | None in repo (Lovable-side git sync per AGENTS.md/README); no GitHub Actions | repo inspection |
-| Analytics/Email/Maps | Placeholders only: `google_analytics_id`, `google_tag_manager_id`, `smtp_*` settings all empty; Google Maps via `google_maps_embed` iframe setting | live `site_settings` |
+| Layer                 | Technology                                                                                                                                         | Evidence                                                           |
+| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| Framework             | **TanStack Start v1.168/1.170** (SSR file-based routing, server functions), **React 19.2**, **TypeScript 5.8**                                     | `package.json`, `src/router.tsx`, `src/routes/*`, `vite.config.ts` |
+| Build                 | **Vite 8** via `@lovable.dev/vite-tanstack-config` (bundles TanStack plugins, nitro targeting Cloudflare by default)                               | `vite.config.ts`, `devDependencies`                                |
+| Styling               | **Tailwind CSS 4.2** (`@theme inline`, `@utility` custom CSS), `tw-animate-css`; design tokens in `src/styles.css`                                 | `src/styles.css`                                                   |
+| Fonts                 | Google Fonts: **Space Grotesk** (display) + **Inter** (body), loaded via `<link>` in root head                                                     | `__root.tsx` head                                                  |
+| State/data            | **TanStack Query v5** (`useQuery`/`useSuspenseQuery`/`queryOptions`) — no global state library                                                     | all routes                                                         |
+| Forms                 | Native `<form>` + `FormData` on public site; **no react-hook-form usage** despite dependency                                                       | `index.tsx` Contact                                                |
+| Backend API           | TanStack **server functions** (`createServerFn`) calling Supabase REST directly; no separate API framework                                         | `src/lib/cms.functions.ts`                                         |
+| Database/Auth/Storage | **Supabase** (Postgres, RLS, Auth, Storage bucket `media`); PostgREST v14.5; typed client via generated `types.ts`                                 | `src/integrations/supabase/*`, migrations                          |
+| Validation            | **Zod 3.24** on the two public server functions only                                                                                               | `cms.functions.ts`                                                 |
+| Admin UI              | Hand-rolled admin at `/admin` (no UI framework beyond basic inputs + sonner toasts)                                                                | `src/routes/_authenticated/admin/*`                                |
+| Hosting               | Lovable Cloud (preview URLs `*.lovable.app`); nitro `cloudflare` default target; R2 for Lovable asset CDN (`/__l5e/assets-v1/…`)                   | `vite.config.ts` comment, asset manifests                          |
+| CI/CD                 | None in repo (Lovable-side git sync per AGENTS.md/README); no GitHub Actions                                                                       | repo inspection                                                    |
+| Analytics/Email/Maps  | Placeholders only: `google_analytics_id`, `google_tag_manager_id`, `smtp_*` settings all empty; Google Maps via `google_maps_embed` iframe setting | live `site_settings`                                               |
 
 **Uninstalled vs installed reality:** `package.json` declares recharts, embla-carousel, react-day-picker, input-otp, react-resizable-panels, cmdk, vaul, date-fns, react-hook-form, @hookform/resolvers — grep confirms **none are imported by any application file** (only by the unused `src/components/ui/*` library). ~46 shadcn/ui components exist in `src/components/ui/` and **none are imported** by app code (Nav, admin pages, and homepage all use raw elements + custom CSS classes).
 
@@ -46,45 +46,45 @@ The current system is a **recently built, well-structured but thin prototype**: 
 
 ### Routes (from `src/routes/` + generated `routeTree.gen.ts`)
 
-| Route | Purpose | Rendering | Content source | Status |
-|---|---|---|---|---|
-| `/` | Entire public site (one-page) | SSR + TanStack Query; `getSiteData()` server fn | Supabase: `site_settings`, `nav_items`, `sections`, `content_items`, `categories` | Live |
-| `/$slug` | Generic page renderer for CMS `pages` | SSR; `getPage(slug)` | Supabase `pages` | Live; 4 pages seeded |
-| `/auth` | Admin sign-in/sign-up | Client-only (`ssr: false`) | Supabase Auth | Live, `noindex` |
-| `/admin/*` | CMS (10 screens) | Client-only | Supabase (direct client queries, RLS-guarded) | Live, not in nav |
-| `/api/public/media/*` | Media file proxy (streams from Supabase Storage with service-role key server-side) | Server route | Storage bucket `media` | Live; **0 files stored** |
+| Route                 | Purpose                                                                            | Rendering                                       | Content source                                                                    | Status                   |
+| --------------------- | ---------------------------------------------------------------------------------- | ----------------------------------------------- | --------------------------------------------------------------------------------- | ------------------------ |
+| `/`                   | Entire public site (one-page)                                                      | SSR + TanStack Query; `getSiteData()` server fn | Supabase: `site_settings`, `nav_items`, `sections`, `content_items`, `categories` | Live                     |
+| `/$slug`              | Generic page renderer for CMS `pages`                                              | SSR; `getPage(slug)`                            | Supabase `pages`                                                                  | Live; 4 pages seeded     |
+| `/auth`               | Admin sign-in/sign-up                                                              | Client-only (`ssr: false`)                      | Supabase Auth                                                                     | Live, `noindex`          |
+| `/admin/*`            | CMS (10 screens)                                                                   | Client-only                                     | Supabase (direct client queries, RLS-guarded)                                     | Live, not in nav         |
+| `/api/public/media/*` | Media file proxy (streams from Supabase Storage with service-role key server-side) | Server route                                    | Storage bucket `media`                                                            | Live; **0 files stored** |
 
 ### Homepage section inventory (render order, code `index.tsx` lines 74–104, controlled by `sections` table)
 
-| # | Section key | Title in DB | Data | Rendered? | Notes |
-|---|---|---|---|---|---|
-| 1 | `hero` | "We dream, design & deliver engineering that just works." | — | **No** — DB hero is ignored; code renders a hardcoded 6-image `HeroSlider` with imported local JPGs. No headline text overlays the hero at all. | Hardcoded/cMS-mismatch |
-| 2 | `clients_marquee` | "Trusted by leading brands, PSUs & PMCs" | `clients` with logos | Yes (logos only; 29 with logos) | First-paint trust strip |
-| 3 | `about` | "Turnkey engineering, delivered end to end." | + `stats` (4) | Yes | Includes extra JSON: highlights, capabilities, sectors, vision/mission cards, association groups |
-| 4 | `services` | "Six disciplines. One accountable partner." | `services` (6) | Yes | Cards; image, icon, bullets |
-| 5 | `industries` | "Trusted across sectors that can't afford downtime." | `industries` (12) | Yes | Flat chip grid; no detail |
-| 6 | `why_us` | "Built on rigor. Backed by SLAs." | `why_us` (6) | Yes | |
-| 7 | `process` | "A five-stage delivery model that removes surprises." | `process` (5) | Yes | Timeline |
-| 8 | `projects` | "A decade of commissioned deliverables." | `projects` (13 items in DB) | **OFF** (`is_active=false`) + nav item disabled | Deliberately hidden |
-| 9 | `clients_grid` | "Trusted across sectors" | `clients` (56) + `categories` (4) | Yes | Text list grouped by category |
-| 10 | `subsidiaries` | "Our subsidiary & associate companies" | `subsidiaries` (0 items) | Renders nothing (guard `items.length > 0`) | Empty; Phase 1 says no subsidiaries exist |
-| 11 | `certifications` | "Compliance you can verify." | `certifications` (4) + `partners` (13) | Yes | Partners shown as text names |
-| 12 | `testimonials` | "What partners say about working with us." | `testimonials` (3) | Yes | **All placeholders, rendered publicly** |
-| 13 | `team` | "The people behind the delivery." | `team` (0 items) | Renders nothing; DB `extra={"hidden":true}` | Empty |
-| 14 | `gallery` | "From site to commissioning." | `gallery` (0 items) | Renders nothing; `extra={"hidden":true}` | Empty |
-| 15 | `blog` | "News & articles." | `blogs` (0 items) | Renders nothing; `extra={"hidden":true}` | Empty |
-| 16 | `faq` | "Everything you need to get started." | `faqs` (5) | Yes | Accordion |
-| 17 | `contact` | "Let's build something that lasts." | settings + form | Yes | Posts `submitEnquiry` |
-| 18 | `newsletter` | "Stay in the loop" | footer form | Yes | Posts `subscribeNewsletter` |
+| #   | Section key       | Title in DB                                               | Data                                   | Rendered?                                                                                                                                       | Notes                                                                                            |
+| --- | ----------------- | --------------------------------------------------------- | -------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| 1   | `hero`            | "We dream, design & deliver engineering that just works." | —                                      | **No** — DB hero is ignored; code renders a hardcoded 6-image `HeroSlider` with imported local JPGs. No headline text overlays the hero at all. | Hardcoded/cMS-mismatch                                                                           |
+| 2   | `clients_marquee` | "Trusted by leading brands, PSUs & PMCs"                  | `clients` with logos                   | Yes (logos only; 29 with logos)                                                                                                                 | First-paint trust strip                                                                          |
+| 3   | `about`           | "Turnkey engineering, delivered end to end."              | + `stats` (4)                          | Yes                                                                                                                                             | Includes extra JSON: highlights, capabilities, sectors, vision/mission cards, association groups |
+| 4   | `services`        | "Six disciplines. One accountable partner."               | `services` (6)                         | Yes                                                                                                                                             | Cards; image, icon, bullets                                                                      |
+| 5   | `industries`      | "Trusted across sectors that can't afford downtime."      | `industries` (12)                      | Yes                                                                                                                                             | Flat chip grid; no detail                                                                        |
+| 6   | `why_us`          | "Built on rigor. Backed by SLAs."                         | `why_us` (6)                           | Yes                                                                                                                                             |                                                                                                  |
+| 7   | `process`         | "A five-stage delivery model that removes surprises."     | `process` (5)                          | Yes                                                                                                                                             | Timeline                                                                                         |
+| 8   | `projects`        | "A decade of commissioned deliverables."                  | `projects` (13 items in DB)            | **OFF** (`is_active=false`) + nav item disabled                                                                                                 | Deliberately hidden                                                                              |
+| 9   | `clients_grid`    | "Trusted across sectors"                                  | `clients` (56) + `categories` (4)      | Yes                                                                                                                                             | Text list grouped by category                                                                    |
+| 10  | `subsidiaries`    | "Our subsidiary & associate companies"                    | `subsidiaries` (0 items)               | Renders nothing (guard `items.length > 0`)                                                                                                      | Empty; Phase 1 says no subsidiaries exist                                                        |
+| 11  | `certifications`  | "Compliance you can verify."                              | `certifications` (4) + `partners` (13) | Yes                                                                                                                                             | Partners shown as text names                                                                     |
+| 12  | `testimonials`    | "What partners say about working with us."                | `testimonials` (3)                     | Yes                                                                                                                                             | **All placeholders, rendered publicly**                                                          |
+| 13  | `team`            | "The people behind the delivery."                         | `team` (0 items)                       | Renders nothing; DB `extra={"hidden":true}`                                                                                                     | Empty                                                                                            |
+| 14  | `gallery`         | "From site to commissioning."                             | `gallery` (0 items)                    | Renders nothing; `extra={"hidden":true}`                                                                                                        | Empty                                                                                            |
+| 15  | `blog`            | "News & articles."                                        | `blogs` (0 items)                      | Renders nothing; `extra={"hidden":true}`                                                                                                        | Empty                                                                                            |
+| 16  | `faq`             | "Everything you need to get started."                     | `faqs` (5)                             | Yes                                                                                                                                             | Accordion                                                                                        |
+| 17  | `contact`         | "Let's build something that lasts."                       | settings + form                        | Yes                                                                                                                                             | Posts `submitEnquiry`                                                                            |
+| 18  | `newsletter`      | "Stay in the loop"                                        | footer form                            | Yes                                                                                                                                             | Posts `subscribeNewsletter`                                                                      |
 
 ### CMS pages (rendered at `/$slug`)
 
-| Slug | Title | Size | Status |
-|---|---|---|---|
-| `/privacy-policy` | Privacy Policy | 722 chars | Live — contains **"[Placeholder — please review with your legal advisor before publishing.]"** |
-| `/terms-and-conditions` | Terms & Conditions | 509 chars | Live — same placeholder |
-| `/cookies-policy` | Cookies Policy | 422 chars | Live — same placeholder |
-| `/careers` | Careers | 333 chars | Live — "**[Placeholder — add current openings from the Admin Panel.]**" |
+| Slug                    | Title              | Size      | Status                                                                                         |
+| ----------------------- | ------------------ | --------- | ---------------------------------------------------------------------------------------------- |
+| `/privacy-policy`       | Privacy Policy     | 722 chars | Live — contains **"[Placeholder — please review with your legal advisor before publishing.]"** |
+| `/terms-and-conditions` | Terms & Conditions | 509 chars | Live — same placeholder                                                                        |
+| `/cookies-policy`       | Cookies Policy     | 422 chars | Live — same placeholder                                                                        |
+| `/careers`              | Careers            | 333 chars | Live — "**[Placeholder — add current openings from the Admin Panel.]**"                        |
 
 No blog posts, no service detail pages, no project pages, no team page, no gallery page — these concepts exist in the CMS schema but have zero content and no public route.
 
@@ -98,11 +98,12 @@ No blog posts, no service detail pages, no project pages, no team page, no galle
 **Journey:** Land → marquee → scroll a linear story → contact form. Services/industries have no drill-down; the FAQ is the only interactive content; the only conversion points are the header "Get a Quote" button, the contact form, and the newsletter field.
 
 **Assessment vs Phase 1 company:**
+
 - The **two practices** (UG Utilities/Electrical/CGD vs MEP/Fire/HVAC) — the organizing principle of the company's own newest profile — are **absent**. Services are a flat list of 6; a visitor cannot discover the practices, their different project portfolios, teams, or evidence.
 - **Projects are the company's strongest proof point** (WTT 4000 TR, World Trade Park 2400 TR, Patna/Banaras smart city, Lucknow Metro, BGRL gas) — and the section is **switched off**, with only 13 of the 76 documented projects entered.
 - **Team** (22 people documented in Phase 1) is empty and hidden.
 - **Geographic presence** (25 states + Nepal, 4 offices + Rajasthan manufacturing unit) appears only as a passing phrase; no map, no offices list beyond one address.
-- **Services**: "Solar" is live on the site (6th service card) — Phase 1 flagged solar as **cover-only, unsupported by any document** (C19). Also the migration that created it did so by *replacing* the "Clean Rooms" service card — yet Clean Rooms remain promised in the hero body text, About capabilities, FAQ, and contact form options. Inconsistent.
+- **Services**: "Solar" is live on the site (6th service card) — Phase 1 flagged solar as **cover-only, unsupported by any document** (C19). Also the migration that created it did so by _replacing_ the "Clean Rooms" service card — yet Clean Rooms remain promised in the hero body text, About capabilities, FAQ, and contact form options. Inconsistent.
 
 ---
 
@@ -112,40 +113,41 @@ No blog posts, no service detail pages, no project pages, no team page, no galle
 
 **Admin modules (10 fixed + 16 content collections):**
 
-| Module | Fields exposed | CRUD | Publish control | Notes |
-|---|---|---|---|---|
-| Dashboard | — (counts + last 5 enquiries) | R | — | |
-| Site Settings | all `site_settings` rows grouped (general/contact/social/seo/footer/integrations); input types text/textarea/image | U only (no add/delete of settings keys from UI) | — | Saves each row sequentially (N updates per save) |
-| Navigation | label, url, sort_order, location (header/footer), active, new-tab | CRUD | `is_active` | Free-text URL; `#anchor` or `/slug` |
-| Page Sections | eyebrow/title/subtitle/body/image/background/2×CTA + **raw JSON "Advanced content" editor** + Show on website toggle | U only | `is_active` | The JSON editor powers highlights/capabilities/sectors/cards/association groups/contact options — fragile but functional |
-| Categories | collection, name, slug, sort_order | CRUD | `is_active` | 4 client categories seeded |
-| Media Library | multi-upload (image/video/pdf), copy URL, delete | CRUD | — | Uploads to Storage `media` bucket + `media` table row; **0 files currently** |
-| Pages & Policies | title, slug, content (plain text, `\n\n` paragraphs), SEO title/description, published flag | CRUD | `is_active` | |
-| Enquiries | list, mark read/unread, delete | RU+D | — | 0 rows |
-| Newsletter | list, delete, export CSV | R+D | — | 0 rows |
-| Users & Roles | per-user admin/editor checkboxes | U | — | Enforced server-side by RLS (see §9) |
-| Content × 16 | shared form: title, subtitle, tag, icon (Lucide name), category (clients only), link_url, excerpt, body, main image + `images[]` + `bullet_points[]`, status (projects only), featured, active, sort order | CRUD | `is_active` (+ hidden via section flags for some) | Collections: services, industries, projects, clients, subsidiaries, partners, process, why_us, stats, certifications, testimonials, team, gallery, blogs, careers, faqs |
+| Module           | Fields exposed                                                                                                                                                                                             | CRUD                                            | Publish control                                   | Notes                                                                                                                                                                   |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- | ------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Dashboard        | — (counts + last 5 enquiries)                                                                                                                                                                              | R                                               | —                                                 |                                                                                                                                                                         |
+| Site Settings    | all `site_settings` rows grouped (general/contact/social/seo/footer/integrations); input types text/textarea/image                                                                                         | U only (no add/delete of settings keys from UI) | —                                                 | Saves each row sequentially (N updates per save)                                                                                                                        |
+| Navigation       | label, url, sort_order, location (header/footer), active, new-tab                                                                                                                                          | CRUD                                            | `is_active`                                       | Free-text URL; `#anchor` or `/slug`                                                                                                                                     |
+| Page Sections    | eyebrow/title/subtitle/body/image/background/2×CTA + **raw JSON "Advanced content" editor** + Show on website toggle                                                                                       | U only                                          | `is_active`                                       | The JSON editor powers highlights/capabilities/sectors/cards/association groups/contact options — fragile but functional                                                |
+| Categories       | collection, name, slug, sort_order                                                                                                                                                                         | CRUD                                            | `is_active`                                       | 4 client categories seeded                                                                                                                                              |
+| Media Library    | multi-upload (image/video/pdf), copy URL, delete                                                                                                                                                           | CRUD                                            | —                                                 | Uploads to Storage `media` bucket + `media` table row; **0 files currently**                                                                                            |
+| Pages & Policies | title, slug, content (plain text, `\n\n` paragraphs), SEO title/description, published flag                                                                                                                | CRUD                                            | `is_active`                                       |                                                                                                                                                                         |
+| Enquiries        | list, mark read/unread, delete                                                                                                                                                                             | RU+D                                            | —                                                 | 0 rows                                                                                                                                                                  |
+| Newsletter       | list, delete, export CSV                                                                                                                                                                                   | R+D                                             | —                                                 | 0 rows                                                                                                                                                                  |
+| Users & Roles    | per-user admin/editor checkboxes                                                                                                                                                                           | U                                               | —                                                 | Enforced server-side by RLS (see §9)                                                                                                                                    |
+| Content × 16     | shared form: title, subtitle, tag, icon (Lucide name), category (clients only), link_url, excerpt, body, main image + `images[]` + `bullet_points[]`, status (projects only), featured, active, sort order | CRUD                                            | `is_active` (+ hidden via section flags for some) | Collections: services, industries, projects, clients, subsidiaries, partners, process, why_us, stats, certifications, testimonials, team, gallery, blogs, careers, faqs |
 
 ### CMS entity → model → API → public page mapping (verified)
 
-| CMS entity | DB model | API | Public rendering |
-|---|---|---|---|
-| Site settings | `site_settings(key,value,…)` | `getSiteData()` server fn | Nav brand/logo/phone, contact block, footer, SEO meta |
-| Navigation | `nav_items` | `getSiteData()` | Header nav, footer links |
-| Sections | `sections` (18 rows) | `getSiteData()` | Homepage section headings/copy/CTAs/JSON extras |
-| Content items | `content_items` (collection-discriminated) | `getSiteData()` | services/industries/why_us/process/stats/clients/certifications/partners/testimonials/faqs cards; projects/team/gallery/blogs/subsidiaries/careers currently empty or off |
-| Categories | `categories` | `getSiteData()` | Clients-by-sector grouping |
-| Pages | `pages` | `getPage(slug)` | `/$slug` route |
-| Media | `media` table + Storage `media` bucket | `/api/public/media/*` server route (service-role download) | Any `image_url` beginning `/uploads/…` **except** seeded service images which live in git `public/uploads/` |
-| Enquiries | `form_submissions` | `submitEnquiry()` (Zod-validated, anon insert RLS) | Contact form → admin |
-| Newsletter | `newsletter_subscribers` | `subscribeNewsletter()` (Zod, anon insert) | Footer form → admin |
-| Users/roles | `profiles`, `user_roles`, `auth.users` | client-side Supabase SDK | Admin gate |
+| CMS entity    | DB model                                   | API                                                        | Public rendering                                                                                                                                                          |
+| ------------- | ------------------------------------------ | ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Site settings | `site_settings(key,value,…)`               | `getSiteData()` server fn                                  | Nav brand/logo/phone, contact block, footer, SEO meta                                                                                                                     |
+| Navigation    | `nav_items`                                | `getSiteData()`                                            | Header nav, footer links                                                                                                                                                  |
+| Sections      | `sections` (18 rows)                       | `getSiteData()`                                            | Homepage section headings/copy/CTAs/JSON extras                                                                                                                           |
+| Content items | `content_items` (collection-discriminated) | `getSiteData()`                                            | services/industries/why_us/process/stats/clients/certifications/partners/testimonials/faqs cards; projects/team/gallery/blogs/subsidiaries/careers currently empty or off |
+| Categories    | `categories`                               | `getSiteData()`                                            | Clients-by-sector grouping                                                                                                                                                |
+| Pages         | `pages`                                    | `getPage(slug)`                                            | `/$slug` route                                                                                                                                                            |
+| Media         | `media` table + Storage `media` bucket     | `/api/public/media/*` server route (service-role download) | Any `image_url` beginning `/uploads/…` **except** seeded service images which live in git `public/uploads/`                                                               |
+| Enquiries     | `form_submissions`                         | `submitEnquiry()` (Zod-validated, anon insert RLS)         | Contact form → admin                                                                                                                                                      |
+| Newsletter    | `newsletter_subscribers`                   | `subscribeNewsletter()` (Zod, anon insert)                 | Footer form → admin                                                                                                                                                       |
+| Users/roles   | `profiles`, `user_roles`, `auth.users`     | client-side Supabase SDK                                   | Admin gate                                                                                                                                                                |
 
 ---
 
 ## 6. CMS ↔ WEBSITE CONSISTENCY (verified against live DB)
 
 **Content in the CMS but hidden/not rendered:**
+
 - `projects` (13 items) — section `is_active=false`, nav link disabled (migration did both deliberately). Data entered but invisible.
 - `hero` section — fully populated in DB (eyebrow, headline, body, CTAs, image) but **the code never reads it**; the homepage hardcodes its own slider. The DB hero's "Start a Project"/"Explore Services" CTAs and "ISO 9001:2015 · MSME · Est. 2012" eyebrow are discarded. Also, no headline is displayed over the hero images at all — the homepage opens with an unlabeled photo carousel.
 - `team`, `gallery`, `blog` sections — `is_active=true` but `extra={"hidden":true}`; with 0 items each, the length guards hide them anyway. Section headings exist in CMS yet nothing can appear until items are added — no `team`/`gallery`/`blogs` items exist in any collection.
@@ -154,6 +156,7 @@ No blog posts, no service detail pages, no project pages, no team page, no galle
 - `careers` collection — 0 items, yet `/careers` page and footer link are live with a placeholder note.
 
 **Content rendered on the website that does not exist in/contradicts the CMS or Phase 1:**
+
 - Hero slider images (6) — hardcoded imports from `src/assets/hero/*`, not CMS-managed. Solar hero image included, reinforcing the unsupported solar service.
 - "Get a Quote" CTA in Nav — hardcoded, not CMS.
 - Footer `footer_note`: "Creating wonders in HVAC & Fire Fighting." — ignores the UG/CGD practice.
@@ -164,6 +167,7 @@ No blog posts, no service detail pages, no project pages, no team page, no galle
 - Stats ("150+ Projects Commissioned", "315+ KM Utilities Laid") — present in CMS but **not substantiated by any Phase 1 document** (docs support 54 HVAC + 22 fire + ~10 UG entries; 315 KM is plausibly the sum of documented cable/gas KM — 150+180+20+60+50+165 = 625 KM, so even the arithmetic doesn't obviously match; flagged for verification).
 
 **Duplicate/parallel structures:**
+
 - Services exist in 3 places: `services` collection (cards), `contact.extra.services` JSON (form dropdown), About `extra.capabilities` (list). Three manual syncs.
 - Client names appear both as `clients` items and inside About `extra.association_groups` (hardcoded lists: L&T, BGRL, IGL… + PMCs JLL, CBRE…).
 - Policies exist as `pages` but are linked only from the footer; careers exists both as a `pages` row and an empty `careers` collection concept.
@@ -177,11 +181,13 @@ No blog posts, no service detail pages, no project pages, no team page, no galle
 **Design tokens (verified):** CSS custom properties in oklch — deep navy brand `oklch(0.28 0.09 262)`, royal-blue primary, **orange accent** `oklch(0.68 0.17 52)`; dark bands re-map tokens so components invert within `band-navy`. Radius 0.5rem. Space Grotesk/Inter with font-feature toggles. This is a coherent, restrained "premium industrial navy + amber" system — visually **more consistent than the three brochures** (which used purple, lime-on-teal, and amber schemes).
 
 **Good foundations:**
+
 - Server functions with Zod validation; SSR loaders with `ensureQueryData`; SEO head per route; `notFoundComponent`/`errorComponent` everywhere; 404 page; generic error page with capture middleware (`error-capture.ts`, `server.ts` normalizing h3-swallowed errors).
 - Responsive: container widths, mobile menu, grid breakpoints used throughout.
 - Accessibility basics: aria-labels on icon buttons/slider dots, `aria-current`, iframe title, alt text from CMS titles, focus rings, `role=alert` on errors. Weaknesses: FAQ accordion is `div`+`button` without `aria-expanded`/`region` semantics; marquee is decorative without `prefers-reduced-motion` handling; hero images have alt but the slider has no pause control.
 
 **Technical debt (frontend):**
+
 - **1,097-line monolith** — every homepage section is a local function; nothing reusable across pages (and there are no other pages to reuse in).
 - Hero ignores CMS (`hero` row) — hardcoded images, **no visible headline** — the most valuable above-the-fold messaging slot is empty.
 - `index.tsx` site query: `staleTime 0`, `refetchOnMount/WindowFocus/Reconnect "always"`, **`refetchInterval: 5000` + `refetchIntervalInBackground: true`** — the entire site data (settings, all 56 clients, all sections) is re-fetched from Supabase every 5 seconds, in background, forever. Confirmed in code lines 16–25. This is a performance and cost problem (see §12) and also means admin edits appear on the live site within ~5s — the only "live preview" mechanism.
@@ -194,6 +200,7 @@ No blog posts, no service detail pages, no project pages, no team page, no galle
 ## 8. BACKEND / API ARCHITECTURE
 
 **Server functions (`cms.functions.ts`):**
+
 - `getSiteData()` — 5 parallel Supabase selects (settings, nav, sections, content_items, categories), maps to a single `SiteData` payload. Uses **publishable key + anon client** server-side (correct pattern; RLS still applies; no service role on public path).
 - `getPage({slug})` — Zod-validated slug (max 120), `maybeSingle` on active pages.
 - `submitEnquiry` — Zod schema (name 1–120, email, phone ≤40, subject ≤160, message 1–4000, `data` record of strings), inserts into `form_submissions`. **Anonymous inserts are permitted by the RLS "anyone can submit" policy — by design.**
@@ -204,6 +211,7 @@ No blog posts, no service detail pages, no project pages, no team page, no galle
 **Middleware (`start.ts`):** `attachSupabaseAuth` (client → attaches session bearer to serverFn calls), CSRF middleware scoped to serverFn handlers, error middleware rendering the generic error page. `server.ts` wraps the nitro entry and normalizes 500s.
 
 **Confirmed issues (backend):**
+
 1. **No rate limiting or spam protection on `submitEnquiry`/`subscribeNewsletter`.** Anyone can insert unlimited rows (bounded only by field length). The integrations settings hint at future SMTP/analytics but no CAPTCHA exists. Given zero traffic this is latent, not urgent — but it must be solved before launch.
 2. **No transactional email/notification** — enquiries land silently in the admin; nobody is emailed (SMTP settings empty). A lead could sit unread indefinitely. The admin dashboard does surface unread counts, but the workflow depends on someone opening the admin.
 3. `getSiteData` has **no caching at all** server-side (every request = 5 DB round-trips) and the client polls it every 5 s. For a static-content corporate site, this is the single worst performance decision in the codebase.
@@ -217,24 +225,25 @@ No blog posts, no service detail pages, no project pages, no team page, no galle
 **AuthN:** Supabase Auth email/password; session persisted client-side (`persistSession: true` via brokered storage); server functions receive bearer via middleware; `requireSupabaseAuth` middleware exists (`auth-middleware.ts`) validating claims server-side, but **no public server function uses it** (none need auth). Password rules: client-side `minLength 8`; sign-up is open to anyone (see below).
 
 **AuthZ model (verified against RLS in migration 1):**
+
 - Public reads: allowed (`true` policies) on settings/media/nav/sections/categories/content/pages — appropriate.
 - Staff writes: `is_staff(auth.uid())` security-definer function checks `user_roles in ('admin','editor')` — **enforced in RLS at the database**, not just UI. Good.
 - `user_roles`: authenticated users can read their own roles or (if admin) all roles; **insert/delete of roles is not granted to `authenticated`** — only service role. The admin Users screen toggles roles via the client SDK, so **role changes only succeed for admins via RLS… but there is no insert policy for admins either** — the write fails unless Postgres grants apply. Migration grants: `grant select on public.user_roles to authenticated` only. **This means the Users & Roles screen's role-toggle may fail for everyone except via service key — a likely-broken admin feature (needs runtime verification).**
 - Submissions/subscribers: anon insert-only; staff select/update/delete. Correct.
-- Storage: `media` bucket — staff-only CRUD via storage policies (migration 3). Media *serving* goes through the app's server route with service role — bucket stays private. Correct.
+- Storage: `media` bucket — staff-only CRUD via storage policies (migration 3). Media _serving_ goes through the app's server route with service role — bucket stays private. Correct.
 - `handle_new_user()` trigger auto-grants **admin to the first user ever created** — a real bootstrapping risk if the Supabase project has signups enabled and no user exists yet: the first stranger to register becomes admin. Status now: at least one admin presumably exists (unverifiable read-only), but if the project were reset, this would re-arm. **Sign-up should be disabled in Supabase dashboard after accounts are provisioned.**
 
 **Confirmed security findings:**
 
-| # | Severity | Finding | Evidence | Risk | Remediation direction |
-|---|---|---|---|---|---|
-| S1 | **HIGH** | Open self-signup + first-user-becomes-admin trigger | `auth.tsx` signUp; `handle_new_user()` migration 1 | Account/role takeover if project reset or roles table emptied | Disable public signups in Supabase; remove auto-admin trigger after initial provisioning |
-| S2 | **MEDIUM** | Unthrottled anonymous inserts (enquiry + newsletter) | RLS `with check (true)`; no rate limiter anywhere | Spam/DoS on table growth; junk leads | Add rate limiting (edge middleware or Supabase function), honeypot/CAPTCHA, row caps |
-| S3 | **MEDIUM** | `sections.extra` raw JSON edited/parsed in admin and injected into React without schema validation | `sections.tsx` JSON.parse → save; homepage renders `extra.*` arrays | Malformed/breaking content (render crashes guarded only by `Array.isArray` checks); stored-XSS *unlikely* (React escapes), but data-integrity risk real | Validate `extra` with Zod per section key on save |
-| S4 | **LOW** | Media proxy serves any file in bucket without auth | `/api/public/media/$` (service-role download) | Only staff can upload, so contents are intended-public; path traversal blocked | Acceptable; optionally sign URLs |
-| S5 | **LOW** | Admin "Users & Roles" role writes appear blocked by grants/RLS (see above) — either broken feature or silently relying on a grant not in migrations | migration grants vs `users.tsx` insert/delete | Editor confusion; potential future over-grant to fix it | Verify at runtime; prefer a service-role server function for role changes with admin check |
-| S6 | **INFO** | `.env` contains only publishable key (safe by design); no service-role key in repo; CORS default Supabase; CSRF middleware present | `.env`, `start.ts`` | — | None |
-| S7 | **INFO** | Error responses render generic pages (no stack leakage); `error.message` from Supabase failures surfaces on public error components in some paths (index/$slug errorComponent prints `error.message`) | `index.tsx` | Minor information disclosure if Supabase errors leak details | Sanitize messages |
+| #   | Severity   | Finding                                                                                                                                                                                               | Evidence                                                            | Risk                                                                                                                                                    | Remediation direction                                                                      |
+| --- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| S1  | **HIGH**   | Open self-signup + first-user-becomes-admin trigger                                                                                                                                                   | `auth.tsx` signUp; `handle_new_user()` migration 1                  | Account/role takeover if project reset or roles table emptied                                                                                           | Disable public signups in Supabase; remove auto-admin trigger after initial provisioning   |
+| S2  | **MEDIUM** | Unthrottled anonymous inserts (enquiry + newsletter)                                                                                                                                                  | RLS `with check (true)`; no rate limiter anywhere                   | Spam/DoS on table growth; junk leads                                                                                                                    | Add rate limiting (edge middleware or Supabase function), honeypot/CAPTCHA, row caps       |
+| S3  | **MEDIUM** | `sections.extra` raw JSON edited/parsed in admin and injected into React without schema validation                                                                                                    | `sections.tsx` JSON.parse → save; homepage renders `extra.*` arrays | Malformed/breaking content (render crashes guarded only by `Array.isArray` checks); stored-XSS _unlikely_ (React escapes), but data-integrity risk real | Validate `extra` with Zod per section key on save                                          |
+| S4  | **LOW**    | Media proxy serves any file in bucket without auth                                                                                                                                                    | `/api/public/media/$` (service-role download)                       | Only staff can upload, so contents are intended-public; path traversal blocked                                                                          | Acceptable; optionally sign URLs                                                           |
+| S5  | **LOW**    | Admin "Users & Roles" role writes appear blocked by grants/RLS (see above) — either broken feature or silently relying on a grant not in migrations                                                   | migration grants vs `users.tsx` insert/delete                       | Editor confusion; potential future over-grant to fix it                                                                                                 | Verify at runtime; prefer a service-role server function for role changes with admin check |
+| S6  | **INFO**   | `.env` contains only publishable key (safe by design); no service-role key in repo; CORS default Supabase; CSRF middleware present                                                                    | `.env`, `start.ts``                                                 | —                                                                                                                                                       | None                                                                                       |
+| S7  | **INFO**   | Error responses render generic pages (no stack leakage); `error.message` from Supabase failures surfaces on public error components in some paths (index/$slug errorComponent prints `error.message`) | `index.tsx`                                                         | Minor information disclosure if Supabase errors leak details                                                                                            | Sanitize messages                                                                          |
 
 **Security posture overall:** solid framework defaults, RLS done thoughtfully; the real risks are the signup bootstrap (S1) and missing rate limiting (S2).
 
@@ -242,19 +251,19 @@ No blog posts, no service detail pages, no project pages, no team page, no galle
 
 ## 10. SEO & DISCOVERABILITY
 
-| Area | Current state | Confirmed issue? |
-|---|---|---|
-| Page titles/descriptions | Root defaults + homepage uses CMS `seo_title/description` (`Capex Engineering — Turnkey HVAC, Fire Fighting, MEP & UG Utilities` etc.); `$slug` pages use per-page SEO fields | **No**: reasonable. Homepage title is generic-but-acceptable; per-page control exists |
-| Canonical URLs | None anywhere | **Yes**: no `rel=canonical` on any route |
-| Open Graph | Root hardcodes OG/Twitter tags incl. a **broken R2 preview image URL** (401/404 publicly); homepage adds OG but no `og:url`/`og:image` (setting `seo_og_image` unused) | **Yes**: broken share image |
-| Structured data | None (no Organization/LocalBusiness/Service schema) | **Yes** |
-| Sitemap | **No sitemap.xml** in `public/` | **Yes** |
-| robots.txt | Present, allows all (Googlebot/Bing/Twitter/Facebook/*) | **No** (fine); `/auth` and `/admin` not explicitly disallowed (they are `noindex`-ed via meta on `/auth`; admin is behind auth with `ssr:false`) |
-| URL structure | Single page + 4 flat slugs | Thin: nothing to index per service/project |
-| Heading hierarchy | One `h1` per page (hero has **no** h1 on homepage — first heading is `h2` in the marquee/about area since hero renders only images) | **Yes**: homepage lacks an h1 (rendered text-wise) |
-| Image alt text | Derived from item titles (`alt={s.title}`); hero alts hardcoded descriptive | Mostly OK |
-| Indexability | SSR everywhere except auth/admin | Good |
-| Duplicate content | Policy pages boilerplate-short; no duplication problem | No |
+| Area                     | Current state                                                                                                                                                                 | Confirmed issue?                                                                                                                                 |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Page titles/descriptions | Root defaults + homepage uses CMS `seo_title/description` (`Capex Engineering — Turnkey HVAC, Fire Fighting, MEP & UG Utilities` etc.); `$slug` pages use per-page SEO fields | **No**: reasonable. Homepage title is generic-but-acceptable; per-page control exists                                                            |
+| Canonical URLs           | None anywhere                                                                                                                                                                 | **Yes**: no `rel=canonical` on any route                                                                                                         |
+| Open Graph               | Root hardcodes OG/Twitter tags incl. a **broken R2 preview image URL** (401/404 publicly); homepage adds OG but no `og:url`/`og:image` (setting `seo_og_image` unused)        | **Yes**: broken share image                                                                                                                      |
+| Structured data          | None (no Organization/LocalBusiness/Service schema)                                                                                                                           | **Yes**                                                                                                                                          |
+| Sitemap                  | **No sitemap.xml** in `public/`                                                                                                                                               | **Yes**                                                                                                                                          |
+| robots.txt               | Present, allows all (Googlebot/Bing/Twitter/Facebook/*)                                                                                                                       | **No** (fine); `/auth` and `/admin` not explicitly disallowed (they are `noindex`-ed via meta on `/auth`; admin is behind auth with `ssr:false`) |
+| URL structure            | Single page + 4 flat slugs                                                                                                                                                    | Thin: nothing to index per service/project                                                                                                       |
+| Heading hierarchy        | One `h1` per page (hero has **no** h1 on homepage — first heading is `h2` in the marquee/about area since hero renders only images)                                           | **Yes**: homepage lacks an h1 (rendered text-wise)                                                                                               |
+| Image alt text           | Derived from item titles (`alt={s.title}`); hero alts hardcoded descriptive                                                                                                   | Mostly OK                                                                                                                                        |
+| Indexability             | SSR everywhere except auth/admin                                                                                                                                              | Good                                                                                                                                             |
+| Duplicate content        | Policy pages boilerplate-short; no duplication problem                                                                                                                        | No                                                                                                                                               |
 
 **Confirmed SEO gaps:** no sitemap, no canonicals, no structured data, broken OG image, missing homepage h1, and — structurally — a one-page site gives search engines almost nothing to rank for service/project intent. (The last point is an IA issue, not a quick fix.)
 
@@ -263,6 +272,7 @@ No blog posts, no service detail pages, no project pages, no team page, no galle
 ## 11. PERFORMANCE
 
 **Code-level findings (confirmed):**
+
 1. **5-second background polling of the entire site payload** (`refetchInterval: 5000`, `refetchIntervalInBackground: true`, `staleTime: 0`) — `index.tsx:16–25`. Every 5 s, client re-issues the `getSiteData` server fn → 5 Supabase queries. Wasteful bandwidth, DB load, and cost; also keeps the network tab busy and can cause layout shifts if content changes under the user.
 2. **Dynamic full-namespace icon import** (`import * as Icons from "lucide-react"`) in the homepage — pulls the entire icon library into the client graph regardless of the ~10 icons used. Bundle bloat confirmed at code level.
 3. Hero: 6 × 1920px JPGs (56–186 KB each, ~1 MB total) all mount immediately; only slide 0 is `eager` (good), others `lazy` (good). Acceptable, though no `srcset`/AVIF variants; `hero-work.mp4` asset exists in manifests but is unused (no video rendered).
@@ -272,54 +282,58 @@ No blog posts, no service detail pages, no project pages, no team page, no galle
 7. **Bundle risk:** unimported UI components are tree-shaken in production, but `bun.lock` ships ~10 unnecessary heavy deps (recharts ~ hundreds of KB, embla, day-picker, resizable-panels, cmdk, vaul, input-otp, react-hook-form stack) that inflate installs and CI time; `import * as Icons` is the one that actually reaches the client.
 8. No image optimization pipeline (no vite-plugin-imagemin, no responsive variants); images served as-is with `cache-control` only via the media proxy (uploads in git are static assets with standard cache).
 
-**Not observed (would need a browser session):** CLS/LCP field data; given SSR + eager first hero image, LCP is probably the hero JPG — acceptable. The dominant *architectural* performance issue is the polling; everything else is normal.
+**Not observed (would need a browser session):** CLS/LCP field data; given SSR + eager first hero image, LCP is probably the hero JPG — acceptable. The dominant _architectural_ performance issue is the polling; everything else is normal.
 
 ---
 
 ## 12. CONTENT QUALITY — website vs Phase 1 company truth
 
 **Missing entirely from the website (Phase 1 has it):**
+
 - The **two-practice structure** and practice-branded delivery narratives.
 - **Projects evidence**: 13 of ~76 documented projects entered; section hidden. No WTT-4000TR story, no smart-city map, no metro reference.
 - **Leadership/team** (22 named people in Phase 1): 0 team items.
-- **Geographic presence**: no offices list (Patna/Gurugram/Sangli), no Rajasthan manufacturing unit, no India/Nepal reach visual — only "Pan-India" phrases and one Noida address (which is a *different* address than Phase 1's corporate office — see below).
+- **Geographic presence**: no offices list (Patna/Gurugram/Sangli), no Rajasthan manufacturing unit, no India/Nepal reach visual — only "Pan-India" phrases and one Noida address (which is a _different_ address than Phase 1's corporate office — see below).
 - **Statutory annexure** (CIN/PAN/GSTIN×5/ESI/Udyam) — only CIN + Udyam appear in small print (footer/certifications).
 - **Tools & plant** (HDD fleet etc.) — the "why us" alludes to capability but the impressive equipment list is absent.
 - **History** (incorporation date appears only in footer small-print "Est. 2012" and certifications "Est. 2012").
 - **Open Access Service** — mentioned on DOC A cover (unsupported); absent here (consistent with Phase 1's skepticism).
 
 **Unsupported / contradicted (flagged, not resolved):**
-| Website content | Phase 1 evidence | Issue |
-|---|---|---|
-| Testimonials (3, "Facilities Head", "PMC Lead", "Project Director") | No testimonials exist in any document | **Invented content live on site**, labeled "placeholder" in small print |
-| "150+ Projects Commissioned" | Documents enumerate 54 HVAC + 22 fire + ~10 UG records | Number not sourced; needs verification |
-| "315+ KM Utilities Laid" | Documented scopes sum to 625 KM (or other subsets) | Number not sourced; needs verification |
-| Solar service card + solar hero image + solar contact option | Solar appears only on DOC A cover, nowhere else (C19) | Unsupported service promoted as a core offering |
-| Contact form option "Clean Rooms" + hero body + FAQ mention Clean Rooms | Service card was replaced by Solar in migration | Inconsistent service list across the site |
-| Hero "We dream, design & deliver" | Phase 1 C12: unexplained "Wedream" brand text in DOC A | Echoes the anomaly; needs human verification before use |
-| Address: "Unit No 621/622, Tower-A, Bhutani Alphathum, Sector 90, Noida" | Phase 1: corporate office 801, KM03, Jaypee Kosmos, Sector-134, Noida (certificates: Jaypee Greens/201301) | **Website address matches none of the documented addresses**; also Bhutani Alphathum is a *client's* (Bhutani) property — worth verifying the company actually operates from there |
-| Phone: only +91 98185 40532 | Documents list both 9818540532 and 87440 44810 | Second number dropped (minor) |
-| "Empanelled with leading architects & PMCs" + partner list | Phase 1: "Associated Architects & PMC of Delhi-NCR" list from DOC B only | Wording upgraded from "associated" to "empanelled" — stronger legal claim than documented; "Knight Frank" spelling corrected vs DOC B's "Knight Frenk" (good, but verify the association) |
-| Industries: "Data & Telecom", "IT / SEZ Parks", "Public Sector (PSU)" | Phase 1 sectors come from project evidence; DEN TV/CommScope/Avnet support IT/telecom-adjacent claims; PSU explicit via smart-city clients | Plausible but softer than documented sectors; acceptable direction, needs content backing |
-| FAQ: "branch office in Patna" | Matches Phase 1 | OK; but Gurugram + Sangli branches omitted |
+
+| Website content                                                          | Phase 1 evidence                                                                                                                           | Issue                                                                                                                                                                                     |
+| ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Testimonials (3, "Facilities Head", "PMC Lead", "Project Director")      | No testimonials exist in any document                                                                                                      | **Invented content live on site**, labeled "placeholder" in small print                                                                                                                   |
+| "150+ Projects Commissioned"                                             | Documents enumerate 54 HVAC + 22 fire + ~10 UG records                                                                                     | Number not sourced; needs verification                                                                                                                                                    |
+| "315+ KM Utilities Laid"                                                 | Documented scopes sum to 625 KM (or other subsets)                                                                                         | Number not sourced; needs verification                                                                                                                                                    |
+| Solar service card + solar hero image + solar contact option             | Solar appears only on DOC A cover, nowhere else (C19)                                                                                      | Unsupported service promoted as a core offering                                                                                                                                           |
+| Contact form option "Clean Rooms" + hero body + FAQ mention Clean Rooms  | Service card was replaced by Solar in migration                                                                                            | Inconsistent service list across the site                                                                                                                                                 |
+| Hero "We dream, design & deliver"                                        | Phase 1 C12: unexplained "Wedream" brand text in DOC A                                                                                     | Echoes the anomaly; needs human verification before use                                                                                                                                   |
+| Address: "Unit No 621/622, Tower-A, Bhutani Alphathum, Sector 90, Noida" | Phase 1: corporate office 801, KM03, Jaypee Kosmos, Sector-134, Noida (certificates: Jaypee Greens/201301)                                 | **Website address matches none of the documented addresses**; also Bhutani Alphathum is a _client's_ (Bhutani) property — worth verifying the company actually operates from there        |
+| Phone: only +91 98185 40532                                              | Documents list both 9818540532 and 87440 44810                                                                                             | Second number dropped (minor)                                                                                                                                                             |
+| "Empanelled with leading architects & PMCs" + partner list               | Phase 1: "Associated Architects & PMC of Delhi-NCR" list from DOC B only                                                                   | Wording upgraded from "associated" to "empanelled" — stronger legal claim than documented; "Knight Frank" spelling corrected vs DOC B's "Knight Frenk" (good, but verify the association) |
+| Industries: "Data & Telecom", "IT / SEZ Parks", "Public Sector (PSU)"    | Phase 1 sectors come from project evidence; DEN TV/CommScope/Avnet support IT/telecom-adjacent claims; PSU explicit via smart-city clients | Plausible but softer than documented sectors; acceptable direction, needs content backing                                                                                                 |
+| FAQ: "branch office in Patna"                                            | Matches Phase 1                                                                                                                            | OK; but Gurugram + Sangli branches omitted                                                                                                                                                |
 
 **Placeholder content live:** 4 policy pages ("[Placeholder…]", "[Placeholder — add current openings…]"), 3 testimonials, empty careers collection. Generic marketing language is moderate: most section copy is decent and specific ("two-person crews", "call-escalation matrix") and traces to Phase 1's "Why Choose" list — better than typical AI filler.
 
-**Weak CTAs:** every service/industry/project card ends nowhere; only one conversion path (contact form). "Start a Project" CTA exists only in the *unused* DB hero.
+**Weak CTAs:** every service/industry/project card ends nowhere; only one conversion path (contact form). "Start a Project" CTA exists only in the _unused_ DB hero.
 
 ---
 
 ## 13. VISUAL / UX ASSESSMENT (against PREMIUM / ENGINEERING-LED / TECHNICAL / CREDIBLE positioning)
 
 **Where the current design succeeds:**
+
 - **Consistent, restrained design system** — navy/amber oklch tokens, band-based rhythm, glass panels, one display font. Far more coherent than the brochures' three clashing identities.
-- **Evidence-forward gestures**: marquee trust strip, clients-by-sector grid, numbered why-us grid, 5-step process timeline — right *kinds* of components for an engineering brand.
+- **Evidence-forward gestures**: marquee trust strip, clients-by-sector grid, numbered why-us grid, 5-step process timeline — right _kinds_ of components for an engineering brand.
 - Solid responsive patterns, decent spacing rhythm, readable type scale.
 - Photo-real hero (if generic stock-ish engineering imagery) with lazy loading.
 
 **Where it limits the positioning:**
+
 - **No above-the-fold message**: the hero is an unlabeled photo carousel — no headline, subline, or CTA visible on first paint. The most premium slot says nothing.
-- **One-page shallowness**: "premium/engineering-led/technical" requires depth — project case studies, technical specs (TR capacities, KM laid, HDD tonnage), credentials — all of which exist in Phase 1 but have no place to live in this IA. The site *tells* ("Compliance you can verify") without *showing* (no certificate scans, no project pages).
+- **One-page shallowness**: "premium/engineering-led/technical" requires depth — project case studies, technical specs (TR capacities, KM laid, HDD tonnage), credentials — all of which exist in Phase 1 but have no place to live in this IA. The site _tells_ ("Compliance you can verify") without _showing_ (no certificate scans, no project pages).
 - **Credibility leaks**: public placeholder testimonials and "[Placeholder]" policy pages directly undercut the "credible/technical" goal; broken share image; client logos that 404 off-platform.
 - **Photography**: 6 hero/service images are the entire visual identity; no project photography from the brochures (which contain rich galleries: HDD rigs, substation erection, WTT chiller plant) is used.
 - **Micro-UX**: FAQ accordion lacks keyboard semantics; marquee ignores reduced-motion; form has no inline validation (only required attributes); no success-state design beyond button text change; no sticky section awareness in nav (no active highlighting on scroll).
@@ -329,28 +343,28 @@ No blog posts, no service detail pages, no project pages, no team page, no galle
 
 ## 14. TECHNICAL DEBT INVENTORY (evidence-based)
 
-| ID | Class | Severity | Item | Evidence |
-|---|---|---|---|---|
-| TD1 | Performance/cost | **CRITICAL** | 5-second full-site polling incl. background | `index.tsx:16–25` |
-| TD2 | Security | **HIGH** | Open signup + first-user-admin bootstrap trigger | `auth.tsx`, `handle_new_user()` |
-| TD3 | Architecture | **HIGH** | Homepage monolith (1,097 lines, 15 sections, zero reuse) | `index.tsx` |
-| TD4 | Content integrity | **HIGH** | Live placeholder/unverifiable claims (testimonials, stats, policies, solar) | live DB rows |
-| TD5 | Dead code/deps | **MEDIUM** | 46 unused shadcn/ui components; ~10 unused heavy deps; `hero-work.mp4` unused | grep across `src/` |
-| TD6 | Hardcoding | **MEDIUM** | Hero ignores CMS `hero` row (images + would-be headline hardcoded); Nav CTA hardcoded; OG image hardcoded-broken; `seo_og_image` setting orphaned | `index.tsx`, `Nav.tsx`, `__root.tsx` |
-| TD7 | Duplication | **MEDIUM** | Service list maintained in 3 places (cards, contact JSON, about capabilities); client names in items + about JSON groups | DB rows |
-| TD8 | Off-platform asset coupling | **MEDIUM** | 29 client logo URLs + logo_url + OG image on `/__l5e/assets-v1/…` Lovable-internal paths | DB `image_url`s; asset manifests |
-| TD9 | Fragile admin editing | **MEDIUM** | Raw JSON textarea for all section "extra" content; no per-key schema, no icon-name validation; `slug` auto-gen collisions possible (unique constraint surfaces raw PG error) | `sections.tsx`, `content.$collection.tsx` |
-| TD10 | SEO plumbing | **MEDIUM** | No sitemap.xml, canonicals, JSON-LD; homepage lacks h1 | `public/`, routes |
-| TD11 | Icons bundle | **MEDIUM** | `import * as Icons` pulls full lucide set into client graph | `index.tsx:4` |
-| TD12 | Feature likely broken | **MEDIUM** | Users & Roles toggle writes may be blocked by grants/RLS (insert/delete not granted to authenticated) | migration grants vs `users.tsx` |
-| TD13 | No tests / no CI | **MEDIUM** | Zero test files; no lint/typecheck CI workflow in repo | repo tree |
-| TD14 | No lead notification | **MEDIUM** | SMTP settings empty; enquiries have no email path | live settings |
-| TD15 | Rate limiting absent | **MEDIUM** | Public write endpoints unthrottled | `cms.functions.ts` |
-| TD16 | Docs | **LOW** | No README section on CMS usage/admin creds/runbook; `src/routes/README.md` covers routing only | repo |
-| TD17 | Media pipeline unused | **LOW** | Media library + proxy built; 0 rows; seeded images bypass it via git/R2 | live DB |
-| TD18 | Settings save N+1 | **LOW** | Settings admin loops updates per key | `settings.tsx` |
-| TD19 | Error message pass-through | **LOW** | Public error components print raw `error.message` | `index.tsx`, `$slug.tsx` |
-| TD20 | Footer/about copy scope mismatch | **LOW** | "Creating wonders in HVAC & Fire Fighting" taglines ignore UG/CGD practice | live settings |
+| ID   | Class                            | Severity     | Item                                                                                                                                                                         | Evidence                                  |
+| ---- | -------------------------------- | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
+| TD1  | Performance/cost                 | **CRITICAL** | 5-second full-site polling incl. background                                                                                                                                  | `index.tsx:16–25`                         |
+| TD2  | Security                         | **HIGH**     | Open signup + first-user-admin bootstrap trigger                                                                                                                             | `auth.tsx`, `handle_new_user()`           |
+| TD3  | Architecture                     | **HIGH**     | Homepage monolith (1,097 lines, 15 sections, zero reuse)                                                                                                                     | `index.tsx`                               |
+| TD4  | Content integrity                | **HIGH**     | Live placeholder/unverifiable claims (testimonials, stats, policies, solar)                                                                                                  | live DB rows                              |
+| TD5  | Dead code/deps                   | **MEDIUM**   | 46 unused shadcn/ui components; ~10 unused heavy deps; `hero-work.mp4` unused                                                                                                | grep across `src/`                        |
+| TD6  | Hardcoding                       | **MEDIUM**   | Hero ignores CMS `hero` row (images + would-be headline hardcoded); Nav CTA hardcoded; OG image hardcoded-broken; `seo_og_image` setting orphaned                            | `index.tsx`, `Nav.tsx`, `__root.tsx`      |
+| TD7  | Duplication                      | **MEDIUM**   | Service list maintained in 3 places (cards, contact JSON, about capabilities); client names in items + about JSON groups                                                     | DB rows                                   |
+| TD8  | Off-platform asset coupling      | **MEDIUM**   | 29 client logo URLs + logo_url + OG image on `/__l5e/assets-v1/…` Lovable-internal paths                                                                                     | DB `image_url`s; asset manifests          |
+| TD9  | Fragile admin editing            | **MEDIUM**   | Raw JSON textarea for all section "extra" content; no per-key schema, no icon-name validation; `slug` auto-gen collisions possible (unique constraint surfaces raw PG error) | `sections.tsx`, `content.$collection.tsx` |
+| TD10 | SEO plumbing                     | **MEDIUM**   | No sitemap.xml, canonicals, JSON-LD; homepage lacks h1                                                                                                                       | `public/`, routes                         |
+| TD11 | Icons bundle                     | **MEDIUM**   | `import * as Icons` pulls full lucide set into client graph                                                                                                                  | `index.tsx:4`                             |
+| TD12 | Feature likely broken            | **MEDIUM**   | Users & Roles toggle writes may be blocked by grants/RLS (insert/delete not granted to authenticated)                                                                        | migration grants vs `users.tsx`           |
+| TD13 | No tests / no CI                 | **MEDIUM**   | Zero test files; no lint/typecheck CI workflow in repo                                                                                                                       | repo tree                                 |
+| TD14 | No lead notification             | **MEDIUM**   | SMTP settings empty; enquiries have no email path                                                                                                                            | live settings                             |
+| TD15 | Rate limiting absent             | **MEDIUM**   | Public write endpoints unthrottled                                                                                                                                           | `cms.functions.ts`                        |
+| TD16 | Docs                             | **LOW**      | No README section on CMS usage/admin creds/runbook; `src/routes/README.md` covers routing only                                                                               | repo                                      |
+| TD17 | Media pipeline unused            | **LOW**      | Media library + proxy built; 0 rows; seeded images bypass it via git/R2                                                                                                      | live DB                                   |
+| TD18 | Settings save N+1                | **LOW**      | Settings admin loops updates per key                                                                                                                                         | `settings.tsx`                            |
+| TD19 | Error message pass-through       | **LOW**      | Public error components print raw `error.message`                                                                                                                            | `index.tsx`, `$slug.tsx`                  |
+| TD20 | Footer/about copy scope mismatch | **LOW**      | "Creating wonders in HVAC & Fire Fighting" taglines ignore UG/CGD practice                                                                                                   | live settings                             |
 
 ---
 
@@ -368,29 +382,29 @@ No blog posts, no service detail pages, no project pages, no team page, no galle
 
 ## 16. KEEP / IMPROVE / REFACTOR / REBUILD / REMOVE
 
-| Component | Verdict | Rationale |
-|---|---|---|
-| **Platform: TanStack Start + React 19 + TypeScript** | **KEEP** | Modern, SSR-capable, typed; right tool for a content site that may grow dynamic features |
-| **Supabase (DB/Auth/Storage/RLS)** | **KEEP** | Generic CMS schema is well designed; RLS correct in principle |
-| **Generic `content_items` CMS schema** | **KEEP** (extend) | Collection-discriminated rows with JSON extras flexibly cover current needs; add dedicated tables only where relational integrity is needed (e.g., projects↔services) |
-| **Admin CMS shell** (layout, auth gate, media, submissions, settings, pages, categories) | **KEEP/IMPROVE** | Functional; improve: JSON-editor → structured field forms (TD9), settings save batching (TD18), fix roles grant (TD12) |
-| **Admin content CRUD for 16 collections** | **KEEP** | Works, minimal |
-| **Public server functions + Zod** | **KEEP** | Correct pattern |
-| **Design system (tokens/bands/glass)** | **KEEP** | Coherent premium-industrial direction worth evolving |
-| **Homepage section components** | **REFACTOR** | Split monolith into `src/components/sections/*`; make each section reusable on future pages |
-| **Hero implementation** | **REBUILD** | Must render CMS `hero` content (headline/eyebrow/CTAs) over imagery; current one discards it |
-| **Site data fetching** | **REFACTOR** | Kill 5-s polling; use sensible `staleTime`/revalidation + server cache; consider splitting payload per section |
-| **Navigation** | **IMPROVE** | Will need real pages + practice-level nav in Phase 3; mechanism (CMS-driven) is fine |
-| **Projects section** | **IMPROVE → relaunch** | Data model exists; needs full Phase 1 project corpus, detail pages, filters |
-| **Testimonials** | **REMOVE (current data)** | Invented content must not ship; keep the *component* for real, approved testimonials later |
-| **Placeholder policy/careers pages** | **IMPROVE** | Write real policies (legal-reviewed) before launch |
-| **Unused shadcn/ui library + heavy deps** | **REMOVE** | 46 components + recharts/embla/day-picker/vaul/cmdk/input-otp/resizable-panels/react-hook-form stack are unimported |
-| **`import * as Icons`** | **REFACTOR** | Static icon imports or a curated icon map |
-| **Lovable R2 asset-path coupling in DB content** | **REFACTOR** | Migrate logo/image URLs into the media library (`/api/public/media/...`) so content survives platform moves |
-| **Solar service** | **HUMAN DECISION** | Unsupported by Phase 1 documents — verify with the client before keeping (also decide Clean Rooms' return) |
-| **Media library + proxy route** | **KEEP** | Currently unused but the right mechanism; migrate all imagery into it |
-| **SEO plumbing (sitemap, canonicals, JSON-LD)** | **IMPROVE** | Add in Phase 3 |
-| **Open signup / first-admin trigger** | **REMOVE (harden)** | Disable signups post-provisioning |
+| Component                                                                                | Verdict                   | Rationale                                                                                                                                                             |
+| ---------------------------------------------------------------------------------------- | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Platform: TanStack Start + React 19 + TypeScript**                                     | **KEEP**                  | Modern, SSR-capable, typed; right tool for a content site that may grow dynamic features                                                                              |
+| **Supabase (DB/Auth/Storage/RLS)**                                                       | **KEEP**                  | Generic CMS schema is well designed; RLS correct in principle                                                                                                         |
+| **Generic `content_items` CMS schema**                                                   | **KEEP** (extend)         | Collection-discriminated rows with JSON extras flexibly cover current needs; add dedicated tables only where relational integrity is needed (e.g., projects↔services) |
+| **Admin CMS shell** (layout, auth gate, media, submissions, settings, pages, categories) | **KEEP/IMPROVE**          | Functional; improve: JSON-editor → structured field forms (TD9), settings save batching (TD18), fix roles grant (TD12)                                                |
+| **Admin content CRUD for 16 collections**                                                | **KEEP**                  | Works, minimal                                                                                                                                                        |
+| **Public server functions + Zod**                                                        | **KEEP**                  | Correct pattern                                                                                                                                                       |
+| **Design system (tokens/bands/glass)**                                                   | **KEEP**                  | Coherent premium-industrial direction worth evolving                                                                                                                  |
+| **Homepage section components**                                                          | **REFACTOR**              | Split monolith into `src/components/sections/*`; make each section reusable on future pages                                                                           |
+| **Hero implementation**                                                                  | **REBUILD**               | Must render CMS `hero` content (headline/eyebrow/CTAs) over imagery; current one discards it                                                                          |
+| **Site data fetching**                                                                   | **REFACTOR**              | Kill 5-s polling; use sensible `staleTime`/revalidation + server cache; consider splitting payload per section                                                        |
+| **Navigation**                                                                           | **IMPROVE**               | Will need real pages + practice-level nav in Phase 3; mechanism (CMS-driven) is fine                                                                                  |
+| **Projects section**                                                                     | **IMPROVE → relaunch**    | Data model exists; needs full Phase 1 project corpus, detail pages, filters                                                                                           |
+| **Testimonials**                                                                         | **REMOVE (current data)** | Invented content must not ship; keep the _component_ for real, approved testimonials later                                                                            |
+| **Placeholder policy/careers pages**                                                     | **IMPROVE**               | Write real policies (legal-reviewed) before launch                                                                                                                    |
+| **Unused shadcn/ui library + heavy deps**                                                | **REMOVE**                | 46 components + recharts/embla/day-picker/vaul/cmdk/input-otp/resizable-panels/react-hook-form stack are unimported                                                   |
+| **`import * as Icons`**                                                                  | **REFACTOR**              | Static icon imports or a curated icon map                                                                                                                             |
+| **Lovable R2 asset-path coupling in DB content**                                         | **REFACTOR**              | Migrate logo/image URLs into the media library (`/api/public/media/...`) so content survives platform moves                                                           |
+| **Solar service**                                                                        | **HUMAN DECISION**        | Unsupported by Phase 1 documents — verify with the client before keeping (also decide Clean Rooms' return)                                                            |
+| **Media library + proxy route**                                                          | **KEEP**                  | Currently unused but the right mechanism; migrate all imagery into it                                                                                                 |
+| **SEO plumbing (sitemap, canonicals, JSON-LD)**                                          | **IMPROVE**               | Add in Phase 3                                                                                                                                                        |
+| **Open signup / first-admin trigger**                                                    | **REMOVE (harden)**       | Disable signups post-provisioning                                                                                                                                     |
 
 ---
 
@@ -408,19 +422,19 @@ CURRENT CODE (solid platform, monolithic surface, polling, asset coupling)
 GAPS
 ```
 
-| # | What the company needs (Phase 1) | What currently exists | Why insufficient | What must eventually change |
-|---|---|---|---|---|
-| G1 | Communicate the **two practices** as the organizing brand principle | Flat 6-service list, merged | Visitors can't discover the practice split, its distinct evidence/teams; brand story flattened | Practice-level IA: two practice hubs, distinct service groups, practice-scoped projects/team content |
-| G2 | Prove capability with **76+ documented projects** (4000 TR flagship, smart cities, metro, CGD) | 13 projects entered, section OFF, no detail pages | The single strongest sales asset is invisible | Full project corpus in CMS, project detail templates (scope/client/location/capacity), filters by practice/service |
-| G3 | Credibility via **statutory documents** (CIN, GST×5, ESI, Udyam, ISO badge) | Small-print mentions + 4 certification cards (no scans, no issuing details) | "Compliance you can verify" claims verification but shows nothing | Certifications section with document scans (media library), registry numbers, verified wording |
-| G4 | Present **22-person leadership/team** | Empty hidden team section | Credibility of a real organization missing | Team content from Phase 1 (with the C1–C7 conflicts resolved), practice-scoped team pages |
-| G5 | Geographic reach: **4 offices + Rajasthan unit + 25 states/Nepal** | One address (a *different* one), "Pan-India" copy | Reach claim unsupported; address contradicts documents | Offices/presence module (CMS-driven), map, verified address (resolve vs Phase 1 C10) |
-| G6 | Service depth (HVAC testing suite, HDD fleet, substation erection, 33/11kV…) | One-line service cards with 4 bullets | Turnkey technical competence not conveyed | Service detail pages with capability lists, equipment/plant, standards (NBC etc.), process |
-| G7 | Trust via **client logos across 4 categories** | 56 client items, 29 logos on platform-coupled paths, category grid as text | Logos break off-platform; grid is a wall of names without relationships | Migrate logos to media library; optionally client↔project cross-links |
-| G8 | Convert interest: **enquiry + phone + email paths** | Contact form (works), one phone, mailto | No email notifications (leads unread), no spam protection, single weak path | Notifications (SMTP/Resend), rate limiting/CAPTCHA, multiple CTAs per page, optional WhatsApp/phone emphasis |
-| G9 | Publishable legal surface | 4 placeholder policy pages | Unpublishable as-is | Real policies; careers page with actual openings or removal |
-| G10 | Findability for service/geo intent | 1 indexable page + 4 short pages, no sitemap/schema | Minimal search footprint | Multi-page IA → per-service/project SEO surface, sitemap, LocalBusiness/Organization JSON-LD |
-| G11 | Brand consistency (CAPEX vs "Capex Engineering" vs prompt's "CCEPL") | Mixed wordmarks/taglines; "Wedream"-echo headline | Naming ambiguity carries into all future content | Client decision on naming + removal of "dream" wording pending verification (Phase 1 C12) |
+| #   | What the company needs (Phase 1)                                                               | What currently exists                                                       | Why insufficient                                                                               | What must eventually change                                                                                        |
+| --- | ---------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| G1  | Communicate the **two practices** as the organizing brand principle                            | Flat 6-service list, merged                                                 | Visitors can't discover the practice split, its distinct evidence/teams; brand story flattened | Practice-level IA: two practice hubs, distinct service groups, practice-scoped projects/team content               |
+| G2  | Prove capability with **76+ documented projects** (4000 TR flagship, smart cities, metro, CGD) | 13 projects entered, section OFF, no detail pages                           | The single strongest sales asset is invisible                                                  | Full project corpus in CMS, project detail templates (scope/client/location/capacity), filters by practice/service |
+| G3  | Credibility via **statutory documents** (CIN, GST×5, ESI, Udyam, ISO badge)                    | Small-print mentions + 4 certification cards (no scans, no issuing details) | "Compliance you can verify" claims verification but shows nothing                              | Certifications section with document scans (media library), registry numbers, verified wording                     |
+| G4  | Present **22-person leadership/team**                                                          | Empty hidden team section                                                   | Credibility of a real organization missing                                                     | Team content from Phase 1 (with the C1–C7 conflicts resolved), practice-scoped team pages                          |
+| G5  | Geographic reach: **4 offices + Rajasthan unit + 25 states/Nepal**                             | One address (a _different_ one), "Pan-India" copy                           | Reach claim unsupported; address contradicts documents                                         | Offices/presence module (CMS-driven), map, verified address (resolve vs Phase 1 C10)                               |
+| G6  | Service depth (HVAC testing suite, HDD fleet, substation erection, 33/11kV…)                   | One-line service cards with 4 bullets                                       | Turnkey technical competence not conveyed                                                      | Service detail pages with capability lists, equipment/plant, standards (NBC etc.), process                         |
+| G7  | Trust via **client logos across 4 categories**                                                 | 56 client items, 29 logos on platform-coupled paths, category grid as text  | Logos break off-platform; grid is a wall of names without relationships                        | Migrate logos to media library; optionally client↔project cross-links                                              |
+| G8  | Convert interest: **enquiry + phone + email paths**                                            | Contact form (works), one phone, mailto                                     | No email notifications (leads unread), no spam protection, single weak path                    | Notifications (SMTP/Resend), rate limiting/CAPTCHA, multiple CTAs per page, optional WhatsApp/phone emphasis       |
+| G9  | Publishable legal surface                                                                      | 4 placeholder policy pages                                                  | Unpublishable as-is                                                                            | Real policies; careers page with actual openings or removal                                                        |
+| G10 | Findability for service/geo intent                                                             | 1 indexable page + 4 short pages, no sitemap/schema                         | Minimal search footprint                                                                       | Multi-page IA → per-service/project SEO surface, sitemap, LocalBusiness/Organization JSON-LD                       |
+| G11 | Brand consistency (CAPEX vs "Capex Engineering" vs prompt's "CCEPL")                           | Mixed wordmarks/taglines; "Wedream"-echo headline                           | Naming ambiguity carries into all future content                                               | Client decision on naming + removal of "dream" wording pending verification (Phase 1 C12)                          |
 
 ---
 
@@ -440,6 +454,7 @@ GAPS
 ## 19. QUESTIONS / BENCHMARK AREAS FOR PHASE 3
 
 **Benchmark questions Phase 3 should answer (vs leading engineering/EPC websites):**
+
 1. How do top engineering/construction firms structure **two-practice/multi-division companies** in navigation and page hierarchy (e.g., separate practice landing pages vs unified service catalog)?
 2. What makes a compelling **project/case-study template** for this industry (scope, client, capacity, timeline, imagery, outcomes) — and how deep should detail pages go for an MSME of this size?
 3. How do peers present **credentials/statutory proof** (certificate scans, registration numbers, ISO/MSME badges) without looking bureaucratic?
@@ -456,6 +471,7 @@ GAPS
 ## 20. RECOMMENDED NEXT PHASE
 
 Proceed to **Phase 3 (strategy/IA/design brief)** on the current platform. Recommended Phase 3 inputs, in order:
+
 1. Resolve the human-verification list (§18) — especially naming, address, solar/clean-rooms, stats, and testimonial policy — since IA and content design depend on them.
 2. Decide the **two-practice IA** direction first (it determines navigation, homepage structure, service/project templates, and SEO surface).
 3. Rebuild the public surface on the kept foundations: section component refactor, CMS-driven hero, project relaunch, practice hubs, real pages for services/industries, offices/presence, team.
@@ -465,4 +481,4 @@ The platform and CMS do not need replacement; the **information architecture, co
 
 ---
 
-*Verification artifacts: live DB inventory scripts read-only against Supabase REST (`site_settings`, `sections`, `nav_items`, `categories`, `content_items`, `pages`, `media`); repo file reads of all `src/`, `supabase/migrations/`, `public/` files. No files or data were modified.*
+_Verification artifacts: live DB inventory scripts read-only against Supabase REST (`site_settings`, `sections`, `nav_items`, `categories`, `content_items`, `pages`, `media`); repo file reads of all `src/`, `supabase/migrations/`, `public/` files. No files or data were modified._

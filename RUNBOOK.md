@@ -22,6 +22,7 @@ via Supabase Dashboard → SQL Editor (the environment has no service-role key
 or CLI token; this is the documented path for every migration in this repo).
 
 The migration:
+
 1. Creates `ref_sequence` + `credential_requests` and the two SECURITY DEFINER RPCs
    (the enquiry RPC was previously designed but never applied — both forms fail with
    the graceful generic message until this migration runs).
@@ -32,6 +33,7 @@ The migration:
    `user_roles`) — content now lives in the repo corpora.
 
 **Verify after applying** (anon-key REST):
+
 - `POST /rest/v1/rpc/submit_form_submission` and `.../submit_credential_request`
   appear in the OpenAPI spec (`GET /rest/v1/`).
 - `GET /rest/v1/form_submissions` and `GET /rest/v1/credential_requests` return
@@ -46,12 +48,12 @@ Until the migration is applied, both forms render their failure states on submit
 
 Host-runtime (Lovable Cloud / deployment platform) — never in repo, logs, or client:
 
-| Variable | Required | Purpose |
-|---|---|---|
-| `SUPABASE_URL` | yes | submissions backend |
-| `SUPABASE_PUBLISHABLE_KEY` | yes | anon key — execute-only on the two RPCs |
-| `RATE_LIMIT_SALT` | recommended | random string for ip_hash (`openssl rand -hex 32`); without it a dev default is used |
-| `SITE_URL` | recommended | production origin for the sitemap URL set |
+| Variable                   | Required    | Purpose                                                                              |
+| -------------------------- | ----------- | ------------------------------------------------------------------------------------ |
+| `SUPABASE_URL`             | yes         | submissions backend                                                                  |
+| `SUPABASE_PUBLISHABLE_KEY` | yes         | anon key — execute-only on the two RPCs                                              |
+| `RATE_LIMIT_SALT`          | recommended | random string for ip_hash (`openssl rand -hex 32`); without it a dev default is used |
+| `SITE_URL`                 | recommended | production origin for the sitemap URL set                                            |
 
 No longer required (CMS/admin retired): `VITE_SUPABASE_*`, `SUPABASE_SERVICE_ROLE_KEY`,
 `RESEND_API_KEY`, `ENQUIRY_NOTIFY_EMAIL`, admin/auth configuration. `.env` in-repo
@@ -68,6 +70,7 @@ Rate-limited submissions are rejected with error code `P0002` before insert.
 ## 4. Content changes (no admin panel)
 
 All public content is code, in the verified corpora:
+
 - Projects: `src/lib/project-corpus.ts` (49 published records)
 - Services/practices/equipment: `src/lib/services-corpus.ts` (11 + 2)
 - Sectors: `src/lib/sector-corpus.ts` (9)

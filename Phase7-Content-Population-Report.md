@@ -24,40 +24,40 @@ CLI, and the Supabase Dashboard in the user's browser has no signed-in session
 (checked; per the brief, credentials were not requested). The local PostgreSQL
 on port 5432 is an unrelated system install requiring unknown credentials.
 
-Per the brief's own rule — *"production application must remain a deliberate
-deployment step"* and *"do not ask for credentials"* — Phase 7 delivered the
+Per the brief's own rule — _"production application must remain a deliberate
+deployment step"_ and _"do not ask for credentials"_ — Phase 7 delivered the
 complete, audited, self-verifying migration pack instead of applying it
 blindly. **Applying it is a 10-minute manual step, documented in RUNBOOK §5a.**
 
 New files (apply after the Phase 6 pack, in filename order):
 
-| File | Contents |
-|---|---|
-| `supabase/migrations/20260903130000_phase7a_content_population.sql` | Corpus verification pass, client reconciliation, conflict notes (C13–C17), practice metrics/narratives, stats/hero/services/sectors/team/clients/equipment publication, `review_queue` view, `client_review_items` table (20 grouped decisions) |
-| `supabase/migrations/20260903130100_phase7b_verification_assertions.sql` | 20+ assertions, raises on any mismatch, ends `PHASE 7B: ALL ASSERTIONS PASSED` |
-| `scripts/p7/verify-matrix.mjs` | Anon-REST visibility-matrix probe (the exact surface the public site uses) |
-| `scripts/p7/expected-counts.md` | Row-by-row audit arithmetic behind every expected count |
-| `Phase7-Client-Review-Queue.md` | A/B/C/D-grouped client verification checklist |
+| File                                                                     | Contents                                                                                                                                                                                                                                        |
+| ------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `supabase/migrations/20260903130000_phase7a_content_population.sql`      | Corpus verification pass, client reconciliation, conflict notes (C13–C17), practice metrics/narratives, stats/hero/services/sectors/team/clients/equipment publication, `review_queue` view, `client_review_items` table (20 grouped decisions) |
+| `supabase/migrations/20260903130100_phase7b_verification_assertions.sql` | 20+ assertions, raises on any mismatch, ends `PHASE 7B: ALL ASSERTIONS PASSED`                                                                                                                                                                  |
+| `scripts/p7/verify-matrix.mjs`                                           | Anon-REST visibility-matrix probe (the exact surface the public site uses)                                                                                                                                                                      |
+| `scripts/p7/expected-counts.md`                                          | Row-by-row audit arithmetic behind every expected count                                                                                                                                                                                         |
+| `Phase7-Client-Review-Queue.md`                                          | A/B/C/D-grouped client verification checklist                                                                                                                                                                                                   |
 
 ## 2. Records by entity (post-7A, expected)
 
-| Entity | Total | Verified | Needs client review | Unverified | Published (verified+active) |
-|---|---|---|---|---|---|
-| Practices | 2 | 2 | 0 | 0 | 2 |
-| Services | 11 | 11 | 0 | 0 | 11 |
-| Sectors | 9 | 9 | 0 | 0 | 5 (hub+service-led; 4 list-only stay unpublished by design) |
-| Projects | 86 | 49 | 37 | 0 | 49 |
-| Clients | ~71 | ~40 | ~31 | 0 | ~40 (evidence-backed only) |
-| Team members | 22 | 14 | 8 | 0 | 14 (name+role only) |
-| Credentials | 12 | 10 | 2 (ISO, Make in India) | 0 | 10 |
-| Offices | 5 | 0 | 5 | 0 | 0 (gates #2/#16) |
-| Equipment | 25 | 9 | 16 | 0 | 9 (Practice 02) |
-| Stats (content_items) | 6 | 4 | 2 (24/7, legacy) | 0 | 4 |
-| Testimonials | 3 | 0 | 3 (archived) | 0 | 0 |
-| Policy pages | 4 | 0 | 4 | 0 | 0 |
+| Entity                | Total | Verified | Needs client review    | Unverified | Published (verified+active)                                 |
+| --------------------- | ----- | -------- | ---------------------- | ---------- | ----------------------------------------------------------- |
+| Practices             | 2     | 2        | 0                      | 0          | 2                                                           |
+| Services              | 11    | 11       | 0                      | 0          | 11                                                          |
+| Sectors               | 9     | 9        | 0                      | 0          | 5 (hub+service-led; 4 list-only stay unpublished by design) |
+| Projects              | 86    | 49       | 37                     | 0          | 49                                                          |
+| Clients               | ~71   | ~40      | ~31                    | 0          | ~40 (evidence-backed only)                                  |
+| Team members          | 22    | 14       | 8                      | 0          | 14 (name+role only)                                         |
+| Credentials           | 12    | 10       | 2 (ISO, Make in India) | 0          | 10                                                          |
+| Offices               | 5     | 0        | 5                      | 0          | 0 (gates #2/#16)                                            |
+| Equipment             | 25    | 9        | 16                     | 0          | 9 (Practice 02)                                             |
+| Stats (content_items) | 6     | 4        | 2 (24/7, legacy)       | 0          | 4                                                           |
+| Testimonials          | 3     | 0        | 3 (archived)           | 0          | 0                                                           |
+| Policy pages          | 4     | 0        | 4                      | 0          | 0                                                           |
 
-*Not a claim of applied state — these are the audited expected values the 7B
-assertions enforce. The assertions fail loudly if reality differs.*
+_Not a claim of applied state — these are the audited expected values the 7B
+assertions enforce. The assertions fail loudly if reality differs._
 
 ## 3. Project corpus reconciliation (86 documented records)
 
@@ -88,21 +88,21 @@ Vardaan (no project record), One India (its only records are C14-flagged).
 
 ## 4. Code fixes made in Phase 7 (implementation bugs/unverified content)
 
-| # | File | Fix |
-|---|---|---|
-| 1 | `src/routes/__root.tsx` | Root/OG/Twitter meta said **"10+ years"** (C9-unsupported) and led with the brand-naming-gated "Capex Engineering" — replaced with document-backed "since 2012" + full legal name |
-| 2 | `src/routes/index.tsx` | Hero was fully hardcoded, bypassing the CMS/verification model (P4 required CMS-driven bands; old-DB "We dream…" copy proved the bypass) — now renders `sections.hero` (rewritten by 6I-2, published by 7A) with safe fallbacks |
-| 3 | `src/routes/index.tsx` | Stats band hardcoded 4 values, bypassing the stats collection — now renders `content_items.stats` (verified rows only) |
-| 4 | `src/routes/index.tsx` | Hardcoded phone/email in the contact band and error component — now from verified `site_settings` via chrome query |
-| 5 | `src/lib/site-data.ts` + `src/routes/sectors.$slug.tsx` | **Runtime crash**: sector hub filtered services on `s.practices` but the query never fetched the `practice_id` relation → TypeError on every /sectors/* page. Fixed in the data layer |
-| 6 | `src/routes/practices.$slug.tsx` (verified no change needed) | Practice metrics/narrative now populated via 7A instead of empty panels |
+| #   | File                                                         | Fix                                                                                                                                                                                                                             |
+| --- | ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | `src/routes/__root.tsx`                                      | Root/OG/Twitter meta said **"10+ years"** (C9-unsupported) and led with the brand-naming-gated "Capex Engineering" — replaced with document-backed "since 2012" + full legal name                                               |
+| 2   | `src/routes/index.tsx`                                       | Hero was fully hardcoded, bypassing the CMS/verification model (P4 required CMS-driven bands; old-DB "We dream…" copy proved the bypass) — now renders `sections.hero` (rewritten by 6I-2, published by 7A) with safe fallbacks |
+| 3   | `src/routes/index.tsx`                                       | Stats band hardcoded 4 values, bypassing the stats collection — now renders `content_items.stats` (verified rows only)                                                                                                          |
+| 4   | `src/routes/index.tsx`                                       | Hardcoded phone/email in the contact band and error component — now from verified `site_settings` via chrome query                                                                                                              |
+| 5   | `src/lib/site-data.ts` + `src/routes/sectors.$slug.tsx`      | **Runtime crash**: sector hub filtered services on `s.practices` but the query never fetched the `practice_id` relation → TypeError on every /sectors/* page. Fixed in the data layer                                           |
+| 6   | `src/routes/practices.$slug.tsx` (verified no change needed) | Practice metrics/narrative now populated via 7A instead of empty panels                                                                                                                                                         |
 
 Verification: `tsc --noEmit` clean, eslint clean on all edited files, `npm run
 build` succeeds (3-stage vite/nitro build), all public routes return 200 under
 `vite dev` (`/`, `/services`, `/services/*`, `/projects`, `/projects/*`,
 `/sectors`, `/sectors/*`, `/about`, `/team`, `/clients`, `/credentials`,
 `/contact`, `/practices/*`, sitemap; `/careers` correctly 307-redirects to
-`/about#careers`). Rendering the homepage against the *un-migrated* DB showed
+`/about#careers`). Rendering the homepage against the _un-migrated_ DB showed
 the old "We dream…"/"10+ Years" rows — proof the CMS-driven hero works: it
 renders exactly what the (verified-only) database supplies. After 7A applies,
 the rewritten hero/stats rows replace them.

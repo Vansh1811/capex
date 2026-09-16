@@ -542,6 +542,90 @@ export const getClientsPage = createServerFn({ method: "GET" }).handler(async ()
   composeClientRegistry(),
 );
 
+// ---------- clients page — signature measures ----------
+
+export type SignatureMeasure = {
+  /** The published record this figure belongs to — the measure's only source. */
+  slug: string;
+  /** Sheet number, e.g. P1-103 — the figure of record's own reference. */
+  ref: string;
+  title: string;
+  city: string;
+  state: string;
+  status: "completed" | "ongoing";
+  practice_label: string;
+  /** The record's own metric, verbatim (`220` + `KV`). Never recomputed. */
+  value: string;
+  unit: string;
+  metricLabel: string;
+  /** Two-line display caption for the measure (presentational, not a claim). */
+  caption: string;
+  context: string;
+};
+
+/**
+ * The four signature measures of the Clients page — the register the
+ * exhibition opens on. The selection is presentational (one figure of record
+ * per programme theme); every value, unit, city and sheet number is READ from
+ * the published record it names. A measure whose record is not in the
+ * published corpus — or whose status is unconfirmed — simply does not render,
+ * so this strip can never publish a figure the archive does not carry.
+ */
+const SIGNATURE_MEASURES: {
+  slug: string;
+  /** Index into the record's metrics — the figure this measure carries. */
+  metric: number;
+  /** Display labels for the measure (presentational, not a claim). */
+  caption: string;
+  context: string;
+}[] = [
+  {
+    slug: "lucknow-metro-electrical",
+    metric: 1,
+    caption: "Lucknow Metro",
+    context: "cable works",
+  },
+  {
+    slug: "aurangabad-cmdp-pipe-laying",
+    metric: 0,
+    caption: "BGRL / Aurangabad",
+    context: "gas works",
+  },
+  { slug: "sangli-lmc-work", metric: 0, caption: "Sangli gas", context: "connections" },
+  {
+    slug: "world-trade-tower-hvac-fire",
+    metric: 0,
+    caption: "WTT Noida",
+    context: "HVAC installation",
+  },
+];
+
+export const getSignatureMeasures = createServerFn({ method: "GET" }).handler(async () =>
+  SIGNATURE_MEASURES.flatMap((m) => {
+    const record = PROJECT_CORPUS.find((p) => p.slug === m.slug);
+    const metric = record?.metrics[m.metric];
+    if (!record || !metric) return [];
+    // Publication rule: only completed/ongoing records ever surface.
+    if (record.status === "unconfirmed") return [];
+    return [
+      {
+        slug: record.slug,
+        ref: record.ref,
+        title: record.title,
+        city: record.city,
+        state: record.state,
+        status: record.status,
+        practice_label: record.practice_label,
+        value: metric.value,
+        unit: metric.unit,
+        metricLabel: metric.label,
+        caption: m.caption,
+        context: m.context,
+      } satisfies SignatureMeasure,
+    ];
+  }),
+);
+
 // ---------- credentials page (PROOF OF PRACTICE) ----------
 
 export type RegisterCredential = {

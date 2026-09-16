@@ -2,7 +2,7 @@
 
 **Capex Construction & Engineering Pvt. Ltd. · Prepared 2026-09-03**
 
-**Status:** DESIGN SPECIFICATION — awaiting client review. This document defines *what the website should look like, feel like, and behave like*. No code, database, CMS content, routes, or components have been created or modified. This is the handoff artifact for a future implementation phase.
+**Status:** DESIGN SPECIFICATION — awaiting client review. This document defines _what the website should look like, feel like, and behave like_. No code, database, CMS content, routes, or components have been created or modified. This is the handoff artifact for a future implementation phase.
 
 **Sources of truth:** Phase 1 (Company Discovery — company facts, conflict register C1–C25), Phase 2 (Website & Codebase Audit — technical debt TD1–TD20, security S1–S7), Phase 3 (Website Strategy, IA & Design Blueprint — all strategic decisions), plus read-only inspection of the existing prototype (`styles.css` tokens, `Nav.tsx`, `index.tsx`, routes, migrations) to ground constraints.
 
@@ -11,10 +11,11 @@
 > **ENGINEERING DOCUMENTATION × PREMIUM ARCHITECTURE × REAL PROJECT EVIDENCE**
 
 **Conventions:**
+
 - **[P3]** — decision carried forward unchanged from Phase 3.
 - **[NEW]** — visual/UX decision introduced in this phase (consistent with Phase 3 strategy, but new specificity).
 - **[VERIFY: Cn / gate]** — verification constraint preserved; the design must not resolve it silently. Full register in §10.1 of Phase 3 and §23 of this document.
-- **Draft copy** shown in code font is *structural placeholder for layout only* — wording requires client approval; it invents no facts.
+- **Draft copy** shown in code font is _structural placeholder for layout only_ — wording requires client approval; it invents no facts.
 - All quantities referenced (4,000 TR, 150 km, 5,000 connections, 32 t HDD, etc.) are documented in Phase 1 §4. Nothing numeric in this document is invented.
 
 ---
@@ -24,72 +25,84 @@
 Twelve principles govern every screen. Each states: meaning · why it fits Capex · how it appears · what it explicitly avoids.
 
 ### 1.1 Evidence before adjectives
+
 **Meaning:** Every claim is visually subordinate to its proof — the number, the name, the document comes first; the adjective comes second or never.
 **Why Capex:** Capex's documents are full of hard proof (4,000 TR, 150 km, CIN/GST registries, L&T/TATA Projects) while its current site leads with unverifiable marketing ("150+ Projects Commissioned" — flagged, Phase 2 §12). Evidence is Capex's actual differentiator [P3 §12.1].
 **In the interface:** metrics render larger than their labels; project tiles lead with quantity; credentials render as a registry table with real numbers; client names appear grouped by real relationship.
 **Avoid:** giant unsupported stat callouts ("150+ Projects"), superlative headlines with nothing behind them ("Leading", "Premier" as standalone claims).
 
 ### 1.2 The document is the aesthetic
-**Meaning:** The site borrows the visual grammar of engineering documentation — title blocks, numbered sections, hairline rules, mono annotations, tabular data — as its decorative system, so decoration *is* information.
+
+**Meaning:** The site borrows the visual grammar of engineering documentation — title blocks, numbered sections, hairline rules, mono annotations, tabular data — as its decorative system, so decoration _is_ information.
 **Why Capex:** The audience (EPC procurement, utility engineers, PMCs) reads drawings and registers daily; this grammar signals membership in their world [P3 §7.2].
 **In the interface:** section headers as drawing-sheet title blocks; mono record references; hairline tables; numbered bands (§3).
 **Avoid:** a literal "blueprint theme" — no grid-paper backgrounds everywhere, no cyan dashed lines, no fake CAD chrome, no compass-rose clip art (§3.4 boundary rules).
 
 ### 1.3 Restraint as confidence
+
 **Meaning:** Few colors, few effects, one accent used sparingly; the site says less per screen than competitors.
 **Why Capex:** Premium = self-assurance; Capex's evidence carries the persuasion, so the design doesn't need to shout [P3 §1.6].
 **In the interface:** amber appears only on section numbers, key metrics, and one signature CTA per view; one primary action per screen; shadows essentially absent (§2.8).
 **Avoid:** multi-accent palettes, gradient banners, glow effects, "attention-grabbing" color blocks.
 
 ### 1.4 Typography carries the brand
+
 **Meaning:** Scale, weight, and spacing of type — not imagery or effects — create hierarchy and mood.
 **Why Capex:** Three display sizes exist (Space Grotesk) with an industrial-technical character already in the prototype; leaning on type avoids dependence on photography Capex doesn't yet have [P3 §7.3].
 **In the interface:** large display statements with tight tracking; mono for every number and label of record; generous line-height discipline (§2.1).
 **Avoid:** decorative fonts, center-everything layouts, text on busy backgrounds, more than 3 font families.
 
 ### 1.5 The quantity is the image
+
 **Meaning:** Where a competitor would place a stock photo, Capex places a number — rendered with the same visual weight as photography.
 **Why Capex:** Capex's documented quantities (4,000 TR; 150 km 11/33 kV; 5,000 connections; 220 kV metro feed) are its most distinctive content; no benchmark makes numbers the hero [P3 §12.1].
 **In the interface:** instrument-panel metric bands (§5.7), metric-led project rows, tabular numerals everywhere (§2.1).
 **Avoid:** meaningless giant statistics, counting animations on unverified numbers, icons replacing data.
 
 ### 1.6 One company, two disciplines
-**Meaning:** Practice 01 and Practice 02 share every template, token, and component; they differ by *content* (subject, quantities, evidence), never by visual system.
+
+**Meaning:** Practice 01 and Practice 02 share every template, token, and component; they differ by _content_ (subject, quantities, evidence), never by visual system.
 **Why Capex:** The practices share one director pool and one brand [P3 §1.3, DOC A p8]; splitting them visually would fabricate two companies.
 **In the interface:** identical page skeletons for both practice pages, mirrored hero compositions as the only asymmetry (§6.2); practice chips as quiet filters, not competing color schemes.
 **Avoid:** per-practice color palettes, two logo treatments, practice-specific button styles.
 
 ### 1.7 Light is the default, navy is the emphasis
+
 **Meaning:** Most of the site sits on off-white "paper"; navy bands are deliberate chapter breaks reserved for evidence, depth, and conversion moments.
 **Why Capex:** Documentation lives on paper; ink (navy) marks what matters [P3 §7.3 band rhythm].
 **In the interface:** ~65% of scroll is light; navy bands: projects feature, technical depth, leadership, contact, footer (§5 rhythm table).
 **Avoid:** full-dark site, dark-mode toggle, navy used for long-form body text areas.
 
 ### 1.8 Photography must be real
+
 **Meaning:** Every image on the site is either genuine Capex/industry-permitted project photography or an honest designed no-photo treatment — never generic stock presented as Capex work.
 **Why Capex:** The brochures contain real, strong photography (HDD rigs, substations, chiller plants — Phase 1 §2.5); misrepresenting imagery would undercut the evidence-first strategy [P3 §7.3].
 **In the interface:** real photography with cool navy-graded treatment; designed absence (title-block-only panels) where no image exists (§16.5).
 **Avoid:** stock construction heroes, AI-generated "engineering" imagery presented as Capex work, images of buildings Capex didn't serve.
 
 ### 1.9 Motion communicates hierarchy
+
 **Meaning:** Animation exists only to direct attention (reveal, feedback, continuity) and never decorates.
 **Why Capex:** B2B evaluators read, they don't play; restraint reads as seniority [P3 §8].
 **In the interface:** 200–250ms hovers, one-time 400ms section reveals, 800ms counters, 250ms filter reflow — all disabled under `prefers-reduced-motion` (§15).
 **Avoid:** parallax, scroll-jacking, autoplay video, cursor effects, entrance choreography on every element.
 
 ### 1.10 The register, not the feed
+
 **Meaning:** Collections of content (projects, clients, credentials, team) are presented as sortable registers and walls — structured, countable, complete — rather than as curated "featured" feeds.
 **Why Capex:** Capex's strength is installed-base volume (54 HVAC + 22 fire + 10 UG records — Phase 1 §4); a register shows the whole corpus honestly, including record-grade entries [P3 §4.6, §12.9].
 **In the interface:** hairline table rows with mono refs; filter rails; counts rendered as "N records" (never "86 projects" — uniqueness unverified [VERIFY]); name wall for team.
 **Avoid:** infinite logo carousels as the only client surface, hand-picked 6-project "portfolio" hiding the corpus, masonry Pinterest grids.
 
 ### 1.11 Nothing unverifiable ships
-**Meaning:** The design has no slot that *requires* fabricated content to look complete — every component has an honest empty/awaiting state.
+
+**Meaning:** The design has no slot that _requires_ fabricated content to look complete — every component has an honest empty/awaiting state.
 **Why Capex:** The current site's credibility leaks (invented testimonials, placeholder policies) came from components that demanded content that didn't exist (Phase 2 §6) [P3 §9.3].
 **In the interface:** no-photo treatment, name-only client fallbacks, name+role-only team cards (until C1–C7 resolved), missing sections collapse silently rather than render "coming soon".
 **Avoid:** placeholder text of any kind on the public surface, "TBD" slots, gray image boxes.
 
 ### 1.12 Mobile is a first-class drawing sheet
+
 **Meaning:** Mobile is not a compressed desktop — it is re-composed: the title blocks, registers, and metric panels are designed at 390px with the same discipline.
 **Why Capex:** Indian B2B evaluation is heavily mobile, phone-first (Phase 2 §19.8); a register that works on mobile is a genuine advantage over competitor sites.
 **In the interface:** phone CTA pinned in header, filters as bottom drawer, registers as stacked record rows, metrics stack 2×2 (§14).
@@ -103,29 +116,29 @@ Twelve principles govern every screen. Each states: meaning · why it fits Capex
 
 **Families [P3 §7.3, retained from prototype]:**
 
-| Role | Family | Weights | Notes |
-|---|---|---|---|
-| Display | **Space Grotesk** | 500, 700 | Headlines, statements, practice names |
-| Body | **Inter** | 400, 500, 600 | Paragraphs, buttons, forms, nav |
-| Technical mono | **IBM Plex Mono** [NEW — final choice in 4A style tile; JetBrains Mono acceptable alternate] | 400, 500 | Every number, label, reference, metadata line; `font-feature-settings: "tnum"` where the face lacks tabular figures |
+| Role           | Family                                                                                       | Weights       | Notes                                                                                                               |
+| -------------- | -------------------------------------------------------------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------- |
+| Display        | **Space Grotesk**                                                                            | 500, 700      | Headlines, statements, practice names                                                                               |
+| Body           | **Inter**                                                                                    | 400, 500, 600 | Paragraphs, buttons, forms, nav                                                                                     |
+| Technical mono | **IBM Plex Mono** [NEW — final choice in 4A style tile; JetBrains Mono acceptable alternate] | 400, 500      | Every number, label, reference, metadata line; `font-feature-settings: "tnum"` where the face lacks tabular figures |
 
 **Type scale (desktop → mobile, px, line-height):**
 
-| Token | Desktop | Mobile | Usage |
-|---|---|---|---|
-| `display-xl` | 76 / 1.05 | 40 / 1.12 | Homepage hero headline |
-| `display-l` | 56 / 1.08 | 34 / 1.14 | Page heroes (practice, projects index, sector hubs) |
-| `display-m` (h2) | 44 / 1.1 | 30 / 1.16 | Section headlines |
-| `statement` | 40 / 1.2 | 28 / 1.28 | Positioning statement, large pull lines |
-| `display-s` (h3) | 28 / 1.25 | 22 / 1.3 | Card titles, sub-sections |
-| `body-l` | 20 / 1.55 | 18 / 1.55 | Hero sublines, leads |
-| `body` | 17 / 1.6 | 16 / 1.6 | Paragraphs |
-| `body-s` | 15 / 1.5 | 15 / 1.5 | Buttons, dense copy, form text |
-| `mono-label` (eyebrow) | 13 / 1.2, ls 0.08em, uppercase | 12 | Eyebrows, chips, tags |
-| `mono-meta` | 13 / 1.4 | 12 | Metadata, captions, table cells |
-| `mono-micro` | 11.5 / 1.3, ls 0.06em, uppercase | 11 | Title blocks, drawing refs |
-| `metric-xl` (mono) | 64 / 1 | 40 | Instrument-panel numbers |
-| `metric-l` (mono) | 40 / 1 | 28 | Card metrics, counters |
+| Token                  | Desktop                          | Mobile    | Usage                                               |
+| ---------------------- | -------------------------------- | --------- | --------------------------------------------------- |
+| `display-xl`           | 76 / 1.05                        | 40 / 1.12 | Homepage hero headline                              |
+| `display-l`            | 56 / 1.08                        | 34 / 1.14 | Page heroes (practice, projects index, sector hubs) |
+| `display-m` (h2)       | 44 / 1.1                         | 30 / 1.16 | Section headlines                                   |
+| `statement`            | 40 / 1.2                         | 28 / 1.28 | Positioning statement, large pull lines             |
+| `display-s` (h3)       | 28 / 1.25                        | 22 / 1.3  | Card titles, sub-sections                           |
+| `body-l`               | 20 / 1.55                        | 18 / 1.55 | Hero sublines, leads                                |
+| `body`                 | 17 / 1.6                         | 16 / 1.6  | Paragraphs                                          |
+| `body-s`               | 15 / 1.5                         | 15 / 1.5  | Buttons, dense copy, form text                      |
+| `mono-label` (eyebrow) | 13 / 1.2, ls 0.08em, uppercase   | 12        | Eyebrows, chips, tags                               |
+| `mono-meta`            | 13 / 1.4                         | 12        | Metadata, captions, table cells                     |
+| `mono-micro`           | 11.5 / 1.3, ls 0.06em, uppercase | 11        | Title blocks, drawing refs                          |
+| `metric-xl` (mono)     | 64 / 1                           | 40        | Instrument-panel numbers                            |
+| `metric-l` (mono)      | 40 / 1                           | 28        | Card metrics, counters                              |
 
 **Heading behavior:** Display type uses tracking −0.02em (existing token behavior) and never wraps more than 2 lines at any breakpoint; if a heading would wrap to 3 lines the content is too long (§19.1). H1 exactly one per page. Headings never sit on photography without a scrim.
 
@@ -141,25 +154,25 @@ Twelve principles govern every screen. Each states: meaning · why it fits Capex
 
 All tokens carried from the prototype's coherent system [P3 §7.1], with one adjustment (amber) and tonal extensions only. **No new hues.** Legacy brochure purple, lime, and teal remain retired [P3 §7.1].
 
-| Token | Value | Usage |
-|---|---|---|
-| `--brand` (navy) | `oklch(0.28 0.09 262)` | Navy bands, footer, header solid state, hero scrim base, practice panels |
-| `--brand-deep` | `oklch(0.22 0.08 262)` **[NEW, tonal]** | Footer depth, overlay scrims, hover state for navy surfaces |
-| `--primary` (engineering blue) | `oklch(0.45 0.16 258)` | Primary buttons, links on light, focus rings, active nav |
-| `--primary-hover` | `oklch(0.40 0.15 258)` **[NEW, tonal]** | Primary button hover |
-| `--accent` (amber) | current `oklch(0.68 0.17 52)` → **adjust toward DOC C gold family (#E0A000–#E8A93D); working value `oklch(0.73 0.14 85)`; FINAL VALUE LOCKED IN 4A STYLE TILE after contrast passes** [P3 directed the nudge] | Section numbers, key metrics, signature CTA, ongoing status, active filters |
-| `--accent-foreground` | `oklch(0.18 0.04 258)` (navy ink) | Text on amber |
-| `--background` (off-white "paper") | `oklch(0.975 0.008 250)` | Default page background |
-| `--surface` | `oklch(0.945 0.014 250)` | Subtle panels, secondary cards |
-| `--surface-elevated` | white | Primary cards, forms on light, mega-menu panel |
-| `--border` (hairline) | `oklch(0.875 0.018 250)`; on navy `oklch(1 0 0 / 12%)` | All hairlines, card borders, dividers |
-| `--foreground` | `oklch(0.19 0.045 258)` | Body text on light |
-| `--muted-foreground` | `oklch(0.47 0.035 258)`; on navy `oklch(0.78 0.03 258)` **[NEW, tonal]** | Secondary text, captions |
-| `--status-verified` | `oklch(0.62 0.12 155)` **[NEW]** | "Completed" status chips, verified-record marks (used only in status contexts, never decoratively) |
-| `--status-ongoing` | `--accent` | "Ongoing" status chips |
-| `--destructive` | `oklch(0.56 0.2 27)` (existing) | Form errors only |
+| Token                              | Value                                                                                                                                                                                                         | Usage                                                                                              |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `--brand` (navy)                   | `oklch(0.28 0.09 262)`                                                                                                                                                                                        | Navy bands, footer, header solid state, hero scrim base, practice panels                           |
+| `--brand-deep`                     | `oklch(0.22 0.08 262)` **[NEW, tonal]**                                                                                                                                                                       | Footer depth, overlay scrims, hover state for navy surfaces                                        |
+| `--primary` (engineering blue)     | `oklch(0.45 0.16 258)`                                                                                                                                                                                        | Primary buttons, links on light, focus rings, active nav                                           |
+| `--primary-hover`                  | `oklch(0.40 0.15 258)` **[NEW, tonal]**                                                                                                                                                                       | Primary button hover                                                                               |
+| `--accent` (amber)                 | current `oklch(0.68 0.17 52)` → **adjust toward DOC C gold family (#E0A000–#E8A93D); working value `oklch(0.73 0.14 85)`; FINAL VALUE LOCKED IN 4A STYLE TILE after contrast passes** [P3 directed the nudge] | Section numbers, key metrics, signature CTA, ongoing status, active filters                        |
+| `--accent-foreground`              | `oklch(0.18 0.04 258)` (navy ink)                                                                                                                                                                             | Text on amber                                                                                      |
+| `--background` (off-white "paper") | `oklch(0.975 0.008 250)`                                                                                                                                                                                      | Default page background                                                                            |
+| `--surface`                        | `oklch(0.945 0.014 250)`                                                                                                                                                                                      | Subtle panels, secondary cards                                                                     |
+| `--surface-elevated`               | white                                                                                                                                                                                                         | Primary cards, forms on light, mega-menu panel                                                     |
+| `--border` (hairline)              | `oklch(0.875 0.018 250)`; on navy `oklch(1 0 0 / 12%)`                                                                                                                                                        | All hairlines, card borders, dividers                                                              |
+| `--foreground`                     | `oklch(0.19 0.045 258)`                                                                                                                                                                                       | Body text on light                                                                                 |
+| `--muted-foreground`               | `oklch(0.47 0.035 258)`; on navy `oklch(0.78 0.03 258)` **[NEW, tonal]**                                                                                                                                      | Secondary text, captions                                                                           |
+| `--status-verified`                | `oklch(0.62 0.12 155)` **[NEW]**                                                                                                                                                                              | "Completed" status chips, verified-record marks (used only in status contexts, never decoratively) |
+| `--status-ongoing`                 | `--accent`                                                                                                                                                                                                    | "Ongoing" status chips                                                                             |
+| `--destructive`                    | `oklch(0.56 0.2 27)` (existing)                                                                                                                                                                               | Form errors only                                                                                   |
 
-**Usage rules:** amber on navy for text/numbers always; amber on light only for large numerals (≥28px, ≥3:1 contrast verified) or non-text marks; amber never for body text. Blue is the working action color; amber is the *signature* color — one amber CTA per view maximum (§2.9). Status colors appear only as chips/dots, never as backgrounds.
+**Usage rules:** amber on navy for text/numbers always; amber on light only for large numerals (≥28px, ≥3:1 contrast verified) or non-text marks; amber never for body text. Blue is the working action color; amber is the _signature_ color — one amber CTA per view maximum (§2.9). Status colors appear only as chips/dots, never as backgrounds.
 
 **Forbidden:** purple/violet (`#604080` family), lime (`#a0c020`), teal — retired [P3 §7.1]. Any gradient other than the photo scrim (§16.4).
 
@@ -167,27 +180,27 @@ All tokens carried from the prototype's coherent system [P3 §7.1], with one adj
 
 **Scale (px):** 4 · 8 · 12 · 16 · 20 · 24 · 32 · 40 · 48 · 64 · 96 · 128 · 160.
 
-| Context | Desktop | Tablet | Mobile |
-|---|---|---|---|
-| Section (band) vertical padding | 112–128 | 80 | 64 |
-| Thin strips (trust, credentials strip) | 56–64 | 48 | 48 |
-| Between section headline and content | 40 | 32 | 24 |
-| Card internal padding | 32 | 24 | 20 |
-| Card grid gap | 24 | 20 | 16 |
-| Page gutters | 80 | 40 | 24 |
-| Max content width | **1440px** [P3 §7.3] | fluid | fluid |
-| Text measure (long copy) | 640–720px | 640 | full minus gutters |
+| Context                                | Desktop              | Tablet | Mobile             |
+| -------------------------------------- | -------------------- | ------ | ------------------ |
+| Section (band) vertical padding        | 112–128              | 80     | 64                 |
+| Thin strips (trust, credentials strip) | 56–64                | 48     | 48                 |
+| Between section headline and content   | 40                   | 32     | 24                 |
+| Card internal padding                  | 32                   | 24     | 20                 |
+| Card grid gap                          | 24                   | 20     | 16                 |
+| Page gutters                           | 80                   | 40     | 24                 |
+| Max content width                      | **1440px** [P3 §7.3] | fluid  | fluid              |
+| Text measure (long copy)               | 640–720px            | 640    | full minus gutters |
 
 **Density:** body sections run airy (premium); register/table sections run compact (evidence) — density contrast is intentional and follows band type. Cards never nest more than one level.
 
 ### 2.4 Grid
 
-| Breakpoint | Columns | Gutter | Notes |
-|---|---|---|---|
-| ≥1280 (xl) | 12 | 24 | Full asymmetric layouts; rail+content splits |
-| 1024–1279 (lg) | 12 | 24 | Container caps 1440; rails narrow |
-| 768–1023 (md) | 8 | 20 | 2-col editorial splits collapse to stacked asymmetric |
-| <768 (sm) | 4 | 16 | Single column; 4-col grid governs internal card paddings only |
+| Breakpoint     | Columns | Gutter | Notes                                                         |
+| -------------- | ------- | ------ | ------------------------------------------------------------- |
+| ≥1280 (xl)     | 12      | 24     | Full asymmetric layouts; rail+content splits                  |
+| 1024–1279 (lg) | 12      | 24     | Container caps 1440; rails narrow                             |
+| 768–1023 (md)  | 8       | 20     | 2-col editorial splits collapse to stacked asymmetric         |
+| <768 (sm)      | 4       | 16     | Single column; 4-col grid governs internal card paddings only |
 
 **Asymmetric ratios [P3 §7.3]:** editorial splits 7/5 and 8/4 (never 6/6 for narrative sections); rail+content 3/9 on `/projects` (280px rail); practice diptych is the only 50/50 split on the site.
 **Image/text ratios:** feature images 16:10 with text panel 4 cols; statement sections are text-only (no forced imagery); project feature tiles 7/5 col at 16:10.
@@ -196,15 +209,15 @@ All tokens carried from the prototype's coherent system [P3 §7.1], with one adj
 
 The hairline (1px `--border`) is the site's primary structural device, replacing shadows and fills.
 
-| Element | Border treatment |
-|---|---|
-| Section rules | 1px full-width hairline between bands; navy bands use white 12% |
-| Card borders | 1px hairline, all sides; hover → primary blue 1px (light) / white 35% (navy) |
-| Dividers inside sections | 1px hairline, partial width (content measure), never full-bleed |
-| Title blocks | 1px hairline box, internal cells divided by 1px verticals (§3.1) |
-| Register rows | bottom hairline only; header row hairline top+bottom |
-| Chips/tags | 1px hairline, no fill; active = amber border + amber text |
-| Emphasis rules | 2px navy (light bands) / 2px amber (navy bands), max one per section — used under section headlines' first 48px |
+| Element                  | Border treatment                                                                                                |
+| ------------------------ | --------------------------------------------------------------------------------------------------------------- |
+| Section rules            | 1px full-width hairline between bands; navy bands use white 12%                                                 |
+| Card borders             | 1px hairline, all sides; hover → primary blue 1px (light) / white 35% (navy)                                    |
+| Dividers inside sections | 1px hairline, partial width (content measure), never full-bleed                                                 |
+| Title blocks             | 1px hairline box, internal cells divided by 1px verticals (§3.1)                                                |
+| Register rows            | bottom hairline only; header row hairline top+bottom                                                            |
+| Chips/tags               | 1px hairline, no fill; active = amber border + amber text                                                       |
+| Emphasis rules           | 2px navy (light bands) / 2px amber (navy bands), max one per section — used under section headlines' first 48px |
 
 No double borders, no border+shadow stacks, no >2px decorative borders.
 
@@ -212,30 +225,30 @@ No double borders, no border+shadow stacks, no >2px decorative borders.
 
 - **8px:** cards, image tiles, form inputs, gallery frames (existing `--radius` token) [P3 §7.3].
 - **4px:** buttons, chips, small controls.
-- **0px (square — deliberate):** title blocks, register tables, metric strips, evidence panels, credential rows, footer. *The square corner is part of the documentation language: data surfaces are square, interactive surfaces are softly rounded.* **[NEW rule]**
+- **0px (square — deliberate):** title blocks, register tables, metric strips, evidence panels, credential rows, footer. _The square corner is part of the documentation language: data surfaces are square, interactive surfaces are softly rounded._ **[NEW rule]**
 - Never pill-shaped anything: the prototype's rounded-full buttons and phone pill are replaced by 4px rectangles/chips. **[NEW — supersedes prototype styling]**
 
 ### 2.7 Shadows (restrained)
 
 Cards and bands: **no shadows** — hairlines carry structure [P3 §7.3]. Shadows exist only for overlays that must separate from the page:
 
-| Token | Value | Used by |
-|---|---|---|
+| Token              | Value                                          | Used by                                                       |
+| ------------------ | ---------------------------------------------- | ------------------------------------------------------------- |
 | `--shadow-overlay` | `0 24px 64px -24px oklch(0.22 0.08 262 / 40%)` | Mega-menu panel, mobile menu, filter drawer, lightbox, toasts |
-| `--shadow-sticky` | `0 1px 0 var(--border)` | Sticky header hairline (not a shadow) |
+| `--shadow-sticky`  | `0 1px 0 var(--border)`                        | Sticky header hairline (not a shadow)                         |
 
 No glow tokens on the new surface (the prototype's `shadow-glow` on buttons is retired with the button restyle).
 
 ### 2.8 Buttons
 
-| Variant | Spec | Hover | Active | Disabled |
-|---|---|---|---|---|
-| **Primary (action blue)** | `--primary` bg, white text, 4px radius, 15px/600, height 48 desktop / 48 mobile, padding 0 24px | bg → `--primary-hover`; arrow icon nudges 4px right (200ms) | scale 0.98 | 40% opacity, cursor not-allowed |
-| **Signature (amber)** — *one per view, "Start a Project" only* [P3 §7.3] | amber bg, `--accent-foreground` navy text, otherwise primary spec | darken 8% | scale 0.98 | never disabled (route always valid) |
-| **Secondary** | transparent, 1px border (`--border`), foreground text | border → primary, text → primary | bg `--surface` | 40% opacity |
-| **On navy** | Secondary inverts: white 35% border, white text; Primary unchanged | border → white 60% | — | — |
-| **Text CTA** | 15px/600 foreground, ArrowRight 16px trailing; no underline at rest | underline reveals (150ms), arrow nudge | color primary | — |
-| **Icon button** (close, lightbox nav, drawer) | 44×44 touch target, 1px hairline or bare | bg `--surface` (light) / white 10% (navy) | scale 0.96 | — |
+| Variant                                                                  | Spec                                                                                            | Hover                                                       | Active         | Disabled                            |
+| ------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------- | -------------- | ----------------------------------- |
+| **Primary (action blue)**                                                | `--primary` bg, white text, 4px radius, 15px/600, height 48 desktop / 48 mobile, padding 0 24px | bg → `--primary-hover`; arrow icon nudges 4px right (200ms) | scale 0.98     | 40% opacity, cursor not-allowed     |
+| **Signature (amber)** — _one per view, "Start a Project" only_ [P3 §7.3] | amber bg, `--accent-foreground` navy text, otherwise primary spec                               | darken 8%                                                   | scale 0.98     | never disabled (route always valid) |
+| **Secondary**                                                            | transparent, 1px border (`--border`), foreground text                                           | border → primary, text → primary                            | bg `--surface` | 40% opacity                         |
+| **On navy**                                                              | Secondary inverts: white 35% border, white text; Primary unchanged                              | border → white 60%                                          | —              | —                                   |
+| **Text CTA**                                                             | 15px/600 foreground, ArrowRight 16px trailing; no underline at rest                             | underline reveals (150ms), arrow nudge                      | color primary  | —                                   |
+| **Icon button** (close, lightbox nav, drawer)                            | 44×44 touch target, 1px hairline or bare                                                        | bg `--surface` (light) / white 10% (navy)                   | scale 0.96     | —                                   |
 
 **Mobile:** all CTAs full-width in stacked contexts; primary tap targets ≥48px; the header "Start a Project" collapses to a 44px-high amber chip that persists (never hidden behind the hamburger).
 
@@ -271,14 +284,14 @@ The core signature component — an engineering title block as page/section head
 └─────────┴──────────────────────────────┴────────────────────┘
 ```
 
-- Anatomy: 1px hairline box; 2–4 cells divided by 1px verticals; first cell is the sheet/sheet-zone reference; cells hold mono-micro uppercase pairs (label above value is *not* used — single-line `LABEL: VALUE`).
+- Anatomy: 1px hairline box; 2–4 cells divided by 1px verticals; first cell is the sheet/sheet-zone reference; cells hold mono-micro uppercase pairs (label above value is _not_ used — single-line `LABEL: VALUE`).
 - Placement: page heroes (below headline, full content width), project Record pages (the primary header), practice pages, credential register header.
 - **Never** on: cards, chips, the footer, form fields, or more than once per page (section-level numbering §3.3 replaces it within the page).
 
 ### 3.2 Drawing/record references
 
 - Section eyebrow format: `[ NN · LABEL ]` in mono-label amber-tinted brackets, e.g., `[ 03 · SELECTED WORK ]` **[NEW — locks Phase 3's "numbered sections" idea]**.
-- Project record refs: `REF P1-014` (practice 1, record 14) — a *UI affordance for navigation and citation*, shown in title blocks and register rows; the number order derives from CMS sort, and the UI must never present it as a source claim. **[NEW]**
+- Project record refs: `REF P1-014` (practice 1, record 14) — a _UI affordance for navigation and citation_, shown in title blocks and register rows; the number order derives from CMS sort, and the UI must never present it as a source claim. **[NEW]**
 - Enquiry refs (§2.9), credential rows (`REG 09-AAFCC1314H1Z0` pattern showing real registry numbers, Phase 1 §8).
 - Document references: where a fact is cited on the public site (credentials page), the mono ref appears as a quiet superscript-like suffix (`ISO 9001:2015 — certificate scan ↗`) — linking to the scan, never to internal phase documents.
 
@@ -313,7 +326,7 @@ Register tables (credentials, equipment/plant, case-study metrics): header row m
 
 ### 3.9 Where the language does NOT appear
 
-Marketing-critical emotional moments stay clean: the hero has no title block (the hero *is* the cover sheet — only the eyebrow and metadata line §5.1); testimonial/quote treatments (future, approved only); the practice diptych's interior; team name wall; client logo wall; form interiors; footer. **Rule of thumb: the drawing-sheet language marks *records and structure*; it never decorates *people, clients, or narrative*.**
+Marketing-critical emotional moments stay clean: the hero has no title block (the hero _is_ the cover sheet — only the eyebrow and metadata line §5.1); testimonial/quote treatments (future, approved only); the practice diptych's interior; team name wall; client logo wall; form interiors; footer. **Rule of thumb: the drawing-sheet language marks _records and structure_; it never decorates _people, clients, or narrative_.**
 
 ---
 
@@ -331,7 +344,7 @@ Marketing-critical emotional moments stay clean: the hero has no title block (th
 - **Height:** 80px default (transparent state) → 64px scrolled (solid state). [NEW — prototype is 64/80 fixed; Phase 4 adds the shrink]
 - **Logo treatment:** existing lockup retained conceptually [P3]: CAPEX wordmark (Space Grotesk 700, 20px) over `CONSTRUCTION & ENGINEERING PVT. LTD.` mono-micro 10px, ls 0.18em, uppercase. Logo image slot from CMS `logo_url` (migrated off Lovable paths, TD8). No rounded container — the wordmark sits bare (removes prototype's rounded-xl white chip). **[VERIFY: naming decision affects wordmark/tagline — gate #1]**
 - **Sticky/scroll behavior:** header is fixed. At scrollY ≤ 20px over a hero image: transparent, white text, no border. Beyond: solid navy `--brand`, hairline bottom (white 12%), text white; 200ms background transition. On light pages without hero imagery (e.g., `/credentials`), header is solid from the top (no transparent state).
-- **Typography:** nav items 14px Inter 600, ls 0.02em; white in both states (header is navy in solid state — so light pages keep navy header; the header is *always* navy-on-solid).
+- **Typography:** nav items 14px Inter 600, ls 0.02em; white in both states (header is navy in solid state — so light pages keep navy header; the header is _always_ navy-on-solid).
 - **Hover:** item text → amber tick underline (150ms, 2px, offset 6px); never background fills.
 - **Active states:** current route's top-level item carries the amber tick underline persistently; on interior anchors, an IntersectionObserver sets active state (fixes Phase 2 §13 gap).
 - **Phone:** hairline chip, Phone icon 14px + number in mono-meta; hidden below 1024px (mobile replaces with icon-chip §4.3). [VERIFY: which numbers — both documented numbers should appear; header shows primary, contact page shows both — gate #3]
@@ -339,7 +352,7 @@ Marketing-critical emotional moments stay clean: the hero has no title block (th
 
 ### 4.2 Capabilities mega-menu
 
-Triggered by hover-intent (80ms open delay, 240ms close grace) *and* click/Enter (keyboard-first). Panel: full-content-width (1440 max) white `--surface-elevated`, hairline border, `--shadow-overlay`, 4px radius, padding 40; opens below header with 200ms fade+8px rise; closes on Esc, outside click, or focus leaving.
+Triggered by hover-intent (80ms open delay, 240ms close grace) _and_ click/Enter (keyboard-first). Panel: full-content-width (1440 max) white `--surface-elevated`, hairline border, `--shadow-overlay`, 4px radius, padding 40; opens below header with 200ms fade+8px rise; closes on Esc, outside click, or focus leaving.
 
 **Structure — two practice columns + one evidence column, never a flat service list [P3 §2.3]:**
 
@@ -399,14 +412,15 @@ All band content renders from CMS sections/collections [P3 §6, TD6 fix]. No har
 **Purpose:** position Capex in 5 seconds — turnkey engineering, two practices, proof, next step [P3 §1.1].
 
 **Composition (desktop ≥1280):**
+
 - Full-bleed image, min-height 88vh (max 960px), width 100vw. Image subject positioned right-of-center (crop guidance §16.2); left 55% carries a left-to-right navy scrim (`--brand` 92% → transparent 65%) plus a bottom-up scrim on the lowest 200px for the metadata line.
 - Text block: left-aligned, grid columns 1–6 (of 12), vertically centered at 52% viewport; max-width 640px.
-- **Eyebrow (mono-label, white 80%, amber tick):** `— CAPEX CONSTRUCTION & ENGINEERING PVT. LTD. · EST. 2012 · NOIDA` *(draft — CMS `sections.hero.eyebrow`)*.
-- **Headline `display-xl` white:** `Turnkey engineering, delivered end to end.` *(draft; CMS `sections.hero.title` — this is the TD6 fix: the hero renders CMS content)*.
-- **Subline `body-l` white 85%, max 520px:** `Underground utilities, electrical & CGD. MEP, HVAC & fire protection. One accountable partner — supply, installation, testing & commissioning.` *(draft; CMS body)*.
+- **Eyebrow (mono-label, white 80%, amber tick):** `— CAPEX CONSTRUCTION & ENGINEERING PVT. LTD. · EST. 2012 · NOIDA` _(draft — CMS `sections.hero.eyebrow`)_.
+- **Headline `display-xl` white:** `Turnkey engineering, delivered end to end.` _(draft; CMS `sections.hero.title` — this is the TD6 fix: the hero renders CMS content)_.
+- **Subline `body-l` white 85%, max 520px:** `Underground utilities, electrical & CGD. MEP, HVAC & fire protection. One accountable partner — supply, installation, testing & commissioning.` _(draft; CMS body)_.
 - **CTAs:** amber `Start a Project` + secondary-on-navy `Explore Projects`. Side by side, 16px gap.
 - **Metadata line** (bottom-left, above the bottom hairline, mono-meta white 70%): `150 KM SMART-CITY CABLE · 4,000 TR HVAC · 165 KM GAS NETWORKS` — three documented quantities, separated by middots. **[Stat policy P3 §6 — documented only]**
-- **Sheet chrome:** bottom edge of the hero carries a full-width 1px white-12% hairline with a 4-cell micro title strip along it: `SHEET 01 · HOME  |  CAPEX  |  PROJECT REACH: INDIA & NEPAL  |  SCROLL ↓` (mono-micro, white 60%). This is the *only* drawing-sheet element in the hero.
+- **Sheet chrome:** bottom edge of the hero carries a full-width 1px white-12% hairline with a 4-cell micro title strip along it: `SHEET 01 · HOME  |  CAPEX  |  PROJECT REACH: INDIA & NEPAL  |  SCROLL ↓` (mono-micro, white 60%). This is the _only_ drawing-sheet element in the hero.
 - **No carousel.** One decisive image [P3]. A restrained >8s cross-fade to a second image is permitted only if CMS provides ≥2 quality images — pausable via a small control; default is static. **[P3 allowed the option; Phase 4 defaults to static]**
 
 **Composition (mobile <768):** image `background-size: cover`, min-height 78vh, heavier bottom scrim (navy 88% bottom → 30% mid); text block bottom-anchored with 24px gutters: eyebrow → headline (`display-xl` mobile 40px) → subline (hidden after 2 lines + "More" expand? **No** — subline truncated to 3 lines max, full text on About) → CTAs stacked full-width → metadata line wraps to 2 lines → sheet strip collapses to `SHEET 01 · CAPEX · ↓`.
@@ -429,15 +443,15 @@ All band content renders from CMS sections/collections [P3 §6, TD6 fix]. No har
 ### 5.3 Band 3 — Positioning statement `[ 01 · COMPANY ]`
 
 **Purpose:** who Capex is, in one editorial moment [P3 band 3].
-**Composition:** white band, 128px padding; content in columns 2–9 (deliberately inset from left — the whitespace *is* the composition); `statement` 40px display: `A turnkey engineering company practicing underground utilities on one side, and building systems on the other — one team, one accountable contract.` *(draft; CMS `sections.about`)*; below, 17px body paragraph (≤70 words) with the SITC phrase; a single text CTA `About Capex →`.
+**Composition:** white band, 128px padding; content in columns 2–9 (deliberately inset from left — the whitespace _is_ the composition); `statement` 40px display: `A turnkey engineering company practicing underground utilities on one side, and building systems on the other — one team, one accountable contract.` _(draft; CMS `sections.about`)_; below, 17px body paragraph (≤70 words) with the SITC phrase; a single text CTA `About Capex →`.
 **Annotations:** one marginal mono note (desktop only, right margin): `— EST. 26 DEC 2012 · KANPUR, UP` (documented).
 **Motion:** 400ms rise-on-enter once.
 **No imagery** in this band — type only.
 
-### 5.4 Band 4 — The Two Practices `[ 02 · PRACTICES ]` — *signature section*
+### 5.4 Band 4 — The Two Practices `[ 02 · PRACTICES ]` — _signature section_
 
 **Purpose:** make the company's defining structure visible; route each buyer [P3 §1.3, §12.2].
-**Composition (desktop):** off-white band; headline `display-m` `Two disciplines. One engineering team.` *(draft)* centered? **No — left-aligned per system.** Below: the diptych — two equal panels (50/50, 24px gap, 1px hairline, 0px radius, 8px internal padding 40), each min-height 420px:
+**Composition (desktop):** off-white band; headline `display-m` `Two disciplines. One engineering team.` _(draft)_ centered? **No — left-aligned per system.** Below: the diptych — two equal panels (50/50, 24px gap, 1px hairline, 0px radius, 8px internal padding 40), each min-height 420px:
 
 ```
 ┌───────────────────────────────┐  ┌───────────────────────────────┐
@@ -458,47 +472,49 @@ All band content renders from CMS sections/collections [P3 §6, TD6 fix]. No har
 - Corner crosshairs (§3.4) at panel corners — the diptych is the only place crosshairs are allowed.
 - Metrics inside panels: `metric-l` mono navy + `mono-meta` labels — two documented quantities per practice (P01: `150 KM` Patna cable + `33/11 KV` substations; P02: `4,000 TR` WTT flagship + `22` fire installations — Phase 1 §4).
 - Panels carry a 64px-tall image strip? **No** — text-only panels (restraint; the practice pages carry the photography).
-**Hover:** panel border → primary blue; practice-name arrow nudges; mono chip ticks amber. No bg fills, no flip to navy (too loud).
-**Mobile:** stacked panels, full-width, 16px gap, min-height auto, metrics side-by-side 2-col.
-**Motion:** 400ms rise staggered 120ms between panels, once.
-**CMS:** `practices` entity (name, short label, scope 3-liner, 2 metric refs, link).
+  **Hover:** panel border → primary blue; practice-name arrow nudges; mono chip ticks amber. No bg fills, no flip to navy (too loud).
+  **Mobile:** stacked panels, full-width, 16px gap, min-height auto, metrics side-by-side 2-col.
+  **Motion:** 400ms rise staggered 120ms between panels, once.
+  **CMS:** `practices` entity (name, short label, scope 3-liner, 2 metric refs, link).
 
 ### 5.5 Band 5 — Selected projects `[ 03 · SELECTED WORK ]`
 
 **Purpose:** proof before promises; the quantity-led hook [P3 band 4].
-**Composition (desktop, navy band):** headline `display-m` white `Selected work, by the numbers.` *(draft)* + text CTA right-aligned `View Project Register →`.
+**Composition (desktop, navy band):** headline `display-m` white `Selected work, by the numbers.` _(draft)_ + text CTA right-aligned `View Project Register →`.
 Layout — asymmetric editorial, not a card grid:
+
 - Row 1: **Feature tile** (cols 1–7, 16:10 image, case-study-grade projects only: e.g., World Trade Tower `4,000 TR`): image with bottom scrim; overlay text: mono chip `[ PRACTICE 02 · CASE STUDY ]`, project title `display-s` white, metric `metric-l` amber, location mono.
 - Row 2: **Two compact tiles** (cols 8–12 split 8/4? no — two tiles of 6 cols each at 16:10): mid-tier features (Patna Smart City `150 KM`; Aurangabad CGD `165 KM`) same overlay anatomy.
 - Row 3: **Register strip** — 4 record rows (hairline top, white 12%): `REF P1-003   LUCKNOW METRO — 20 KM 220 KV CABLE   ·  L&T   ·  ONGOING↗` style rows: ref mono amber, title 15px white, metric mono, client + status mono-meta white 60%, chevron.
-**Hover:** image scale 1.03 (600ms ease-out); metric amber→white shift; chevron nudge.
-**Mobile:** feature tile full-width 16:10; two tiles stacked; register rows as stacked rows with 16px padding.
-**CMS:** `projects` (`is_featured`, template B for feature tiles; register rows any record).
-**Motion:** tiles reveal 400ms stagger 80ms; register strip no animation.
+  **Hover:** image scale 1.03 (600ms ease-out); metric amber→white shift; chevron nudge.
+  **Mobile:** feature tile full-width 16:10; two tiles stacked; register rows as stacked rows with 16px padding.
+  **CMS:** `projects` (`is_featured`, template B for feature tiles; register rows any record).
+  **Motion:** tiles reveal 400ms stagger 80ms; register strip no animation.
 
 ### 5.6 Band 6 — Delivery model `[ 04 · HOW WE DELIVER ]`
 
 **Purpose:** the turnkey SITC process + after-sales [P3 band 5; `process` collection exists].
-**Composition (white band):** headline `display-m` `From survey to commissioning — five stages, one contract.` *(draft; CMS)*. Horizontal stepper: 5 nodes across content width; node = mono amber `01`–`05` (28px) + title 16px 600 + 14px muted 2-liner (max 22 words); nodes connected by 1px hairline with 45° elbows? — straight horizontal hairline through node ticks. Stage titles from existing CMS `process` items (Discover & Design / Supply & Procure / Install & Integrate / Test & Commission / Operate & Maintain — already written, retained).
+**Composition (white band):** headline `display-m` `From survey to commissioning — five stages, one contract.` _(draft; CMS)_. Horizontal stepper: 5 nodes across content width; node = mono amber `01`–`05` (28px) + title 16px 600 + 14px muted 2-liner (max 22 words); nodes connected by 1px hairline with 45° elbows? — straight horizontal hairline through node ticks. Stage titles from existing CMS `process` items (Discover & Design / Supply & Procure / Install & Integrate / Test & Commission / Operate & Maintain — already written, retained).
 **Tablet:** 5 nodes → 2 rows (3+2) with hairline continuing.
 **Mobile:** vertical list; hairline runs left of numbers.
 **Motion:** none beyond section reveal (usability band).
 
-### 5.7 Band 7 — Technical depth markers `[ 05 · CAPABILITY ]` — *the instrument panel*
+### 5.7 Band 7 — Technical depth markers `[ 05 · CAPABILITY ]` — _the instrument panel_
 
 **Purpose:** owned plant + T&C rigor — engineering-led credibility [P3 band 6; §12.4–6].
-**Composition (navy band):** headline `display-m` white `The machinery and methods behind the numbers.` *(draft)* + one-line sub. Below: 4 markers in a row (cols 3/3/3/3), each:
+**Composition (navy band):** headline `display-m` white `The machinery and methods behind the numbers.` _(draft)_ + one-line sub. Below: 4 markers in a row (cols 3/3/3/3), each:
+
 - `metric-xl` mono **amber** value; 13px mono white-70% label beneath; 24px tick row above the value (§3.4); hairline column dividers white 12%.
 - Values (documented): `32 T` HDD pullback capability · `3` Drillto HDD rigs · `10` T&C services · `22` fire protection systems.
-**[VERIFY: equipment quantities ambiguous in source (Phase 1 §2.4 note) — rig count "3" is stated in prose ("Drillto 32-tonne, 28-tonne and 20-tonne HDD machines"); acceptable; full equipment table lives on Practice 01 page with the ambiguity flag]**
-**Mobile:** 2×2 grid, `metric-l` 40px.
-**Motion:** counters count up once (800ms, stagger 80ms); reduced-motion → static final values.
-**This band is the purest expression of Principle 1.5 — no imagery at all.**
+  **[VERIFY: equipment quantities ambiguous in source (Phase 1 §2.4 note) — rig count "3" is stated in prose ("Drillto 32-tonne, 28-tonne and 20-tonne HDD machines"); acceptable; full equipment table lives on Practice 01 page with the ambiguity flag]**
+  **Mobile:** 2×2 grid, `metric-l` 40px.
+  **Motion:** counters count up once (800ms, stagger 80ms); reduced-motion → static final values.
+  **This band is the purest expression of Principle 1.5 — no imagery at all.**
 
 ### 5.8 Band 8 — Sectors index `[ 06 · SECTORS ]`
 
 **Purpose:** entry by market; honest evidence levels [P3 band 7].
-**Composition (off-white):** headline `display-m` `Where we work.` *(draft)*; then a **typographic register list** (not icon cards): 2 columns × rows, each row = sector name 20px display-s + mono-meta count of linked projects (`07 RECORDS`) + chevron; hairline row dividers. Hubs carry bold names + arrow; list-only sectors carry plain names + count (including `0 RECORDS — SERVICE-LED` where true — honesty over inflation [P3 §5.3]).
+**Composition (off-white):** headline `display-m` `Where we work.` _(draft)_; then a **typographic register list** (not icon cards): 2 columns × rows, each row = sector name 20px display-s + mono-meta count of linked projects (`07 RECORDS`) + chevron; hairline row dividers. Hubs carry bold names + arrow; list-only sectors carry plain names + count (including `0 RECORDS — SERVICE-LED` where true — honesty over inflation [P3 §5.3]).
 **Mobile:** single column list.
 **CMS:** `industries` + relation counts (computed, never hand-entered).
 
@@ -507,14 +523,14 @@ Layout — asymmetric editorial, not a card grid:
 **Purpose:** verified scale [P3 band 8; stat policy].
 **Composition (white):** 4 counters in a row (like 5.7 but light: navy `metric-xl` values, hairline navy ticks, muted labels — **no amber here**; amber stays scarce):
 `54` HVAC installation records · `22` fire protection systems · `5,000` house & industry connections (Sangli LMC) · `25` states & UTs — project reach (+ Nepal rendered as `+ NEPAL` suffix in mono-meta).
-Each counter carries a one-line source caption in mono-meta muted (e.g., `— COMPANY PROFILE, 2022 REVISION`) — *draft wording; source citation style needs client approval as it references internal docs: alternative `— documented company records`*. **[Decision for client: citation style]**
+Each counter carries a one-line source caption in mono-meta muted (e.g., `— COMPANY PROFILE, 2022 REVISION`) — _draft wording; source citation style needs client approval as it references internal docs: alternative `— documented company records`_. **[Decision for client: citation style]**
 **Motion:** counters once, 800ms; reduced-motion static.
 **[VERIFY: no other stats — "150+ projects", "315+ KM", "10+ years" excluded per P3 §6 stat policy until client approves wording — gate #6]**
 
 ### 5.10 Band 10 — Clients `[ 08 · CLIENTS ]`
 
 **Purpose:** breadth with meaning [P3 band 9].
-**Composition (off-white):** headline `display-m` `A client base across four categories.` *(draft)*; 4 category groups from DOC A p6 (IT · Corporates · Oil & Gas · Builders & Developers) — each: mono-label group header + logo wall (logos navy 60%, 32px height, wrap grid) + `Clients & relationships →` text CTA to /clients.
+**Composition (off-white):** headline `display-m` `A client base across four categories.` _(draft)_; 4 category groups from DOC A p6 (IT · Corporates · Oil & Gas · Builders & Developers) — each: mono-label group header + logo wall (logos navy 60%, 32px height, wrap grid) + `Clients & relationships →` text CTA to /clients.
 **No-logos:** name-only text tiles (15px 600) — same grid cell size, hairline border, no fake logo boxes.
 **Mobile:** groups stacked; logos 24px.
 **CMS:** `clients` + `categories` (grouping exists in prototype) + `permission_status` [gate #12].
@@ -522,12 +538,13 @@ Each counter carries a one-line source caption in mono-meta muted (e.g., `— CO
 ### 5.11 Band 11 — Leadership `[ 09 · LEADERSHIP ]`
 
 **Purpose:** a real, named organization [P3 band 10].
-**Composition (navy):** headline `display-m` white `Directed by engineers, not salespeople.` *(draft)*; 4 leadership plates in a row (cols 3 each): each plate = 1px white-12% border, 0 radius, 32px padding: name `display-s` white, role mono-meta amber, one-line bio note (≤12 words) white 70%.
+**Composition (navy):** headline `display-m` white `Directed by engineers, not salespeople.` _(draft)_; 4 leadership plates in a row (cols 3 each): each plate = 1px white-12% border, 0 radius, 32px padding: name `display-s` white, role mono-meta amber, one-line bio note (≤12 words) white 70%.
+
 - People (documented): Sanjay Sharma, Mayank Kaushal, Anurag Parashar (Directors), Malkit Singh (Patron — 42 years HVAC).
 - **No photos initially** (headshots requested — §10.2 P3); photo slot design exists but renders the name-plate treatment until assets arrive. **[VERIFY: bios/titles C1–C7 unresolved — plates ship name + role only, no experience-year claims]**
-**CTA:** `Meet the full team →` (to /team).
-**Mobile:** 2×2 plates.
-**CMS:** `team` (leadership group).
+  **CTA:** `Meet the full team →` (to /team).
+  **Mobile:** 2×2 plates.
+  **CMS:** `team` (leadership group).
 
 ### 5.12 Band 12 — Credentials strip
 
@@ -551,19 +568,19 @@ Each counter carries a one-line source caption in mono-meta muted (e.g., `— CO
 
 ### 6.1 Shared skeleton — "two disciplines, one company" [P3 §2.2, §1.6]
 
-Both practice pages use **identical templates, tokens, components, and section order**. They differ only in *content and imagery*. The single deliberate device linking-and-separating them: **mirrored hero compositions** — Practice 01's hero places the image right / text left; Practice 02's hero mirrors it (image left / text right). Beyond the hero, every section is structurally identical. No per-practice colors, no per-practice buttons, no per-practice fonts — ever.
+Both practice pages use **identical templates, tokens, components, and section order**. They differ only in _content and imagery_. The single deliberate device linking-and-separating them: **mirrored hero compositions** — Practice 01's hero places the image right / text left; Practice 02's hero mirrors it (image left / text right). Beyond the hero, every section is structurally identical. No per-practice colors, no per-practice buttons, no per-practice fonts — ever.
 
 Shared section order (both pages):
 `Hero (mirrored)` → `Metadata strip` → `Scope narrative` → `Services index` → `Technical capability / plant` → `Flagship & recent projects` → `Sectors` → `Delivery & safety` → `Credentials strip` → `CTA band`.
 
 ### 6.2 Practice 01 — `/practices/ug-utilities-electrical`
 
-**Hero:** full-bleed real photography (HDD rig on site / pipeline works — brochure assets), 72vh; image right-weighted, scrim navy 90% → 40% left-to-right; text cols 1–6: eyebrow `[ PRACTICE 01 · UG UTILITIES, ELECTRICAL & CGD ]` (amber-tick mono, white); headline `display-l` white: `Underground infrastructure, laid to last.` *(draft)*; subline 2–3 lines *(draft)*: `HT/LT cable networks, city gas distribution, last-mile connections and 33/11 kV substations — trenched, drilled, jointed and commissioned by our own fleets.`; CTAs: `Explore Practice Projects` (primary) + `Discuss This Practice` (secondary-on-navy).
+**Hero:** full-bleed real photography (HDD rig on site / pipeline works — brochure assets), 72vh; image right-weighted, scrim navy 90% → 40% left-to-right; text cols 1–6: eyebrow `[ PRACTICE 01 · UG UTILITIES, ELECTRICAL & CGD ]` (amber-tick mono, white); headline `display-l` white: `Underground infrastructure, laid to last.` _(draft)_; subline 2–3 lines _(draft)_: `HT/LT cable networks, city gas distribution, last-mile connections and 33/11 kV substations — trenched, drilled, jointed and commissioned by our own fleets.`; CTAs: `Explore Practice Projects` (primary) + `Discuss This Practice` (secondary-on-navy).
 **Metadata strip** (hairline band below hero, mono, off-white band): `DELIVERY MODEL: TURNKEY SITC · KEY CREDENTIALS: L&T, TATA PROJECTS, BGRL, IGL · FOOTPRINT: SMART-CITY & METRO PROGRAMS ACROSS 5 STATES` — all documented (Phase 1 §4.1–4.2).
 **Scope narrative (01 · THE PRACTICE):** white band; asymmetric 7/5 — left: `statement` + 2 paragraphs (scope from DOC A §2: UG utilities, CGD MDPE/steel mains, HT/LT 11/33/220 kV cable, LMC, sub-stations, allied infrastructure); right: a 3-item mono list `WHAT THIS PRACTICE DELIVERS` (hairline rows).
 **Services index (02 · SERVICES):** off-white; 5 service rows (not cards): name `display-s` + 1-line scope 15px + chevron; hairline dividers; links to the five Practice-01 service pages (§5 taxonomy P3). Rows, not icon-cards — register aesthetics.
 **Technical capability (03 · PLANT & FLEET):** navy band — the **owned-equipment table** (the EPC differentiator): technical table (§3.8) listing the documented Drillto HDD fleet (32 t / 28 t / 20 t rigs), welding sets, threading, butt-fusion, winch 250 m, compressors, JCB (Phase 1 §2.4) — columns: ITEM · SPEC · COUNT. **[VERIFY: exact counts ambiguous in source — launch with item+spec only, counts added after client confirmation; the table renders honestly without a count column]**
-   Below: 3 marker metrics (`32 T` max pullback · `220 KV` highest cable class · `25 STATES` reach — documented).
+Below: 3 marker metrics (`32 T` max pullback · `220 KV` highest cable class · `25 STATES` reach — documented).
 **Flagship & recent projects (04 · THE RECORD):** white; editorial list — 3 feature rows (Patna 150 km · Aurangabad 165 km · Sangli 5,000 connections) each: 16:10 thumb (or no-photo panel), title `display-s`, metric `metric-l` mono, client + location mono-meta, `Read record →`; then a 5-row register strip of remaining records with `View full register →`. **[VERIFY: "running" statuses from July-2022 docs — gate #11; status chips read `ONGOING` only after client confirms]**
 **Sectors (05 · SECTORS):** off-white; compact register list of this practice's sectors with project counts (Smart-City & Metro · Oil, Gas & CGD · Corporate & Commercial), linking to hubs.
 **Delivery & safety (06 · DELIVERY & SAFETY):** white; split — left: 5-stage stepper (shared component, §5.6); right: the 5 documented safety procedures as a numbered mono list (DOC A p9 — PPE, eye & hand, sectional hydraulic testing, hot-work control, lifting & rigging).
@@ -572,7 +589,7 @@ Shared section order (both pages):
 ### 6.3 Practice 02 — `/practices/mep-fire-protection`
 
 Identical skeleton, mirrored hero (image left / text right).
-**Hero:** photography: WTT chiller plant / hydrant header (brochure assets); eyebrow `[ PRACTICE 02 · MEP, FIRE FIGHTING & FIRE PROTECTION ]`; headline `display-l` *(draft)*: `Building systems, engineered to perform.`; subline: HVAC, VRV, clean rooms, hydrant/sprinkler, MEP — single-point SITC delivery (DOC A §3).
+**Hero:** photography: WTT chiller plant / hydrant header (brochure assets); eyebrow `[ PRACTICE 02 · MEP, FIRE FIGHTING & FIRE PROTECTION ]`; headline `display-l` _(draft)_: `Building systems, engineered to perform.`; subline: HVAC, VRV, clean rooms, hydrant/sprinkler, MEP — single-point SITC delivery (DOC A §3).
 **Metadata strip:** `DELIVERY MODEL: TURNKEY SITC · FLAGSHIP: WORLD TRADE TOWER, 4,000 TR · INSTALLED BASE: 54 HVAC · 22 FIRE RECORDS` (documented).
 **Scope narrative:** building-services framing (DOC A p14 sector framing; T&C services).
 **Services index:** 6 rows (HVAC · VRV/VRF · Fire Fighting & Hydrant · Clean Rooms · MEP · Testing & Commissioning) → service pages.
@@ -583,7 +600,7 @@ Identical skeleton, mirrored hero (image left / text right).
 
 ### 6.4 "Related but distinct" — the mechanics
 
-Shared: everything structural. Distinct: (a) mirrored hero; (b) subject matter and quantities; (c) hero image grade — P01 images get a slightly warmer dust-tone grade, P02 a cooler plant-tone grade (both within the navy-tint system — a 5% tonal difference, imperceptible as "two brands"); (d) the capability band's star content (owned-fleet table vs T&C+service-model register). The homepage diptych and both nav entries reinforce: *two disciplines inside one company.*
+Shared: everything structural. Distinct: (a) mirrored hero; (b) subject matter and quantities; (c) hero image grade — P01 images get a slightly warmer dust-tone grade, P02 a cooler plant-tone grade (both within the navy-tint system — a 5% tonal difference, imperceptible as "two brands"); (d) the capability band's star content (owned-fleet table vs T&C+service-model register). The homepage diptych and both nav entries reinforce: _two disciplines inside one company._
 
 ---
 
@@ -612,7 +629,7 @@ Reusable for all 11 services [P3 §3.4]. Anti-wall-of-text strategy: **the page 
 
 ### 8.1 Page composition
 
-- **Page hero (light):** off-white; eyebrow `[ PROJECT REGISTER ]`; headline `display-l` `The record, by project.` *(draft)*; subline: `Every documented engagement — filterable by practice, service, sector and state.` *(draft — "documented" language deliberately manages the 86-records-unverified issue: counts display as `RECORDS`)*. Metadata strip: `{N} RECORDS · 2 PRACTICES · {S} STATES · {C} CLIENTS` (live counts, computed).
+- **Page hero (light):** off-white; eyebrow `[ PROJECT REGISTER ]`; headline `display-l` `The record, by project.` _(draft)_; subline: `Every documented engagement — filterable by practice, service, sector and state.` _(draft — "documented" language deliberately manages the 86-records-unverified issue: counts display as `RECORDS`)_. Metadata strip: `{N} RECORDS · 2 PRACTICES · {S} STATES · {C} CLIENTS` (live counts, computed).
 - **Sticky filter bar** (below hero, 56px, white, hairline, sticks under header on scroll): contains — Practice toggle (2 chips), Service dropdown (single-select), Sector dropdown, Location dropdown, Status toggle (All/Completed/Ongoing), search field (mono placeholder `SEARCH PROJECT OR CLIENT`, 1 icon, clears via ×), and `RESET`. Chips: mono-label, hairline, active = amber border + amber text (§2.5).
 - **URL-synced filters [P3]:** every facet writes `?practice=ug&sector=smart-city…`; deep-linkable; browser back navigates filters; facet heading renders above results: `UG UTILITIES PROJECTS IN BIHAR — 3 RECORDS` (`aria-live` announces count changes).
 
@@ -640,7 +657,7 @@ All metadata from the project content model [P3 §4.3]; counts always `RECORDS`;
 
 **Composition:**
 
-1. **Record header (light):** off-white band; breadcrumb (`REGISTER / PRACTICE 01 / PATNA…`); eyebrow `[ PRACTICE 01 · RECORD P1-001 ]`; title `display-l` (project name); **the Title Block** (§3.1, full content width): cells — `SHEET: P1-001` | `CLIENT: L&T` | `LOCATION: PATNA, BIHAR` | `STATUS: COMMISSIONED`. Below: the **scope line** — the exact PDF scope wording in `statement` size, navy, set as the page's second-most-important element (e.g., `150 KM 11&33 KV cable laying` — this *is* the story of a record).
+1. **Record header (light):** off-white band; breadcrumb (`REGISTER / PRACTICE 01 / PATNA…`); eyebrow `[ PRACTICE 01 · RECORD P1-001 ]`; title `display-l` (project name); **the Title Block** (§3.1, full content width): cells — `SHEET: P1-001` | `CLIENT: L&T` | `LOCATION: PATNA, BIHAR` | `STATUS: COMMISSIONED`. Below: the **scope line** — the exact PDF scope wording in `statement` size, navy, set as the page's second-most-important element (e.g., `150 KM 11&33 KV cable laying` — this _is_ the story of a record).
 2. **Metrics strip (mono, hairline-topped):** 2–4 structured metrics with units (`150 KM` · `11/33 KV` · `SMART-CITY PROGRAM`); tabular mono, navy on light.
 3. **Imagery (optional):** single 16:10 image left (7 cols) or the **no-photo treatment** (§16.5): a hairline panel, survey grid 6%, centered mono ref `P1-001 — NO PHOTOGRAPHY ON RECORD`, practice watermark chip. Designed absence — never a gray box.
 4. **Classification (mono register):** 2-col table — PRACTICE / SERVICES / SECTOR / CLIENT / LOCATION / STATUS rows (each linking its facet).
@@ -673,14 +690,14 @@ All metadata from the project content model [P3 §4.3]; counts always `RECORDS`;
 
 ### 11.1 Sectors overview — `/sectors`
 
-Light hero (`display-l` `Where Capex works.` *(draft)*, metadata strip with live counts); then the **evidence-tiered register**: three hub rows (feature treatment: name `display-s` + 40-word relevance + project-count + `3+ RECORDS` mono badge + chevron), then list-only sectors as compact register rows with counts (including honest `SERVICE-LED — RECORDS PENDING` where true [P3 §5.3]). 2-col grid desktop; 1-col mobile.
+Light hero (`display-l` `Where Capex works.` _(draft)_, metadata strip with live counts); then the **evidence-tiered register**: three hub rows (feature treatment: name `display-s` + 40-word relevance + project-count + `3+ RECORDS` mono badge + chevron), then list-only sectors as compact register rows with counts (including honest `SERVICE-LED — RECORDS PENDING` where true [P3 §5.3]). 2-col grid desktop; 1-col mobile.
 
 ### 11.2 Sector hub template — `/sectors/{slug}`
 
 For launch hubs: Smart-City & Metro Infrastructure · Oil, Gas & CGD Utilities · Corporate & Commercial Real Estate.
 
 1. **Hub hero (light + image):** off-white; eyebrow `[ SECTOR · {NAME} ]`; headline `display-l`; 40-word standfirst; metadata strip (`RECORDS · PRACTICES · TYPICAL CLIENTS`); right-side 4:5 image (hub photography or no-photo panel). Smart-City hub: Lucknow Metro/metro imagery; CGD hub: pipeline works; Corporate hub: WTT.
-2. **Capex in this sector (01 · WHY CAPEX):** white; 7/5 split — left: ≤90-word relevance (draft from documented facts — e.g., smart-city: L&T/TATA Projects programs, 11/33/220 kV works); right: **Evidence panel** — hairline box listing the *named, documented* proof for this sector: clients (L&T, TATA Projects, BGRL, IGL…), programs (Patna, Banaras, Lucknow Metro…), quantities. This panel is the anti-thin-content device [P3 R3]: the hub *earns* its page by showing its evidence inline.
+2. **Capex in this sector (01 · WHY CAPEX):** white; 7/5 split — left: ≤90-word relevance (draft from documented facts — e.g., smart-city: L&T/TATA Projects programs, 11/33/220 kV works); right: **Evidence panel** — hairline box listing the _named, documented_ proof for this sector: clients (L&T, TATA Projects, BGRL, IGL…), programs (Patna, Banaras, Lucknow Metro…), quantities. This panel is the anti-thin-content device [P3 R3]: the hub _earns_ its page by showing its evidence inline.
 3. **Practices & services in this sector (02 · CAPABILITIES):** off-white; 2-col: two practice mini-panels (name + relevant services as hairline rows, linked).
 4. **Records (03 · THE RECORD):** navy; project register — 2 feature rows + 6-row strip (auto from `sector_ids` relation), `View filtered register →` deep-links `/projects?sector={slug}`.
 5. **Representative clients (04 · CLIENTS):** off-white; logo/name wall filtered to this sector's clients (relationship-typed).
@@ -694,7 +711,8 @@ Secondary sectors (Healthcare, Industrial) use the same template but ship servic
 
 ### 12.1 About — `/about`
 
-Light editorial page (no image hero): headline `display-l` `A turnkey engineering company, since 2012.` *(draft)* + timeline register:
+Light editorial page (no image hero): headline `display-l` `A turnkey engineering company, since 2012.` _(draft)_ + timeline register:
+
 1. **Story (01 · THE COMPANY):** white; 7/5 — narrative ≤3 paragraphs (incorporation 26 Dec 2012 Kanpur → two practices → today; **only documented dates** [VERIFY: 2012–2018 history gap]); right: marginal mono notes (est. date, CIN).
 2. **The two practices (02 · STRUCTURE):** off-white; reuse the homepage diptych component, linked to practice pages.
 3. **Delivery model (03 · HOW WE WORK):** white; stepper + a `TURNKEY SITC` explainer panel (hairline rows: Survey & design → Supply & procure → Install → Test & commission → Operate & maintain).
@@ -705,26 +723,26 @@ Light editorial page (no image hero): headline `display-l` `A turnkey engineerin
 
 ### 12.2 Team — `/team` (not LinkedIn)
 
-1. **Page hero (light):** headline `display-l` `The people on the record.` *(draft)*; metadata strip: `{N} NAMED PEOPLE · 2 PRACTICES · 100+ YEARS COMBINED SITE EXPERIENCE` **[VERIFY: the "century" claim is marketing arithmetic (Phase 1 §15 LOW) — combined-experience line is EXCLUDED until client approves wording; strip shows people + practices counts only]**.
+1. **Page hero (light):** headline `display-l` `The people on the record.` _(draft)_; metadata strip: `{N} NAMED PEOPLE · 2 PRACTICES · 100+ YEARS COMBINED SITE EXPERIENCE` **[VERIFY: the "century" claim is marketing arithmetic (Phase 1 §15 LOW) — combined-experience line is EXCLUDED until client approves wording; strip shows people + practices counts only]**.
 2. **Leadership band (01 · LEADERSHIP):** navy; 4 plates (Directors + Patron + Financial Advisor = 6 plates in 2 rows on desktop; 2-col mobile) — same plate component as homepage §5.11. Name + role + (≤12-word note where verified). **[VERIFY C1–C7: roles/titles/years — ship name+role only until resolved; the Financial Advisor role publishes only with client approval]**
 3. **Delivery organization (02 · DELIVERY):** off-white; 2-col by practice: Senior delivery members (Sr. PMs, Managers, BDM) as register rows: name 17px + role mono-meta + (1-line note where verified). Filter chips: ALL / PRACTICE 01 / PRACTICE 02 (client-side toggle, no URL sync needed).
-4. **Name wall (03 · SITE & DESIGN TEAM):** white; a **typographic wall** — all site & design engineers (the 11 documented names + any additions) in a flowing grid of name chips (hairline, mono-meta, 16px padding). No cards, no fake bios, no headshot placeholders — the wall reads as an engineering crew sheet. Count annotation: `{N} ENGINEERS & SITE STAFF — COMPANY RECORD, 2022 REVISION` *(draft)*.
+4. **Name wall (03 · SITE & DESIGN TEAM):** white; a **typographic wall** — all site & design engineers (the 11 documented names + any additions) in a flowing grid of name chips (hairline, mono-meta, 16px padding). No cards, no fake bios, no headshot placeholders — the wall reads as an engineering crew sheet. Count annotation: `{N} ENGINEERS & SITE STAFF — COMPANY RECORD, 2022 REVISION` _(draft)_.
 5. **Photography policy:** headshots requested (§16.3); until they exist — no photo slots at all (plates and rows are typographic; adding photos later is a non-breaking enhancement: plate reserves a 1:1 slot in its desktop anatomy only when `photo` is non-null).
 6. **CTA:** `Talk to our team →` → /contact.
 
 ### 12.3 Clients — `/clients`
 
-1. **Hero (light):** headline `A working relationship, on the record.` *(draft)*; metadata strip (`{N} CLIENTS & RELATIONSHIPS · 4 CATEGORIES`).
+1. **Hero (light):** headline `A working relationship, on the record.` _(draft)_; metadata strip (`{N} CLIENTS & RELATIONSHIPS · 4 CATEGORIES`).
 2. **Categories register (01 · CLIENTS):** off-white; the 4 DOC A p6 groups as sections — logo walls (navy 60%, 32–40px) with names where no logo/permission; hairline group dividers.
-3. **Relationships (02 · WORKING WITH):** white; two panels: **PMC & architect associations** (JLL, CBRE, Knight Frank, … — DOC B p2 list [VERIFY: "associated" vs "empanelled" wording — gate #14; Phase 4 renders the *conservative* word `ASSOCIATED` until resolved]) and **EPC & utility counterparties** (from project records: L&T, TATA Projects, JSP Projects, BGRL/Vichitra, Parmesh, Capgemini — labeled `FROM PROJECT RECORDS` mono note). No logos for associations (text register only).
+3. **Relationships (02 · WORKING WITH):** white; two panels: **PMC & architect associations** (JLL, CBRE, Knight Frank, … — DOC B p2 list [VERIFY: "associated" vs "empanelled" wording — gate #14; Phase 4 renders the _conservative_ word `ASSOCIATED` until resolved]) and **EPC & utility counterparties** (from project records: L&T, TATA Projects, JSP Projects, BGRL/Vichitra, Parmesh, Capgemini — labeled `FROM PROJECT RECORDS` mono note). No logos for associations (text register only).
 4. **By practice (03 · FILTER):** practice chips re-filter the walls.
 5. **CTA:** `Start a project →`.
 
-### 12.4 Credentials — `/credentials` — *the evidence room*
+### 12.4 Credentials — `/credentials` — _the evidence room_
 
 **Feel: a professional document register — not badge spam [brief §12].**
 
-1. **Hero (light):** headline `Compliance, on the record.` *(draft)*; standfirst; metadata strip (`{N} REGISTRATIONS & CERTIFICATIONS`).
+1. **Hero (light):** headline `Compliance, on the record.` _(draft)_; standfirst; metadata strip (`{N} REGISTRATIONS & CERTIFICATIONS`).
 2. **Statutory register (01 · STATUTORY):** white; the core — a **technical table** (§3.8): columns REGISTRATION · NUMBER · JURISDICTION/ISSUER · STATUS; rows: Incorporation (CIN, 26 Dec 2012, RoC UP) · PAN · Udyam (Small·Services) · GST ×5 (UP/MH/BR/DL/HR with real GSTINs) · ESI. Each row carries a `VIEW SCAN ↗` mono link where a scan is approved (media library). First column sticky on mobile; horizontal scroll permitted for this table only.
 3. **Quality certifications (02 · QUALITY):** off-white; ISO 9001:2015 panel — 1 hairline card: title, scope, issuer, `certificate scan` link. **[VERIFY gate #13: no issuer/scan in source — until provided, panel renders title + `CERTIFICATE ON REQUEST` mono note; the word "certified" is used only in the exact badge wording `ISO 9001:2015 Certified` which IS documented]**
 4. **Memberships & initiatives (03 · MEMBERSHIPS):** white; MSME (Udyam-backed), Make in India, and the green badges — rendered as a quiet mono list titled `MEMBERSHIPS & INITIATIVES — NOT CERTIFICATIONS` (the honesty device for the unsourced badges, Phase 1 §6).
@@ -732,7 +750,7 @@ Light editorial page (no image hero): headline `display-l` `A turnkey engineerin
 
 ### 12.5 Careers — `/careers` (conditional)
 
-Renders only when active openings exist [P3 §3.11]; otherwise route 404s→redirects `/about#careers` and no nav link renders. Page: light; register of openings (role, location, practice, type — from `careers` collection); each row expands to description + `Apply` (mailto with role in subject — no portal). Evergreen panel: `No current openings listed. We still read every serious introduction — write to us.` *(draft)*.
+Renders only when active openings exist [P3 §3.11]; otherwise route 404s→redirects `/about#careers` and no nav link renders. Page: light; register of openings (role, location, practice, type — from `careers` collection); each row expands to description + `Apply` (mailto with role in subject — no portal). Evergreen panel: `No current openings listed. We still read every serious introduction — write to us.` _(draft)_.
 
 ### 12.6 Contact — `/contact`
 
@@ -746,11 +764,11 @@ Fully specified in §13.
 
 ### 13.1 Page composition (light page — the only light conversion surface)
 
-1. **Hero (light):** headline `Start a project.` `display-l`; standfirst *(draft)*: `Tell us what you are building. A director or senior manager responds to every serious enquiry.`; metadata strip: `RESPONSE: WITHIN 1 WORKING DAY *(draft — needs client confirmation — flagged)* · OFFICES: NOIDA · PATNA · GURUGRAM · SANGLI`.
+1. **Hero (light):** headline `Start a project.` `display-l`; standfirst _(draft)_: `Tell us what you are building. A director or senior manager responds to every serious enquiry.`; metadata strip: `RESPONSE: WITHIN 1 WORKING DAY *(draft — needs client confirmation — flagged)* · OFFICES: NOIDA · PATNA · GURUGRAM · SANGLI`.
 2. **Grid 5/7:**
    - **Left — Direct channels (sticky on desktop):** both phones as 48px hairline rows (Phone icon, number in mono 16px, `CALL` label) [VERIFY gate #3]; email row (mailto); **Offices register**: each office = city + type chip (CORPORATE/BRANCH/MANUFACTURING) + address 14px + map link (Google Maps, opens new tab; no embed-per-office — one optional HQ embed from CMS setting at page bottom) [VERIFY: address variants — gate #2; Rajasthan unit address missing — gate #16]; business hours row [content requested]. HQ office carries the single map embed (existing `google_maps_embed` CMS setting).
    - **Right — Enquiry form (the intake sheet):** title-block-framed: frame header `ENQUIRY INTAKE — CAPEX CONSTRUCTION & ENGINEERING PVT. LTD.` (mono-micro). Fields: Name* · Email* · Phone · Company · **Practice (segmented control: `GENERAL / PRACTICE 01 / PRACTICE 02` — practice-aware routing [P3 §13.12])** · Service (select — **generated from the live `services` collection**, grouped by practice; kills the triple-maintained list, TD7) · Message* (textarea, 6 rows, helper: `Scope, location, timeline — whatever you know today.`). Honeypot hidden field. Submit: amber signature button (the one per view) `Send Enquiry` (§2.8 button spec, §2.9 states).
-3. **Success state:** form area → confirmation panel (title-block frame): `ENQ-{REF}` mono amber *(server-generated [NEW])*, `Received. A senior colleague will respond within one working day.` *(draft — client to confirm the promise)*, both phones repeated, `Send another enquiry` text button. (Fixes the prototype's button-text-only success.)
+3. **Success state:** form area → confirmation panel (title-block frame): `ENQ-{REF}` mono amber _(server-generated [NEW])_, `Received. A senior colleague will respond within one working day.` _(draft — client to confirm the promise)_, both phones repeated, `Send another enquiry` text button. (Fixes the prototype's button-text-only success.)
 4. **Validation:** per §2.9 — on blur + submit; name/email/message required; email format; phone optional-format; error summary at top (focus moves to first error, `role=alert`).
 5. **Mobile:** stacked — headline, phones (48px rows, thumb zone), form full-width, offices below as accordion; sticky? — **no** sticky mobile CTA bar; the header CTA suffices.
 
@@ -760,22 +778,22 @@ Fully specified in §13.
 
 **Breakpoints:** 480 / 768 / 1024 / 1280 / 1440 (max) — matching §2.4 grid table.
 
-| Component | Desktop ≥1280 | Tablet 768–1279 | Mobile <768 |
-|---|---|---|---|
-| Header | 80→64px transparent→solid; mega-menu | Simplified dropdown (mega collapses to 2-col panel ≤1023px; phone chip hidden ≤1023) | 64px solid; phone chip + Start chip + menu; full drawer (§4.3) |
-| Hero (home) | 88vh, text cols 1–6, meta line | 70vh, text cols 1–7 | 78vh bottom-anchored; display-xl 40px; stacked CTAs |
-| Practice diptych | 2×50/50 panels | stacked, 2-col metrics | stacked; panels min-height auto |
-| Project feature | 7/5 split rows | stacked image-over-text | 16:10 card, overlay text |
-| Register rows | 64px full rows | same, ±metric wrap | 2-line 96px rows (§8.2) |
-| Filter rail | 280px sticky left rail | top filter bar + collapsible | `FILTERS` button + bottom drawer (§8.2) |
-| Technical tables | full width | horizontal scroll | horizontal scroll, **sticky first column** |
-| Metric panels | 4-across `metric-xl` | 2×2 | 2×2 `metric-l` 40px |
-| Stepper | horizontal 5 nodes | 2 rows (3+2) | vertical list |
-| Forms | 2-col field grid | 1-col | 1-col; 48px targets |
-| Galleries | 3-col 16:10 | 2-col | 1-col w/ swipe? — 1-col stacked (no carousel) |
-| Footer | 4-col register | 2-col | 1-col accordion? — 1-col stacked |
-| Typography | per §2.1 scale | 1 step down | per §2.1 mobile column |
-| Image crops | 16:10 @ cols | 16:10 | 4:5–16:10 object-position per §16.2 mobile crop map |
+| Component        | Desktop ≥1280                        | Tablet 768–1279                                                                      | Mobile <768                                                    |
+| ---------------- | ------------------------------------ | ------------------------------------------------------------------------------------ | -------------------------------------------------------------- |
+| Header           | 80→64px transparent→solid; mega-menu | Simplified dropdown (mega collapses to 2-col panel ≤1023px; phone chip hidden ≤1023) | 64px solid; phone chip + Start chip + menu; full drawer (§4.3) |
+| Hero (home)      | 88vh, text cols 1–6, meta line       | 70vh, text cols 1–7                                                                  | 78vh bottom-anchored; display-xl 40px; stacked CTAs            |
+| Practice diptych | 2×50/50 panels                       | stacked, 2-col metrics                                                               | stacked; panels min-height auto                                |
+| Project feature  | 7/5 split rows                       | stacked image-over-text                                                              | 16:10 card, overlay text                                       |
+| Register rows    | 64px full rows                       | same, ±metric wrap                                                                   | 2-line 96px rows (§8.2)                                        |
+| Filter rail      | 280px sticky left rail               | top filter bar + collapsible                                                         | `FILTERS` button + bottom drawer (§8.2)                        |
+| Technical tables | full width                           | horizontal scroll                                                                    | horizontal scroll, **sticky first column**                     |
+| Metric panels    | 4-across `metric-xl`                 | 2×2                                                                                  | 2×2 `metric-l` 40px                                            |
+| Stepper          | horizontal 5 nodes                   | 2 rows (3+2)                                                                         | vertical list                                                  |
+| Forms            | 2-col field grid                     | 1-col                                                                                | 1-col; 48px targets                                            |
+| Galleries        | 3-col 16:10                          | 2-col                                                                                | 1-col w/ swipe? — 1-col stacked (no carousel)                  |
+| Footer           | 4-col register                       | 2-col                                                                                | 1-col accordion? — 1-col stacked                               |
+| Typography       | per §2.1 scale                       | 1 step down                                                                          | per §2.1 mobile column                                         |
+| Image crops      | 16:10 @ cols                         | 16:10                                                                                | 4:5–16:10 object-position per §16.2 mobile crop map            |
 
 **Mobile-first rules:** body ≥16px; mono ≥11px; tap targets ≥44px (CTAs 48); hover states never the only affordance (touch surfaces show active states); sticky elements max 1 (header); forms one column; no horizontal scroll except the credentials table (intentional); iOS safe areas respected (drawer, sticky CTA).
 
@@ -787,17 +805,17 @@ Fully specified in §13.
 
 ### 15.1 Token set
 
-| Token | Duration | Easing | Used by |
-|---|---|---|---|
-| `--motion-fast` | 150ms | ease-out | link underlines, color hovers, chip states |
-| `--motion-base` | 250ms | cubic-bezier(0.2, 0.6, 0.2, 1) | hovers (image scale, card border), filter reflow fade, drawer slide, accordion |
-| `--motion-section` | 400ms | ease-out | section reveals (once per view) |
-| `--motion-count` | 600–900ms | ease-out | counters (once, staggered) |
+| Token              | Duration  | Easing                         | Used by                                                                        |
+| ------------------ | --------- | ------------------------------ | ------------------------------------------------------------------------------ |
+| `--motion-fast`    | 150ms     | ease-out                       | link underlines, color hovers, chip states                                     |
+| `--motion-base`    | 250ms     | cubic-bezier(0.2, 0.6, 0.2, 1) | hovers (image scale, card border), filter reflow fade, drawer slide, accordion |
+| `--motion-section` | 400ms     | ease-out                       | section reveals (once per view)                                                |
+| `--motion-count`   | 600–900ms | ease-out                       | counters (once, staggered)                                                     |
 
 ### 15.2 Specification per interaction
 
 - **Page entrance:** none (instant SSR content — no page-load choreography). Only the homepage hero text reveals on load (§5.1).
-- **Section reveal:** one-time 12px rise + fade, `--motion-section`, threshold 20% viewport, each section once per page-view; no staggering *within* sections except diptych (120ms) and metric panels (80ms).
+- **Section reveal:** one-time 12px rise + fade, `--motion-section`, threshold 20% viewport, each section once per page-view; no staggering _within_ sections except diptych (120ms) and metric panels (80ms).
 - **Hover:** image scale 1.02–1.05 (`--motion-base`); borders/underlines `--motion-fast`; chevron/arrows nudge 4px; metric color shifts `--motion-fast`. Never layout-shifting.
 - **Counters:** count-up `--motion-count`, staggered 80ms; once per view; format-preserving (commas); reduced-motion → final value immediately.
 - **Filter transitions:** 250ms fade-out → DOM update → fade-in of the result list; count line updates `aria-live`; no FLIP gymnastics — the register aesthetic survives a simple crossfade.
@@ -831,17 +849,17 @@ Brochure galleries (DOC A p12, p16; DOC B; DOC C — Phase 1 §2.5): HDD rig (GS
 
 ### 16.3 Per-context treatment
 
-| Context | Ratio | Treatment |
-|---|---|---|
-| Hero bands | 16:10–21:9 (viewport) | navy scrim (§5.1); cool grade |
-| Project feature tiles/rows | 16:10 | cool navy-tint grade; bottom scrim only where text overlays |
-| Project record imagery | 16:10 | as-shot (honest), light grade |
-| Case-study gallery | 16:10 + 4:5 mix | as-shot; captions mandatory (§3.5 annotation format) |
-| Practice hero | viewport | mirrored composition (§6) |
-| Service pages | none | no photography (§7) |
-| Team | 1:1 (when headshots exist) | neutral background, consistent grade; until then typographic (§12.2) |
-| Equipment/plant | 4:3 | as-shot documentation photos, captions w/ spec |
-| Client logos | fixed-height 24–40px | mono-navy 60% opacity, single-color treatment |
+| Context                    | Ratio                      | Treatment                                                            |
+| -------------------------- | -------------------------- | -------------------------------------------------------------------- |
+| Hero bands                 | 16:10–21:9 (viewport)      | navy scrim (§5.1); cool grade                                        |
+| Project feature tiles/rows | 16:10                      | cool navy-tint grade; bottom scrim only where text overlays          |
+| Project record imagery     | 16:10                      | as-shot (honest), light grade                                        |
+| Case-study gallery         | 16:10 + 4:5 mix            | as-shot; captions mandatory (§3.5 annotation format)                 |
+| Practice hero              | viewport                   | mirrored composition (§6)                                            |
+| Service pages              | none                       | no photography (§7)                                                  |
+| Team                       | 1:1 (when headshots exist) | neutral background, consistent grade; until then typographic (§12.2) |
+| Equipment/plant            | 4:3                        | as-shot documentation photos, captions w/ spec                       |
+| Client logos               | fixed-height 24–40px       | mono-navy 60% opacity, single-color treatment                        |
 
 ### 16.4 Overlays
 
@@ -906,27 +924,27 @@ No image → no-photo treatment. Broken image → same treatment (onError swap).
 
 ## 18. PAGE-BY-PAGE DESIGN MATRIX
 
-| Route | Purpose | Audience | Hero type | Major sections | Primary CTA | Secondary CTA | Imagery | CMS deps | Proof/evidence | Unique treatment | Mobile notes |
-|---|---|---|---|---|---|---|---|---|---|---|---|
-| `/` | Position + route buyers + prove | All first-visit | Image hero (CMS) | 13 bands §5 | Start a Project | Explore Projects | 1 hero + feature tiles | all collections | Metrics, register rows, credentials strip | Diptych + instrument panel | Per-band §5 mobile specs |
-| `/practices/ug-utilities-electrical` | P01 front door | EPC/PMC, utilities | Image hero (mirrored R) | §6.2 stack | Explore Practice Projects | Discuss This Practice | HDD/pipeline (real) | practices, services, projects, equipment | Owned-fleet table, km quantities | Plant table star turn | Table sticky-col |
-| `/practices/mep-fire-protection` | P02 front door | Developers, corporates, PMCs | Image hero (mirrored L) | §6.3 stack | Explore Practice Projects | Discuss This Practice | WTT plant (real) | same | T&C register, WTT 4,000 TR | T&C + service model | same |
-| `/services` | Capability index | Evaluators | Light hero | intro + 11 ServiceRows (grouped by practice) | Discuss a Service | View Project Register | none | services | counts per service | Register, not icon grid | single-col list |
-| `/services/{slug}` | Service depth | Need-matchers | Light hero (no image) | §7 stack | Discuss This Service | View {service} records | equipment 4:3 only | services, equipment, projects | 3 service metrics + records | Method 2×2 panels | tables scroll |
-| `/projects` | The evidence register | All evaluators (repeat) | Light hero + sticky filter bar | features + register + rail | (per-row) | Start a Project | feature tiles only | projects + taxonomy | The register itself | Rail+content 3/9 | Filter drawer + 2-line rows |
-| `/projects/{slug}` (A) | Verified record | Evaluators | Title-block record header | §9 stack | Discuss Similar Work | View Register | 16:10 or no-photo | projects | Scope line + metrics | No-photo treatment | metrics wrap |
-| `/projects/{slug}` (B) | Case study | Flagship evaluators | Navy image hero + metric line | §10 stack | Read next case study | Discuss Similar Work | gallery + lightbox | projects (template B) | Full narrative + metrics | Evidence-conditional blocks | gallery 1-col |
-| `/sectors` | Market entry | Buyers by industry | Light hero | evidence-tiered register | (per-hub) | — | none | industries + counts | Record counts | Honest tier badges | 1-col |
-| `/sectors/{slug}` | Sector proof | Sector buyers | Light + 4:5 image | §11.2 stack | Discuss {sector} | View filtered register | hub image | industries, projects, clients | EvidencePanel (inline proof) | Evidence-first hub | stacks |
-| `/about` | Company truth | All serious | Light editorial | §12.1 timeline | Meet the Team | View Credentials | none | pages, offices, settings | Timeline, statutory | Offices register + reach strip | accordion offices |
-| `/team` | Real organization | Evaluators, candidates | Light hero | §12.2 stack | Talk to Our Team | — | headshots (pending) | team (verified) | Name wall count | Crew-sheet name wall | plates 2-col |
-| `/clients` | Trust wall | All | Light hero | categories + relationships | Start a Project | — | logos (per permission) | clients, categories | Relationship-typed panels | PMC text registers | grouped walls |
-| `/credentials` | Evidence room | Procurement | Light hero | §12.4 register | Request Verification Docs | — | certificate scans | credentials, media | Real GSTINs, CIN | The register table itself | sticky first column |
-| `/careers`* | Recruiting (conditional) | Candidates | Light hero | openings register | Apply (mailto) | — | none | careers (active only) | Real openings or honest none | Redirect-when-empty | 1-col |
-| `/contact` | Conversion | All | Light hero | §13 | Send Enquiry | Call | HQ map (optional) | offices, services, settings | Both phones, offices | Intake-sheet framing | phones-first stack |
-| `/{slug}` (legal) | Compliance | Legal reviewers | none | policy text (max 640 measure) | — | — | none | pages | Reviewed text only | Unpublishable placeholder rule | plain |
+| Route                                | Purpose                         | Audience                     | Hero type                      | Major sections                               | Primary CTA               | Secondary CTA          | Imagery                | CMS deps                                 | Proof/evidence                            | Unique treatment               | Mobile notes                |
+| ------------------------------------ | ------------------------------- | ---------------------------- | ------------------------------ | -------------------------------------------- | ------------------------- | ---------------------- | ---------------------- | ---------------------------------------- | ----------------------------------------- | ------------------------------ | --------------------------- |
+| `/`                                  | Position + route buyers + prove | All first-visit              | Image hero (CMS)               | 13 bands §5                                  | Start a Project           | Explore Projects       | 1 hero + feature tiles | all collections                          | Metrics, register rows, credentials strip | Diptych + instrument panel     | Per-band §5 mobile specs    |
+| `/practices/ug-utilities-electrical` | P01 front door                  | EPC/PMC, utilities           | Image hero (mirrored R)        | §6.2 stack                                   | Explore Practice Projects | Discuss This Practice  | HDD/pipeline (real)    | practices, services, projects, equipment | Owned-fleet table, km quantities          | Plant table star turn          | Table sticky-col            |
+| `/practices/mep-fire-protection`     | P02 front door                  | Developers, corporates, PMCs | Image hero (mirrored L)        | §6.3 stack                                   | Explore Practice Projects | Discuss This Practice  | WTT plant (real)       | same                                     | T&C register, WTT 4,000 TR                | T&C + service model            | same                        |
+| `/services`                          | Capability index                | Evaluators                   | Light hero                     | intro + 11 ServiceRows (grouped by practice) | Discuss a Service         | View Project Register  | none                   | services                                 | counts per service                        | Register, not icon grid        | single-col list             |
+| `/services/{slug}`                   | Service depth                   | Need-matchers                | Light hero (no image)          | §7 stack                                     | Discuss This Service      | View {service} records | equipment 4:3 only     | services, equipment, projects            | 3 service metrics + records               | Method 2×2 panels              | tables scroll               |
+| `/projects`                          | The evidence register           | All evaluators (repeat)      | Light hero + sticky filter bar | features + register + rail                   | (per-row)                 | Start a Project        | feature tiles only     | projects + taxonomy                      | The register itself                       | Rail+content 3/9               | Filter drawer + 2-line rows |
+| `/projects/{slug}` (A)               | Verified record                 | Evaluators                   | Title-block record header      | §9 stack                                     | Discuss Similar Work      | View Register          | 16:10 or no-photo      | projects                                 | Scope line + metrics                      | No-photo treatment             | metrics wrap                |
+| `/projects/{slug}` (B)               | Case study                      | Flagship evaluators          | Navy image hero + metric line  | §10 stack                                    | Read next case study      | Discuss Similar Work   | gallery + lightbox     | projects (template B)                    | Full narrative + metrics                  | Evidence-conditional blocks    | gallery 1-col               |
+| `/sectors`                           | Market entry                    | Buyers by industry           | Light hero                     | evidence-tiered register                     | (per-hub)                 | —                      | none                   | industries + counts                      | Record counts                             | Honest tier badges             | 1-col                       |
+| `/sectors/{slug}`                    | Sector proof                    | Sector buyers                | Light + 4:5 image              | §11.2 stack                                  | Discuss {sector}          | View filtered register | hub image              | industries, projects, clients            | EvidencePanel (inline proof)              | Evidence-first hub             | stacks                      |
+| `/about`                             | Company truth                   | All serious                  | Light editorial                | §12.1 timeline                               | Meet the Team             | View Credentials       | none                   | pages, offices, settings                 | Timeline, statutory                       | Offices register + reach strip | accordion offices           |
+| `/team`                              | Real organization               | Evaluators, candidates       | Light hero                     | §12.2 stack                                  | Talk to Our Team          | —                      | headshots (pending)    | team (verified)                          | Name wall count                           | Crew-sheet name wall           | plates 2-col                |
+| `/clients`                           | Trust wall                      | All                          | Light hero                     | categories + relationships                   | Start a Project           | —                      | logos (per permission) | clients, categories                      | Relationship-typed panels                 | PMC text registers             | grouped walls               |
+| `/credentials`                       | Evidence room                   | Procurement                  | Light hero                     | §12.4 register                               | Request Verification Docs | —                      | certificate scans      | credentials, media                       | Real GSTINs, CIN                          | The register table itself      | sticky first column         |
+| `/careers`*                          | Recruiting (conditional)        | Candidates                   | Light hero                     | openings register                            | Apply (mailto)            | —                      | none                   | careers (active only)                    | Real openings or honest none              | Redirect-when-empty            | 1-col                       |
+| `/contact`                           | Conversion                      | All                          | Light hero                     | §13                                          | Send Enquiry              | Call                   | HQ map (optional)      | offices, services, settings              | Both phones, offices                      | Intake-sheet framing           | phones-first stack          |
+| `/{slug}` (legal)                    | Compliance                      | Legal reviewers              | none                           | policy text (max 640 measure)                | —                         | —                      | none                   | pages                                    | Reviewed text only                        | Unpublishable placeholder rule | plain                       |
 
-*conditional — hidden from nav & sitemap until openings exist.*
+_conditional — hidden from nav & sitemap until openings exist._
 
 ---
 
@@ -986,62 +1004,73 @@ No image → no-photo treatment. Broken image → same treatment (onError swap).
 The implementation is successful only if ALL of:
 
 **Foundations**
+
 - [ ] Type scale renders per §2.1 at all 5 breakpoints; mono used for every number/label/metadata on the public site (spot-check 20 random numbers site-wide).
 - [ ] Color palette locked to §2.2 tokens; no legacy hues; amber appears ≤1 CTA + numbers/status only per view.
 - [ ] Hairline system: cards/tables/registers bordered per §2.5; shadows only on the 5 overlay surfaces (§2.7).
 - [ ] Spacing: section rhythm 112/80/64; gutters 80/40/24 — verified by overlay audit.
 
 **Signature language**
+
 - [ ] Title blocks render on the 4 specified surfaces only; section numbering runs correctly on every page; no blueprint-theme drift (§3.4 boundaries audited: grid only in navy-band margins + no-photo panels).
 - [ ] No-photo treatment used everywhere imagery is absent — zero gray boxes, zero stock.
 
 **Evidence-first**
+
 - [ ] Every stat on the site maps to the verification register; counters only on documented numbers; counts render `RECORDS`.
 - [ ] Projects index shows features + register with all facets working URL-synced; mobile drawer opens/closes cleanly; empty states present.
 - [ ] Credentials page shows the real registry numbers in the register table.
 
 **Hierarchy & story**
+
 - [ ] Homepage reads as the 13-band narrative with zero orphan components; each band's CTA wired.
 - [ ] Case studies render only with non-empty narrative blocks; Template A pages never show empty narrative slots.
 - [ ] Practice pages are structurally identical (template audit) with mirrored heroes.
 
 **Mobile**
+
 - [ ] All §14 mobile specs hold on a real 390px device: header chips, filter drawer, 2-line register rows, sticky-col tables, 48px targets, no horizontal scroll (except credentials).
 - [ ] Phones tappable in ≤2 taps from every page (header chip).
 
 **Motion & a11y**
+
 - [ ] Reduced-motion global layer verified (marquee static, counters final, reveals off).
 - [ ] Keyboard pass: menus, filters, lightbox, forms, drawer; focus visible throughout; contrast pairs measured and logged.
 - [ ] Zero placeholder text on the public surface (automated grep for "Placeholder", "TBD", "Lorem").
 
 **Identity**
+
 - [ ] The site is visually distinguishable from a generic contractor template in a blind screenshot test of 3 pages (hero, projects, credentials) — the diptych, register rows, and instrument panels carry the identity.
 
 ---
 
 ## 23. PHASE 4 IMPLEMENTATION HANDOFF
 
-**The implementation phases (4A–4D per P3 §13.18, concretized visually).** Note: the sub-phase letters here refer to *visual build order*; they align with P3's implementation phases (4A foundations… 4D polish) so engineering and design can run the same gates.
+**The implementation phases (4A–4D per P3 §13.18, concretized visually).** Note: the sub-phase letters here refer to _visual build order_; they align with P3's implementation phases (4A foundations… 4D polish) so engineering and design can run the same gates.
 
 ### 4A — Design foundations
+
 **Deliverables:** style tile (final amber value, mono family final, all §2 tokens, focus-ring and contrast measurements logged); the 30 components (§17) built as isolated, CMS-fed components; header/mega-menu/drawer; footer; typographic primitives; the no-photo treatment; SectionHeader/TitleBlock/eyebrow system; **CMS hero rendering (TD6) with fallback states**.
 **Dependencies:** CMS entities for practices/services exist (P3 §9) before component data-binding; asset migration off Lovable paths (TD8) before logo components go live.
 **NOT yet:** homepage bands (components only), any project register (needs corpus), motion beyond hover/fast tokens.
 **Acceptance:** components render from CMS with all fallback states; §22 foundation checkboxes pass; mega-menu keyboard-complete.
 
 ### 4B — Homepage experience
+
 **Deliverables:** all 13 bands per §5 with motion §15; counters (verified stats only); marquee (reduced-motion aware); diptych; instrument panel; practice split CTAs.
 **Dependencies:** 4A components; verified stats set (gate #6 wording resolved or documented-only set locked); client-hero image picked (§16.2).
 **NOT yet:** interior pages; projects register.
 **Acceptance:** §22 hierarchy/story checks; band rhythm table implemented exactly; hero renders CMS content with image + fallback; blind screenshot test passes for homepage.
 
 ### 4C — Page templates
+
 **Deliverables:** practice pages (§6), service template (§7), projects index + Template A/B (§8–10), sector hub + overview (§11), company pages (§12), contact (§13), legal route skin.
 **Dependencies:** project corpus entered (Template A minimum) before /projects goes live; equipment table verification state resolved (or count-free version per §6.2); case-study narratives (client-supplied) before any Template B ships — **else Template B pages downgrade to A automatically**.
 **NOT yet:** motion refinement pass; careers route (inactive until openings).
 **Acceptance:** §22 evidence-first + story checks; every §18 matrix row's "unique treatment" present; filter URL-sync verified by test URLs; mobile drawer + register rows verified on device.
 
 ### 4D — Responsive + motion + component refinement
+
 **Deliverables:** full §14 matrix pass at 480/768/1024/1280/1440; §15 motion system + reduced-motion layer; lightbox, filter transitions, counter choreography; §20 a11y audit fixes; performance image pipeline (eager/lazy, focal crops, widths/srcset); final QA against §22 in full.
 **Dependencies:** all 4C pages exist; real-device testing.
 **NOT yet:** Phase 5 (anything beyond this scope — e.g., map visualization, insights).
@@ -1057,6 +1086,6 @@ The implementation is successful only if ALL of:
 
 **3. Conflicts discovered:** none material between P3 and this document. Two clarifications resolved in favor of P3: (a) hero cross-fade — P3 allowed a pausable >8s option; Phase 4 defaults to static, keeping cross-fade as an opt-in if ≥2 quality images exist; (b) team strip's combined-experience line — P3 §12.2 listed it among possibilities but P1 §15 rates the claim LOW, so Phase 4 excludes it until client-approved (the conservative reading of the P3 rule "no silent resolution").
 
-**4. Decisions still requiring client approval (beyond P3's 16 gates):** hero headline & subline drafts (§5.1); both draft copy sets across bands (marked *draft*); amber final value + mono family (4A style tile); source-citation style on counters (§5.9); response-time promise wording (§13.1); careers evergreen copy (§12.5); name-wall annotation wording (§12.2); hero image selection (§16.2); equipment-count publication once verified (§6.2).
+**4. Decisions still requiring client approval (beyond P3's 16 gates):** hero headline & subline drafts (§5.1); both draft copy sets across bands (marked _draft_); amber final value + mono family (4A style tile); source-citation style on counters (§5.9); response-time promise wording (§13.1); careers evergreen copy (§12.5); name-wall annotation wording (§12.2); hero image selection (§16.2); equipment-count publication once verified (§6.2).
 
 **This document stops here. No Phase 5. No implementation. Awaiting client review and approval of this design blueprint.**

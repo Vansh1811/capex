@@ -15,7 +15,7 @@ export type FooterData = {
 /** Footer per Phase 4 component 30: 4-column register close on deep navy */
 export function Footer({ data }: { data: FooterData }) {
   return (
-    <footer className="border-t border-white/10 bg-[var(--brand-deep)] text-white">
+    <footer className="border-t border-white/10 bg-black text-white">
       <div className="mx-auto grid max-w-[1440px] gap-10 px-6 py-14 md:grid-cols-4 lg:px-10">
         <div>
           <div className="font-display text-2xl font-bold tracking-tight">{data.brandWordmark}</div>

@@ -6,10 +6,10 @@ quiet, engineered systems behind a first conversation — and must never be
 captioned or presented as Capex-owned assets, projects or people.
 Replace 1:1 by the same filename when approved Capex photography arrives.
 
-| File | Subject | Source | License |
-| --- | --- | --- | --- |
-| hero-tunnel.jpg | Common utility tunnel — underground services corridor | Wikimedia Commons — "Utility Tunnel GIFT City", GIFT City utility tunnel | CC BY-SA 4.0 |
-| plant-pipes.jpg | Boiler room pipework — wide engineered interior | Wikimedia Commons — "Boiler room – Panorama (Oliksiy Yakovlyev via Poly Haven)" | CC0 |
+| File            | Subject                                               | Source                                                                          | License      |
+| --------------- | ----------------------------------------------------- | ------------------------------------------------------------------------------- | ------------ |
+| hero-tunnel.jpg | Common utility tunnel — underground services corridor | Wikimedia Commons — "Utility Tunnel GIFT City", GIFT City utility tunnel        | CC BY-SA 4.0 |
+| plant-pipes.jpg | Boiler room pipework — wide engineered interior       | Wikimedia Commons — "Boiler room – Panorama (Oliksiy Yakovlyev via Poly Haven)" | CC0          |
 
 ## License notes
 

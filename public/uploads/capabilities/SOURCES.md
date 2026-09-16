@@ -1,20 +1,20 @@
 # Capabilities — atmospheric reference imagery
 
 All frames in this directory are **third-party reference/atmosphere imagery**,
-not Capex project photography. They communicate the *discipline* of each
+not Capex project photography. They communicate the _discipline_ of each
 capability (cable corridors, gas mains, substations, drilling rigs, clean
 rooms, sprinklered ceilings…) and are always captioned as reference material
 on the page — never presented as Capex-owned assets, projects or equipment.
 Replace 1:1 by the same filename when approved Capex photography arrives.
 
-| File | Subject | Commons source | Author | License |
-| --- | --- | --- | --- | --- |
-| cable-tunnel.jpg | Underground cable corridor with racks | "Amsteg - GBT Cable Tunnel (30934985901)" | Kecko | CC BY 2.0 |
-| gas-trench.jpg | Gas main pipe laid in an open trench | "Gas pipe trench in Shan Slieve Drive, Newcastle - geograph.org.uk - 6536707" | Eric Jones | CC BY-SA 2.0 |
-| substation-build.jpg | Substation under construction | "Denny Substation construction site, March 2017 - 32699572384" | SounderBruce | CC BY-SA 2.0 |
-| hdd-rig-drillto.jpg | Drillto HDD drilling machine on site | "Moscow, Drillto ZT 45-90CDF drilling machine, Apr 2025 01" | Retired electrician | CC0 |
-| sprinkler-ceiling.jpg | Fire-protection sprinklers being installed in a ceiling | "Installation of fire protection sprinklers in the ceiling of the future LIRR passenger concourse. (CM014B, 10-31-2018) (30742926137)" | MTA Capital Construction Mega Projects | CC BY 2.0 |
-| cleanroom-lab.jpg | Cleanroom interior with HEPA-hooded ceiling | "Cleanroom (9148358991)" | UCL Mathematical and Physical Sciences from London | CC BY 2.0 |
+| File                  | Subject                                                 | Commons source                                                                                                                         | Author                                             | License      |
+| --------------------- | ------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- | ------------ |
+| cable-tunnel.jpg      | Underground cable corridor with racks                   | "Amsteg - GBT Cable Tunnel (30934985901)"                                                                                              | Kecko                                              | CC BY 2.0    |
+| gas-trench.jpg        | Gas main pipe laid in an open trench                    | "Gas pipe trench in Shan Slieve Drive, Newcastle - geograph.org.uk - 6536707"                                                          | Eric Jones                                         | CC BY-SA 2.0 |
+| substation-build.jpg  | Substation under construction                           | "Denny Substation construction site, March 2017 - 32699572384"                                                                         | SounderBruce                                       | CC BY-SA 2.0 |
+| hdd-rig-drillto.jpg   | Drillto HDD drilling machine on site                    | "Moscow, Drillto ZT 45-90CDF drilling machine, Apr 2025 01"                                                                            | Retired electrician                                | CC0          |
+| sprinkler-ceiling.jpg | Fire-protection sprinklers being installed in a ceiling | "Installation of fire protection sprinklers in the ceiling of the future LIRR passenger concourse. (CM014B, 10-31-2018) (30742926137)" | MTA Capital Construction Mega Projects             | CC BY 2.0    |
+| cleanroom-lab.jpg     | Cleanroom interior with HEPA-hooded ceiling             | "Cleanroom (9148358991)"                                                                                                               | UCL Mathematical and Physical Sciences from London | CC BY 2.0    |
 
 ## Notes
 
