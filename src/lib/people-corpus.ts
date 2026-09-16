@@ -53,12 +53,28 @@ const P2 = "MEP, HVAC & Fire";
 export const PEOPLE_CORPUS: PersonRecord[] = [
   // --- leadership (verified rows only) ---
   {
+    name: "Anurag Parashar",
+    role: "Director",
+    group: "leadership",
+    practice: null,
+    practice_label: "Company-wide",
+    source_ref: "DOC B p4",
+  },
+  {
     name: "Mayank Kaushal",
     role: "Director",
     group: "leadership",
     practice: null,
     practice_label: "Company-wide",
     source_ref: "DOC A p7",
+  },
+  {
+    name: "Sanjay Sharma",
+    role: "Co-Director",
+    group: "leadership",
+    practice: null,
+    practice_label: "Company-wide",
+    source_ref: "DOC B p4",
   },
   {
     name: "CA Chitin Sapria",
@@ -70,6 +86,30 @@ export const PEOPLE_CORPUS: PersonRecord[] = [
   },
 
   // --- delivery (verified rows only) ---
+  {
+    name: "Vinod Pouchary",
+    role: "Sr. Project Manager – HVAC & Fire",
+    group: "delivery",
+    practice: 2,
+    practice_label: P2,
+    source_ref: "DOC B p4",
+  },
+  {
+    name: "Malkit Singh",
+    role: "Patron",
+    group: "delivery",
+    practice: null,
+    practice_label: "Company-wide",
+    source_ref: "DOC B p4",
+  },
+  {
+    name: "Shaliendra Sharma",
+    role: "Sr. Project Manager – HVAC",
+    group: "delivery",
+    practice: 2,
+    practice_label: P2,
+    source_ref: "DOC B p5",
+  },
   {
     name: "Sachin Jamdhade",
     role: "BDM",
