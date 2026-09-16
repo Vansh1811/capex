@@ -1,0 +1,416 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Capex Engineering — premium industrial design system.
+ * V3 palette: warm ivory paper, near-black charcoal, deep earth brown,
+ * restrained copper accent. Imagery and material tones carry the color;
+ * the accent is reserved for hairlines and single typographic marks.
+ * Type: Space Grotesk (display) + Inter (body) + IBM Plex Mono (technical).
+ * Phase 4 §2: mono carries every number, label of record and title block.
+ */
+
+@theme inline {
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", monospace;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-verified: var(--status-verified);
+  --color-shadow-overlay: var(--shadow-overlay);
+}
+
+:root {
+  --radius: 0.5rem;
+
+  /* V3 — warm architectural palette. Ivory paper ground, ink charcoal
+   * foreground, earth-brown deep scenes, copper used only as an accent. */
+
+  --background: oklch(0.965 0.016 85);
+  --foreground: oklch(0.21 0.014 75);
+
+  --surface: oklch(0.935 0.02 85);
+  --surface-elevated: oklch(0.985 0.008 85);
+
+  --card: oklch(0.985 0.008 85);
+  --card-foreground: oklch(0.21 0.014 75);
+  --popover: oklch(0.985 0.008 85);
+  --popover-foreground: oklch(0.21 0.014 75);
+
+  /* Deep earth brown — replaces navy as the dark brand ground */
+  --brand: oklch(0.26 0.028 60);
+  --brand-deep: oklch(0.185 0.02 60);
+  --brand-foreground: oklch(0.965 0.016 85);
+
+  /* Ink charcoal for typographic moments */
+  --ink: oklch(0.185 0.02 60);
+
+  /* Primary: charcoal ink action color (light backgrounds) */
+  --primary: oklch(0.32 0.03 60);
+  --primary-hover: oklch(0.26 0.028 60);
+  --primary-foreground: oklch(0.965 0.016 85);
+
+  --secondary: oklch(0.9 0.024 85);
+  --secondary-foreground: oklch(0.26 0.028 60);
+
+  --muted: oklch(0.92 0.018 85);
+  --muted-foreground: oklch(0.46 0.028 70);
+
+  /* Muted copper accent — V3 hairlines and single marks only.
+   * Large-type display variant keeps AA at big sizes; body use is
+   * restricted to non-text/decorative hairlines. */
+  --accent: oklch(0.55 0.075 55);
+  --accent-foreground: oklch(0.985 0.008 85);
+  --accent-display: oklch(0.68 0.09 55);
+
+  /* Status (Phase 4 §2.2) — used only in status chips/marks, never decoratively */
+  --status-verified: oklch(0.55 0.11 155);
+
+  --destructive: oklch(0.56 0.2 27);
+  --destructive-foreground: oklch(0.98 0 0);
+
+  --border: oklch(0.86 0.02 80);
+  --input: oklch(0.86 0.02 80);
+  --ring: oklch(0.32 0.03 60);
+
+  /* Overlay-only shadow (Phase 4 §2.7); cards and bands use hairlines */
+  --shadow-overlay: 0 24px 64px -24px oklch(0.18 0.02 60 / 45%);
+}
+
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--brand) 40%, transparent);
+    color: var(--foreground);
+  }
+}
+
+@utility container-x {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  max-width: 80rem;
+  @media (min-width: 768px) {
+    padding-inline: 2rem;
+  }
+}
+
+@utility text-gradient-brand {
+  background: linear-gradient(135deg,
+    oklch(0.26 0.028 60) 0%,
+    oklch(0.42 0.045 62) 55%,
+    oklch(0.58 0.08 55) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* -------- Section bands (no layout change, colour only) -------- */
+
+/* Deep earth band; re-maps tokens so all children adapt. */
+@utility band-navy {
+  --background: oklch(0.26 0.028 60);
+  --foreground: oklch(0.965 0.016 85);
+  --surface: oklch(0.3 0.032 60);
+  --surface-elevated: oklch(0.34 0.035 60);
+  --card: oklch(0.31 0.03 60);
+  --card-foreground: oklch(0.965 0.016 85);
+  --muted: oklch(0.34 0.028 60);
+  --muted-foreground: oklch(0.82 0.028 75);
+  --secondary: oklch(0.34 0.028 60);
+  --secondary-foreground: oklch(0.965 0.016 85);
+  --border: oklch(0.44 0.035 60);
+  --input: oklch(0.44 0.035 60);
+  --brand: oklch(0.68 0.09 55);
+  --brand-foreground: oklch(0.16 0.02 60);
+  --primary: oklch(0.68 0.09 55);
+  --primary-foreground: oklch(0.16 0.02 60);
+  background-image: linear-gradient(160deg,
+    oklch(0.2 0.022 60) 0%,
+    oklch(0.26 0.03 62) 55%,
+    oklch(0.31 0.034 66) 100%);
+  color: var(--foreground);
+  border-color: oklch(0.44 0.035 60);
+}
+
+/* Soft warm tint band */
+@utility band-blue {
+  background-image: linear-gradient(180deg,
+    oklch(0.955 0.018 85) 0%,
+    oklch(0.925 0.026 80) 100%);
+}
+
+/* Warm earth tint band */
+@utility band-amber {
+  background-image: linear-gradient(180deg,
+    oklch(0.96 0.02 82) 0%,
+    oklch(0.93 0.034 72) 100%);
+}
+
+/* Ivory → earth accent wash */
+@utility band-mixed {
+  background-image: linear-gradient(120deg,
+    oklch(0.955 0.018 85) 0%,
+    oklch(0.94 0.024 78) 45%,
+    oklch(0.93 0.03 70) 100%);
+}
+
+
+
+
+@utility glass-panel {
+  background: color-mix(in oklab, var(--background) 78%, transparent);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid color-mix(in oklab, var(--foreground) 8%, transparent);
+}
+
+@utility grid-lines {
+  background-image:
+    linear-gradient(to right, color-mix(in oklab, var(--foreground) 5%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--foreground) 5%, transparent) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+/* ============================================================
+ * Phase 4 §3 — Drawing-sheet language (bounded: annotation, not theme)
+ * ============================================================ */
+
+/* Survey grid for navy-band margins + no-photo panels ONLY (Phase 4 §3.4) */
+@utility survey-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in oklab, var(--foreground) 7%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--foreground) 7%, transparent) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Technical type: every number, ref, label of record (Phase 4 §2.1) */
+@utility font-tech {
+  font-family: var(--font-mono);
+  font-feature-settings: "tnum";
+  letter-spacing: 0.02em;
+}
+
+@utility eyebrow-label {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.2;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@utility meta-label {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}
+
+/* Title-block frame: square corners, hairline box (Phase 4 §3.1) */
+@utility title-block {
+  border: 1px solid var(--color-border);
+  border-radius: 0;
+}
+
+/* Section eyebrow bracket: [ NN · LABEL ] (Phase 4 §3.2) */
+@utility section-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@utility animate-fade-up {
+  animation: fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@utility animate-reveal {
+  animation: fade-up 0.4s ease-out both;
+}
+
+/* Marquee (Phase 4 §5.2) — pauses on hover/focus; reduced-motion handled below */
+@keyframes marquee-x {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@utility animate-marquee {
+  animation: marquee-x 40s linear infinite;
+}
+
+@utility animate-marquee-paused {
+  animation-play-state: paused;
+}
+
+/* ============================================================
+ * Phase 4 §15.3 — Global reduced-motion layer (single source; components
+ * never self-check). Final states render; only opacity feedback remains.
+ * ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .animate-marquee {
+    animation: none !important;
+    flex-wrap: wrap !important;
+  }
+}
+
+/* Studio menu rows — rise into place on mount (V2 homepage) */
+@keyframes reveal-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@utility reveal-in {
+  animation: reveal-in 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Mobile drawer slide (Phase 4 §4.3) */
+@keyframes slide-in-right {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+@utility slide-in-right {
+  animation: slide-in-right 250ms cubic-bezier(0.2, 0.6, 0.2, 1) both;
+}
+
+/* ============================================================
+ * V3 homepage — scene vocabulary
+ * The page is a sequence of frames, not a stack of sections.
+ * ============================================================ */
+
+/* Scene tone marks — HomeNav reads these to adapt its color in place.
+ * <section data-tone="dark"> → nav renders light; "light" → dark ink. */
+
+/* Paper ground — faint warm grain, gives ivory scenes material presence
+ * without gradients. Static, cheap, invisible under imagery. */
+@utility paper {
+  background-color: var(--background);
+  background-image:
+    radial-gradient(color-mix(in oklab, var(--foreground) 2.6%, transparent) 0.8px, transparent 0.8px);
+  background-size: 22px 22px;
+}
+
+/* Rising word — used by the delivery-flow statements; each word arrives
+ * from the baseline like a setting line of type. */
+@keyframes rise-line {
+  from { opacity: 0; transform: translateY(0.5em); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@utility rise-line {
+  animation: rise-line 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* V3.1 — Sans eyebrow: the small scene labels drop the mono register so
+ * monospace stays reserved for figures of record. */
+@utility eyebrow-sans {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+/* V3.1 — Studio/Search layer entrance: opacity-only so the homepage
+ * beneath reads through the translucent treatment immediately. */
+@keyframes layer-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@utility layer-in {
+  animation: layer-in 320ms ease-out both;
+}
+
+/* V3.1 — Studio index: on row hover/focus, the other rows recede so the
+ * chosen word carries the room (pure CSS, no JS bookkeeping). */
+@utility studio-list {
+  &:hover li:not(:hover):not(:focus-within) a {
+    opacity: 0.42;
+  }
+  li a {
+    transition:
+      opacity 350ms ease-out,
+      color 350ms ease-out,
+      letter-spacing 350ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}
+
+/* Clients — the preview plate: when the selected client changes, the new
+ * frame fades in with a settling shift of crop (a plate being placed), so
+ * moving between clients reads as one continuous editorial surface. The
+ * key forces the frame to replay on every client switch (key=slug).
+ * The People roster reuses this motion: its hover plate arrives with the
+ * same placed-plate language (key=name), with the scale held slightly high
+ * so a held row still reads as living crop. */
+@keyframes plate-in {
+  from { opacity: 0; transform: scale(1.045) translateX(1.6%); }
+  to { opacity: 1; transform: scale(1) translateX(0); }
+}
+@utility plate-img {
+  animation: plate-in 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}

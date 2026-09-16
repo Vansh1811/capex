@@ -1,0 +1,1 @@
+UPDATE public.nav_items SET is_active = false WHERE lower(label) = 'projects' OR url = '#projects';

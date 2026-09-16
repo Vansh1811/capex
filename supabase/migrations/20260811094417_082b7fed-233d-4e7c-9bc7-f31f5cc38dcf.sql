@@ -1,0 +1,4 @@
+update public.content_items set image_url = '/__l5e/assets-v1/82d67b8f-b617-42a9-8e3b-2e23269b7046/bhutani-logo.webp' where collection='clients' and title='Bhutani';
+update public.content_items set image_url = '/__l5e/assets-v1/b0afe404-1d37-43b2-a6e7-d74fc601325f/infosys-logo.png' where collection='clients' and title='Infosys';
+update public.content_items set image_url = '/__l5e/assets-v1/c494f8b0-9610-46bf-a180-a39a0ec9a2c8/tcs-logo.avif' where collection='clients' and title='TCS';
+update public.content_items set image_url = '/__l5e/assets-v1/f38dfc8f-d9c5-493a-8b06-89d94818f171/cadence-logo.jpg' where collection='clients' and title='Cadence';

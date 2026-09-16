@@ -1,0 +1,1 @@
+UPDATE public.site_settings SET value = 'Tower A, Bhutani Alphathum, Sector 90, Noida, Uttar Pradesh' WHERE key = 'contact_address'; UPDATE public.site_settings SET value = 'https://www.google.com/maps?q=Tower+A+Bhutani+Alphathum+Sector+90+Noida+Uttar+Pradesh&output=embed' WHERE key = 'google_maps_embed';

@@ -1,0 +1,1 @@
+delete from public.content_items where collection='clients' and (image_url is null or image_url='');
