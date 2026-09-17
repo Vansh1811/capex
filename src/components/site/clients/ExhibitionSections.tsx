@@ -197,12 +197,23 @@ export function LogoShowcase({ clients }: { clients: ClientsPageClient[] }) {
     <section
       aria-label="Client logos"
       data-tone="light"
-      className="overflow-hidden border-y border-border bg-[var(--surface)] text-foreground"
+      className="relative overflow-hidden bg-[var(--surface)] text-foreground"
     >
+      {/* Premium tonal transition from the dark hero above */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 z-20 h-10 bg-gradient-to-b from-[var(--brand-deep)] to-transparent md:h-12"
+      />
+      {/* Premium tonal transition into the dark section below */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-10 bg-gradient-to-t from-[var(--brand-deep)] to-transparent md:h-12"
+      />
+
       <div className="group relative">
         <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-[var(--surface)] to-transparent" />
         <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-[var(--surface)] to-transparent" />
-        <div className="overflow-hidden py-7 md:py-9">
+        <div className="overflow-hidden py-10 md:py-12">
           <div
             className="animate-marquee flex w-max items-center hover:[animation-play-state:paused] focus-within:[animation-play-state:paused]"
             style={{ animationDuration: "70s" }}

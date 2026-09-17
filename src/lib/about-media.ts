@@ -11,6 +11,16 @@
  *    registry's `horizontal-boring` — the same documented photograph on its
  *    own project record; that cross-page reuse is intentional and flagged.)
  *  - Components consume `aboutPlate(key)`; nobody hardcodes paths.
+ *
+ *  Quality audit (2026-09-17 About rebuild): the frame inspection found
+ *  several entries mislabelled by extraction — substation-erection is a
+ *  heavily-artifacted scan (posterised sky), wtt-flagship a PDF-page
+ *  collage with captions baked in, below-the-street a posed hard-hat
+ *  composite, hdd-drilling a CGI ducting render, ug-trench a catalogue
+ *  product shot. NONE of these are used on the About page. The page
+ *  composes only the five clean documentary frames: pipeline-work,
+ *  site-team, field-work, hvac-plant-install (pipeline stringing) and
+ *  boring-interface (rooftop pipework) — each used exactly once.
  */
 
 export type AboutPlate = {
@@ -46,8 +56,8 @@ const PLATES: Record<string, AboutPlate> = {
   "hvac-plant-install": {
     src: "/uploads/about-capex/hvac-plant-install.jpg",
     source: "Company profile, p4 — HVAC plant installation",
-    alt: "Capex HVAC plant installation inside a building",
-    caption: "HVAC plant installation · company record",
+    alt: "Pipelayers stringing a large-diameter pipeline along an open right-of-way — photograph from the company profile",
+    caption: "Pipeline stringing works · company profile record",
   },
   "below-the-street": {
     src: "/uploads/about-capex/below-the-street.jpg",
@@ -76,8 +86,8 @@ const PLATES: Record<string, AboutPlate> = {
   "boring-interface": {
     src: "/uploads/about-capex/boring-interface.jpg",
     source: "Company profile, p11 — horizontal boring at the building interface (captioned)",
-    alt: "Horizontal boring at the building interface by Capex",
-    caption: "Boring at the building interface · scope record",
+    alt: "Insulated services pipework running across a building roof — Capex building-systems work, company record",
+    caption: "Building-services pipework · company record",
   },
   "substation-build": {
     src: "/uploads/about-capex/substation-build.jpg",
@@ -94,20 +104,20 @@ const PLATES: Record<string, AboutPlate> = {
   "site-team": {
     src: "/uploads/about-capex/site-team.jpg",
     source: "Electrical & CGD profile, p5 — site crew, gallery",
-    alt: "Capex site crew working on a utility installation",
-    caption: "Site crew · company record",
+    alt: "Coiled MDPE gas pipe staged at a street excavation — Capex city-gas distribution works, company record",
+    caption: "City-gas distribution works · site record",
   },
   "field-work": {
     src: "/uploads/about-capex/field-work.jpg",
     source: "Electrical & CGD profile, p5 — field work, gallery",
-    alt: "Field work on a Capex utility site",
-    caption: "Field work · company record",
+    alt: "A Capex site crew gathered for a pre-work briefing on a street worksite",
+    caption: "Site briefing · company record",
   },
   "pipeline-work": {
     src: "/uploads/about-capex/pipeline-work.jpg",
     source: "Electrical & CGD profile, p18 — pipeline work",
-    alt: "Pipeline work on a Capex utility site",
-    caption: "Pipeline work · site record",
+    alt: "A cross-country pipeline right-of-way crossing open ground — from the company record",
+    caption: "Cross-country pipeline works · company record",
   },
   "hvac-detail": {
     src: "/uploads/about-capex/hvac-detail.jpg",

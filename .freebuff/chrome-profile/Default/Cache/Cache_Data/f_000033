@@ -1,0 +1,386 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/site/about/WhyCapex.tsx");const useEffect = __vite__cjsImport0_react["useEffect"]; const useRef = __vite__cjsImport0_react["useRef"]; const useState = __vite__cjsImport0_react["useState"];const _jsxDEV = __vite__cjsImport3_react_jsxDevRuntime["jsxDEV"];import __vite__cjsImport0_react from "/node_modules/.vite/deps/react.js?v=33cfceb8";
+import { Reveal } from "/src/components/site/home/Reveal.tsx";
+import { WHY } from "/src/lib/about-content.ts";
+var _jsxFileName = "C:/Users/svans/OneDrive/Desktop/Corporate Clarity/src/components/site/about/WhyCapex.tsx";
+import __vite__cjsImport3_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=33cfceb8";
+var _s = $RefreshSig$();
+/**
+* WhyCapex (About): the differentiation as an active register on deep
+* espresso — the strongest dark moment of the page. Left: the claim,
+* "Built on rigor.", held sticky beside the register with a live readout
+* of the row under examination (PR 03 · Two practices, one company).
+* Right: six working principles as hairline rows — each row a two-cell
+* composition, the claim on the left and its evidence behind a hairline
+* on the right. The register settles itself as the reader scrolls (each
+* fully-viewed row becomes the examined one); a pointer or keyboard
+* takes over instantly and hands control back on leave. Nothing is
+* hover-gated: every entry is always visible and reachable. Motion is
+* opacity and one drawn hairline per row — no springs, no continuous
+* animation. Every statement is traceable to the company record;
+* nothing is promised, counted or rated.
+*/
+export function WhyCapex() {
+	_s();
+	const principles = WHY.principles;
+	const n = principles.length;
+	const [active, setActive] = useState(0);
+	const [settled, setSettled] = useState(false);
+	const [drawn, setDrawn] = useState(false);
+	const listRef = useRef(null);
+	// Settle: as the reader scrolls, the row occupying most of the viewport
+	// becomes the examined one — once a row has been passed, control stays
+	// with the reader until they leave the register (pointer/focus revert).
+	useEffect(() => {
+		const list = listRef.current;
+		if (!list) return;
+		const io = new IntersectionObserver((entries) => {
+			for (const entry of entries) {
+				if (!entry.isIntersecting) continue;
+				const i = Number(entry.target.dataset.index ?? 0);
+				setSettled(true);
+				setActive(i);
+				if (i === n - 1) io.disconnect();
+			}
+		}, { threshold: .85 });
+		for (const li of Array.from(list.children)) io.observe(li);
+		// no-scroll safety: the register is never dead — 01 is live by default
+		const fallback = setTimeout(() => setSettled(true), 2500);
+		return () => {
+			io.disconnect();
+			clearTimeout(fallback);
+		};
+	}, [n]);
+	// the row hairlines draw in as the register arrives
+	useEffect(() => {
+		const list = listRef.current;
+		if (!list) return;
+		const io = new IntersectionObserver((entries) => {
+			if (entries[0].isIntersecting) {
+				setDrawn(true);
+				io.disconnect();
+			}
+		}, { threshold: .1 });
+		io.observe(list);
+		return () => io.disconnect();
+	}, []);
+	return /* @__PURE__ */ _jsxDEV("section", {
+		"aria-label": "Why Capex",
+		"data-tone": "dark",
+		className: "relative overflow-hidden bg-[var(--ink)] text-white",
+		"data-tsd-source": "/src/components/site/about/WhyCapex.tsx:73:5",
+		children: [/* @__PURE__ */ _jsxDEV("div", {
+			"aria-hidden": "true",
+			className: "pointer-events-none absolute inset-0 opacity-20 survey-grid",
+			"data-tsd-source": "/src/components/site/about/WhyCapex.tsx:78:7"
+		}, void 0, false, {
+			fileName: _jsxFileName,
+			lineNumber: 78,
+			columnNumber: 7
+		}, this), /* @__PURE__ */ _jsxDEV("div", {
+			className: "relative mx-auto max-w-[1680px] px-6 py-24 md:px-10 md:py-36 lg:px-12 lg:py-44",
+			"data-tsd-source": "/src/components/site/about/WhyCapex.tsx:82:7",
+			children: /* @__PURE__ */ _jsxDEV("div", {
+				className: "grid gap-16 lg:grid-cols-12 lg:items-start lg:gap-10",
+				"data-tsd-source": "/src/components/site/about/WhyCapex.tsx:83:9",
+				children: [/* @__PURE__ */ _jsxDEV("div", {
+					className: "lg:col-span-4",
+					"data-tsd-source": "/src/components/site/about/WhyCapex.tsx:85:11",
+					children: /* @__PURE__ */ _jsxDEV("div", {
+						className: "lg:sticky lg:top-28",
+						"data-tsd-source": "/src/components/site/about/WhyCapex.tsx:86:13",
+						children: [
+							/* @__PURE__ */ _jsxDEV(Reveal, {
+								"data-tsd-source": "/src/components/site/about/WhyCapex.tsx:87:15",
+								children: /* @__PURE__ */ _jsxDEV("p", {
+									className: "eyebrow-sans text-white/40",
+									"data-tsd-source": "/src/components/site/about/WhyCapex.tsx:88:17",
+									children: WHY.eyebrow
+								}, void 0, false, {
+									fileName: _jsxFileName,
+									lineNumber: 88,
+									columnNumber: 17
+								}, this)
+							}, void 0, false, {
+								fileName: _jsxFileName,
+								lineNumber: 87,
+								columnNumber: 15
+							}, this),
+							/* @__PURE__ */ _jsxDEV(Reveal, {
+								delay: 90,
+								"data-tsd-source": "/src/components/site/about/WhyCapex.tsx:90:15",
+								children: /* @__PURE__ */ _jsxDEV("h2", {
+									className: "mt-10 font-display text-[13vw] font-normal leading-[0.98] tracking-[-0.03em] sm:text-[8vw] lg:text-[min(4.8vw,84px)]",
+									"data-tsd-source": "/src/components/site/about/WhyCapex.tsx:91:17",
+									children: [
+										WHY.headline[0],
+										/* @__PURE__ */ _jsxDEV("br", { "data-tsd-source": "/src/components/site/about/WhyCapex.tsx:93:19" }, void 0, false, {
+											fileName: _jsxFileName,
+											lineNumber: 93,
+											columnNumber: 19
+										}, this),
+										/* @__PURE__ */ _jsxDEV("span", {
+											className: "text-white/35",
+											"data-tsd-source": "/src/components/site/about/WhyCapex.tsx:94:19",
+											children: WHY.headline[1]
+										}, void 0, false, {
+											fileName: _jsxFileName,
+											lineNumber: 94,
+											columnNumber: 19
+										}, this)
+									]
+								}, void 0, true, {
+									fileName: _jsxFileName,
+									lineNumber: 91,
+									columnNumber: 17
+								}, this)
+							}, void 0, false, {
+								fileName: _jsxFileName,
+								lineNumber: 90,
+								columnNumber: 15
+							}, this),
+							/* @__PURE__ */ _jsxDEV(Reveal, {
+								delay: 180,
+								"data-tsd-source": "/src/components/site/about/WhyCapex.tsx:97:15",
+								children: /* @__PURE__ */ _jsxDEV("p", {
+									className: "mt-10 max-w-sm text-[15px] leading-[1.8] text-white/60",
+									"data-tsd-source": "/src/components/site/about/WhyCapex.tsx:98:17",
+									children: WHY.note
+								}, void 0, false, {
+									fileName: _jsxFileName,
+									lineNumber: 98,
+									columnNumber: 17
+								}, this)
+							}, void 0, false, {
+								fileName: _jsxFileName,
+								lineNumber: 97,
+								columnNumber: 15
+							}, this),
+							/* @__PURE__ */ _jsxDEV(Reveal, {
+								delay: 240,
+								"data-tsd-source": "/src/components/site/about/WhyCapex.tsx:101:15",
+								children: /* @__PURE__ */ _jsxDEV("div", {
+									"aria-hidden": "true",
+									className: "mt-12 hidden lg:block",
+									"data-tsd-source": "/src/components/site/about/WhyCapex.tsx:102:17",
+									children: [
+										/* @__PURE__ */ _jsxDEV("div", {
+											className: "h-px w-24 bg-[var(--accent)]/60",
+											"data-tsd-source": "/src/components/site/about/WhyCapex.tsx:103:19"
+										}, void 0, false, {
+											fileName: _jsxFileName,
+											lineNumber: 103,
+											columnNumber: 19
+										}, this),
+										/* @__PURE__ */ _jsxDEV("p", {
+											className: "mt-6 font-tech text-[10px] uppercase tracking-[0.22em] text-white/35",
+											"data-tsd-source": "/src/components/site/about/WhyCapex.tsx:104:19",
+											children: "Under examination"
+										}, void 0, false, {
+											fileName: _jsxFileName,
+											lineNumber: 104,
+											columnNumber: 19
+										}, this),
+										/* @__PURE__ */ _jsxDEV("div", {
+											className: "about-note-in",
+											"data-tsd-source": "/src/components/site/about/WhyCapex.tsx:107:19",
+											children: /* @__PURE__ */ _jsxDEV("p", {
+												className: "mt-2 font-tech text-[12px] tracking-[0.1em] text-[var(--accent-display)]",
+												"data-tsd-source": "/src/components/site/about/WhyCapex.tsx:108:21",
+												children: [
+													"PR ",
+													String(active + 1).padStart(2, "0"),
+													" · ",
+													principles[active].title
+												]
+											}, void 0, true, {
+												fileName: _jsxFileName,
+												lineNumber: 108,
+												columnNumber: 21
+											}, this)
+										}, active, false, {
+											fileName: _jsxFileName,
+											lineNumber: 107,
+											columnNumber: 19
+										}, this)
+									]
+								}, void 0, true, {
+									fileName: _jsxFileName,
+									lineNumber: 102,
+									columnNumber: 17
+								}, this)
+							}, void 0, false, {
+								fileName: _jsxFileName,
+								lineNumber: 101,
+								columnNumber: 15
+							}, this)
+						]
+					}, void 0, true, {
+						fileName: _jsxFileName,
+						lineNumber: 86,
+						columnNumber: 13
+					}, this)
+				}, void 0, false, {
+					fileName: _jsxFileName,
+					lineNumber: 85,
+					columnNumber: 11
+				}, this), /* @__PURE__ */ _jsxDEV("div", {
+					className: "lg:col-span-8",
+					"data-tsd-source": "/src/components/site/about/WhyCapex.tsx:118:11",
+					children: [/* @__PURE__ */ _jsxDEV(Reveal, {
+						"data-tsd-source": "/src/components/site/about/WhyCapex.tsx:119:13",
+						children: /* @__PURE__ */ _jsxDEV("p", {
+							className: "font-tech text-[10px] uppercase tracking-[0.22em] text-white/35",
+							"data-tsd-source": "/src/components/site/about/WhyCapex.tsx:120:15",
+							children: WHY.register
+						}, void 0, false, {
+							fileName: _jsxFileName,
+							lineNumber: 120,
+							columnNumber: 15
+						}, this)
+					}, void 0, false, {
+						fileName: _jsxFileName,
+						lineNumber: 119,
+						columnNumber: 13
+					}, this), /* @__PURE__ */ _jsxDEV("ol", {
+						ref: listRef,
+						className: "mt-6",
+						onPointerLeave: () => settled && setActive(-1),
+						"data-tsd-source": "/src/components/site/about/WhyCapex.tsx:124:13",
+						children: [principles.map((p, i) => {
+							const live = i === active;
+							return /* @__PURE__ */ _jsxDEV("li", {
+								"data-index": i,
+								onPointerEnter: () => setActive(i),
+								onFocusCapture: () => setActive(i),
+								className: "group",
+								"data-tsd-source": "/src/components/site/about/WhyCapex.tsx:128:19",
+								children: [/* @__PURE__ */ _jsxDEV("div", {
+									"aria-hidden": "true",
+									className: `h-px origin-left bg-white/15 transition-transform duration-[1100ms] ease-out ${drawn ? "scale-x-100" : "scale-x-0"}`,
+									style: { transitionDelay: `${i * 130 + 200}ms` },
+									"data-tsd-source": "/src/components/site/about/WhyCapex.tsx:136:21"
+								}, void 0, false, {
+									fileName: _jsxFileName,
+									lineNumber: 136,
+									columnNumber: 21
+								}, this), /* @__PURE__ */ _jsxDEV("div", {
+									className: "grid gap-x-10 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]",
+									"data-tsd-source": "/src/components/site/about/WhyCapex.tsx:143:21",
+									children: [/* @__PURE__ */ _jsxDEV("button", {
+										type: "button",
+										onClick: () => setActive(i),
+										"aria-pressed": live,
+										className: "flex items-baseline gap-5 py-6 text-left outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--ink)] md:py-8",
+										"data-tsd-source": "/src/components/site/about/WhyCapex.tsx:145:23",
+										children: [/* @__PURE__ */ _jsxDEV("span", {
+											className: `font-tech text-[11px] tracking-[0.1em] transition-colors duration-300 ${live ? "text-[var(--accent-display)]" : "text-white/30"}`,
+											"data-tsd-source": "/src/components/site/about/WhyCapex.tsx:151:25",
+											children: String(i + 1).padStart(2, "0")
+										}, void 0, false, {
+											fileName: _jsxFileName,
+											lineNumber: 151,
+											columnNumber: 25
+										}, this), /* @__PURE__ */ _jsxDEV("span", {
+											className: `font-display text-[23px] font-normal leading-[1.12] tracking-[-0.02em] transition-colors duration-300 md:text-[27px] ${live ? "text-[var(--accent-display)]" : "text-white/80 group-hover:text-white"}`,
+											"data-tsd-source": "/src/components/site/about/WhyCapex.tsx:158:25",
+											children: p.title
+										}, void 0, false, {
+											fileName: _jsxFileName,
+											lineNumber: 158,
+											columnNumber: 25
+										}, this)]
+									}, void 0, true, {
+										fileName: _jsxFileName,
+										lineNumber: 145,
+										columnNumber: 23
+									}, this), /* @__PURE__ */ _jsxDEV("div", {
+										className: `border-l py-1 pl-5 pr-1 transition-[border-color,opacity] duration-500 md:py-8 md:pl-7 ${live ? "border-[var(--accent)]/70 opacity-100" : "border-white/10 opacity-60"}`,
+										"data-tsd-source": "/src/components/site/about/WhyCapex.tsx:169:23",
+										children: /* @__PURE__ */ _jsxDEV("p", {
+											className: "max-w-lg text-sm leading-[1.75] text-white/65",
+											"data-tsd-source": "/src/components/site/about/WhyCapex.tsx:176:25",
+											children: p.body
+										}, void 0, false, {
+											fileName: _jsxFileName,
+											lineNumber: 176,
+											columnNumber: 25
+										}, this)
+									}, void 0, false, {
+										fileName: _jsxFileName,
+										lineNumber: 169,
+										columnNumber: 23
+									}, this)]
+								}, void 0, true, {
+									fileName: _jsxFileName,
+									lineNumber: 143,
+									columnNumber: 21
+								}, this)]
+							}, p.title, true, {
+								fileName: _jsxFileName,
+								lineNumber: 128,
+								columnNumber: 19
+							}, this);
+						}), /* @__PURE__ */ _jsxDEV("div", {
+							"aria-hidden": "true",
+							className: `h-px origin-left bg-white/15 transition-transform duration-[1100ms] ease-out ${drawn ? "scale-x-100" : "scale-x-0"}`,
+							style: { transitionDelay: `${n * 130 + 200}ms` },
+							"data-tsd-source": "/src/components/site/about/WhyCapex.tsx:182:15"
+						}, void 0, false, {
+							fileName: _jsxFileName,
+							lineNumber: 182,
+							columnNumber: 15
+						}, this)]
+					}, void 0, true, {
+						fileName: _jsxFileName,
+						lineNumber: 124,
+						columnNumber: 13
+					}, this)]
+				}, void 0, true, {
+					fileName: _jsxFileName,
+					lineNumber: 118,
+					columnNumber: 11
+				}, this)]
+			}, void 0, true, {
+				fileName: _jsxFileName,
+				lineNumber: 83,
+				columnNumber: 9
+			}, this)
+		}, void 0, false, {
+			fileName: _jsxFileName,
+			lineNumber: 82,
+			columnNumber: 7
+		}, this)]
+	}, void 0, true, {
+		fileName: _jsxFileName,
+		lineNumber: 73,
+		columnNumber: 5
+	}, this);
+}
+_s(WhyCapex, "XkVpcblWORbgyqvQZmdY484yPt0=");
+_c = WhyCapex;
+var _c;
+$RefreshReg$(_c, "WhyCapex");
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope;
+import * as __vite_react_currentExports from "/src/components/site/about/WhyCapex.tsx";
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+
+  const currentExports = __vite_react_currentExports;
+  queueMicrotask(() => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/svans/OneDrive/Desktop/Corporate Clarity/src/components/site/about/WhyCapex.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/svans/OneDrive/Desktop/Corporate Clarity/src/components/site/about/WhyCapex.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+function $RefreshReg$(type, id) { return RefreshRuntime.register(type, "C:/Users/svans/OneDrive/Desktop/Corporate Clarity/src/components/site/about/WhyCapex.tsx" + ' ' + id); }
+function $RefreshSig$() { return RefreshRuntime.createSignatureFunctionForTransform(); }
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJtYXBwaW5ncyI6IkFBQUE7QUFDQTtBQUNBOzs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBaUJBOztDQUNBO0NBQ0E7Q0FDQTtDQUNBO0NBQ0E7Q0FDQTs7OztDQUtBO0VBQ0E7RUFDQTtFQUNBLHFDQUNBO0dBQ0E7SUFDQTtJQUNBO0lBQ0E7SUFDQTtJQUNBO0dBQ0E7RUFDQSxHQUNBLGtCQUNBO0VBQ0E7O0VBRUE7RUFDQTtHQUNBO0dBQ0E7RUFDQTtDQUNBOztDQUdBO0VBQ0E7RUFDQTtFQUNBLHFDQUNBO0dBQ0E7SUFDQTtJQUNBO0dBQ0E7RUFDQSxHQUNBLGlCQUNBO0VBQ0E7RUFDQTtDQUNBO0NBRUEsT0FDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO1lBSkEsQ0FLQTtHQUNBO0dBQ0E7R0FDQTtFQUFNOzs7O1lBQ047R0FBQTtHQUFBO2FBQ0E7SUFBQTtJQUFBO2NBQUEsQ0FFQTtLQUFBO0tBQUE7ZUFDQTtNQUFBO01BQUE7Z0JBQUE7T0FDQTtRQUFBO2tCQUNBO1NBQUE7U0FBQTttQkFBeUQ7UUFBQTs7Ozs7T0FDekQ7Ozs7O09BQ0E7UUFBQTtRQUFBO2tCQUNBO1NBQUE7U0FBQTttQkFBQTtVQUNBO1VBQ0EsbUdBQXNCOzs7OztVQUN0QjtXQUFBO1dBQUE7cUJBQWlEO1VBQUE7Ozs7O1NBQ2pEOzs7Ozs7T0FDQTs7Ozs7T0FDQTtRQUFBO1FBQUE7a0JBQ0E7U0FBQTtTQUFBO21CQUFxRjtRQUFBOzs7OztPQUNyRjs7Ozs7T0FFQTtRQUFBO1FBQUE7a0JBQ0E7U0FBQTtTQUFBO1NBQUE7bUJBQUE7VUFDQTtXQUFBO1dBQUE7VUFBbUU7Ozs7O1VBQ25FO1dBQUE7V0FBQTtxQkFBcUc7VUFFckc7Ozs7O1VBQ0E7V0FBQTtXQUFBO3FCQUNBO1lBQUE7WUFBQTtzQkFBQTthQUEyRzthQUMzRzthQUFBO2FBQUE7WUFDQTs7Ozs7O1VBQ0EsR0FKQTs7OztpQkFJQTtTQUNBOzs7Ozs7T0FDQTs7Ozs7TUFDQTs7Ozs7O0lBQ0E7Ozs7Y0FHQTtLQUFBO0tBQUE7ZUFBQSxDQUNBO01BQUE7Z0JBQ0E7T0FBQTtPQUFBO2lCQUNBO01BQ0E7Ozs7O0tBQ0E7Ozs7ZUFDQTtNQUFBO01BQUE7TUFBQTtNQUFBO2dCQUFBLENBQ0E7T0FDQTtPQUNBLE9BQ0E7UUFFQTtRQUNBO1FBQ0E7UUFDQTtRQUNBO2tCQU5BLENBUUE7U0FDQTtTQUNBLDJGQUNBO1NBRUE7U0FDQTtRQUFvQjs7OztrQkFDcEI7U0FBQTtTQUFBO21CQUFBLENBRUE7VUFDQTtVQUNBO1VBQ0E7VUFDQTtVQUNBO29CQUxBLENBTUE7V0FDQSxvRkFDQTtXQUVBO3FCQUNBO1VBQ0E7Ozs7b0JBQ0E7V0FDQSxtSUFDQSxPQUNBLGlDQUNBO1dBRUE7cUJBQ0E7VUFDQTs7OztrQkFDQTs7Ozs7bUJBRUE7VUFDQSxxR0FDQSxPQUNBLDBDQUNBO1VBRUE7b0JBQ0E7V0FBQTtXQUFBO3FCQUFvRjtVQUFBOzs7OztTQUNwRjs7OztpQkFDQTs7Ozs7Z0JBQ0E7VUFsREE7Ozs7Y0FrREE7TUFFQSxJQUNBO09BQ0E7T0FDQSwyRkFDQTtPQUVBO09BQ0E7TUFBYzs7OztjQUNkOzs7OzthQUNBOzs7OztZQUNBOzs7Ozs7RUFDQTs7OztVQUNBOzs7Ozs7QUFFQSIsIm5hbWVzIjpbXSwiaWdub3JlTGlzdCI6W10sInNvdXJjZXMiOlsiV2h5Q2FwZXgudHN4Il0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IHVzZUVmZmVjdCwgdXNlUmVmLCB1c2VTdGF0ZSB9IGZyb20gXCJyZWFjdFwiO1xuaW1wb3J0IHsgUmV2ZWFsIH0gZnJvbSBcIkAvY29tcG9uZW50cy9zaXRlL2hvbWUvUmV2ZWFsXCI7XG5pbXBvcnQgeyBXSFkgfSBmcm9tIFwiQC9saWIvYWJvdXQtY29udGVudFwiO1xuXG4vKipcbiAqIFdoeUNhcGV4IChBYm91dCk6IHRoZSBkaWZmZXJlbnRpYXRpb24gYXMgYW4gYWN0aXZlIHJlZ2lzdGVyIG9uIGRlZXBcbiAqIGVzcHJlc3NvIOKAlCB0aGUgc3Ryb25nZXN0IGRhcmsgbW9tZW50IG9mIHRoZSBwYWdlLiBMZWZ0OiB0aGUgY2xhaW0sXG4gKiBcIkJ1aWx0IG9uIHJpZ29yLlwiLCBoZWxkIHN0aWNreSBiZXNpZGUgdGhlIHJlZ2lzdGVyIHdpdGggYSBsaXZlIHJlYWRvdXRcbiAqIG9mIHRoZSByb3cgdW5kZXIgZXhhbWluYXRpb24gKFBSIDAzIMK3IFR3byBwcmFjdGljZXMsIG9uZSBjb21wYW55KS5cbiAqIFJpZ2h0OiBzaXggd29ya2luZyBwcmluY2lwbGVzIGFzIGhhaXJsaW5lIHJvd3Mg4oCUIGVhY2ggcm93IGEgdHdvLWNlbGxcbiAqIGNvbXBvc2l0aW9uLCB0aGUgY2xhaW0gb24gdGhlIGxlZnQgYW5kIGl0cyBldmlkZW5jZSBiZWhpbmQgYSBoYWlybGluZVxuICogb24gdGhlIHJpZ2h0LiBUaGUgcmVnaXN0ZXIgc2V0dGxlcyBpdHNlbGYgYXMgdGhlIHJlYWRlciBzY3JvbGxzIChlYWNoXG4gKiBmdWxseS12aWV3ZWQgcm93IGJlY29tZXMgdGhlIGV4YW1pbmVkIG9uZSk7IGEgcG9pbnRlciBvciBrZXlib2FyZFxuICogdGFrZXMgb3ZlciBpbnN0YW50bHkgYW5kIGhhbmRzIGNvbnRyb2wgYmFjayBvbiBsZWF2ZS4gTm90aGluZyBpc1xuICogaG92ZXItZ2F0ZWQ6IGV2ZXJ5IGVudHJ5IGlzIGFsd2F5cyB2aXNpYmxlIGFuZCByZWFjaGFibGUuIE1vdGlvbiBpc1xuICogb3BhY2l0eSBhbmQgb25lIGRyYXduIGhhaXJsaW5lIHBlciByb3cg4oCUIG5vIHNwcmluZ3MsIG5vIGNvbnRpbnVvdXNcbiAqIGFuaW1hdGlvbi4gRXZlcnkgc3RhdGVtZW50IGlzIHRyYWNlYWJsZSB0byB0aGUgY29tcGFueSByZWNvcmQ7XG4gKiBub3RoaW5nIGlzIHByb21pc2VkLCBjb3VudGVkIG9yIHJhdGVkLlxuICovXG5leHBvcnQgZnVuY3Rpb24gV2h5Q2FwZXgoKSB7XG4gIGNvbnN0IHByaW5jaXBsZXMgPSBXSFkucHJpbmNpcGxlcztcbiAgY29uc3QgbiA9IHByaW5jaXBsZXMubGVuZ3RoO1xuICBjb25zdCBbYWN0aXZlLCBzZXRBY3RpdmVdID0gdXNlU3RhdGUoMCk7XG4gIGNvbnN0IFtzZXR0bGVkLCBzZXRTZXR0bGVkXSA9IHVzZVN0YXRlKGZhbHNlKTtcbiAgY29uc3QgW2RyYXduLCBzZXREcmF3bl0gPSB1c2VTdGF0ZShmYWxzZSk7XG4gIGNvbnN0IGxpc3RSZWYgPSB1c2VSZWY8SFRNTE9MaXN0RWxlbWVudD4obnVsbCk7XG5cbiAgLy8gU2V0dGxlOiBhcyB0aGUgcmVhZGVyIHNjcm9sbHMsIHRoZSByb3cgb2NjdXB5aW5nIG1vc3Qgb2YgdGhlIHZpZXdwb3J0XG4gIC8vIGJlY29tZXMgdGhlIGV4YW1pbmVkIG9uZSDigJQgb25jZSBhIHJvdyBoYXMgYmVlbiBwYXNzZWQsIGNvbnRyb2wgc3RheXNcbiAgLy8gd2l0aCB0aGUgcmVhZGVyIHVudGlsIHRoZXkgbGVhdmUgdGhlIHJlZ2lzdGVyIChwb2ludGVyL2ZvY3VzIHJldmVydCkuXG4gIHVzZUVmZmVjdCgoKSA9PiB7XG4gICAgY29uc3QgbGlzdCA9IGxpc3RSZWYuY3VycmVudDtcbiAgICBpZiAoIWxpc3QpIHJldHVybjtcbiAgICBjb25zdCBpbyA9IG5ldyBJbnRlcnNlY3Rpb25PYnNlcnZlcihcbiAgICAgIChlbnRyaWVzKSA9PiB7XG4gICAgICAgIGZvciAoY29uc3QgZW50cnkgb2YgZW50cmllcykge1xuICAgICAgICAgIGlmICghZW50cnkuaXNJbnRlcnNlY3RpbmcpIGNvbnRpbnVlO1xuICAgICAgICAgIGNvbnN0IGkgPSBOdW1iZXIoKGVudHJ5LnRhcmdldCBhcyBIVE1MRWxlbWVudCkuZGF0YXNldC5pbmRleCA/PyAwKTtcbiAgICAgICAgICBzZXRTZXR0bGVkKHRydWUpO1xuICAgICAgICAgIHNldEFjdGl2ZShpKTtcbiAgICAgICAgICBpZiAoaSA9PT0gbiAtIDEpIGlvLmRpc2Nvbm5lY3QoKTtcbiAgICAgICAgfVxuICAgICAgfSxcbiAgICAgIHsgdGhyZXNob2xkOiAwLjg1IH0sXG4gICAgKTtcbiAgICBmb3IgKGNvbnN0IGxpIG9mIEFycmF5LmZyb20obGlzdC5jaGlsZHJlbikpIGlvLm9ic2VydmUobGkpO1xuICAgIC8vIG5vLXNjcm9sbCBzYWZldHk6IHRoZSByZWdpc3RlciBpcyBuZXZlciBkZWFkIOKAlCAwMSBpcyBsaXZlIGJ5IGRlZmF1bHRcbiAgICBjb25zdCBmYWxsYmFjayA9IHNldFRpbWVvdXQoKCkgPT4gc2V0U2V0dGxlZCh0cnVlKSwgMjUwMCk7XG4gICAgcmV0dXJuICgpID0+IHtcbiAgICAgIGlvLmRpc2Nvbm5lY3QoKTtcbiAgICAgIGNsZWFyVGltZW91dChmYWxsYmFjayk7XG4gICAgfTtcbiAgfSwgW25dKTtcblxuICAvLyB0aGUgcm93IGhhaXJsaW5lcyBkcmF3IGluIGFzIHRoZSByZWdpc3RlciBhcnJpdmVzXG4gIHVzZUVmZmVjdCgoKSA9PiB7XG4gICAgY29uc3QgbGlzdCA9IGxpc3RSZWYuY3VycmVudDtcbiAgICBpZiAoIWxpc3QpIHJldHVybjtcbiAgICBjb25zdCBpbyA9IG5ldyBJbnRlcnNlY3Rpb25PYnNlcnZlcihcbiAgICAgIChlbnRyaWVzKSA9PiB7XG4gICAgICAgIGlmIChlbnRyaWVzWzBdLmlzSW50ZXJzZWN0aW5nKSB7XG4gICAgICAgICAgc2V0RHJhd24odHJ1ZSk7XG4gICAgICAgICAgaW8uZGlzY29ubmVjdCgpO1xuICAgICAgICB9XG4gICAgICB9LFxuICAgICAgeyB0aHJlc2hvbGQ6IDAuMSB9LFxuICAgICk7XG4gICAgaW8ub2JzZXJ2ZShsaXN0KTtcbiAgICByZXR1cm4gKCkgPT4gaW8uZGlzY29ubmVjdCgpO1xuICB9LCBbXSk7XG5cbiAgcmV0dXJuIChcbiAgICA8c2VjdGlvblxuICAgICAgYXJpYS1sYWJlbD1cIldoeSBDYXBleFwiXG4gICAgICBkYXRhLXRvbmU9XCJkYXJrXCJcbiAgICAgIGNsYXNzTmFtZT1cInJlbGF0aXZlIG92ZXJmbG93LWhpZGRlbiBiZy1bdmFyKC0taW5rKV0gdGV4dC13aGl0ZVwiXG4gICAgPlxuICAgICAgPGRpdlxuICAgICAgICBhcmlhLWhpZGRlbj1cInRydWVcIlxuICAgICAgICBjbGFzc05hbWU9XCJwb2ludGVyLWV2ZW50cy1ub25lIGFic29sdXRlIGluc2V0LTAgb3BhY2l0eS0yMCBzdXJ2ZXktZ3JpZFwiXG4gICAgICAvPlxuICAgICAgPGRpdiBjbGFzc05hbWU9XCJyZWxhdGl2ZSBteC1hdXRvIG1heC13LVsxNjgwcHhdIHB4LTYgcHktMjQgbWQ6cHgtMTAgbWQ6cHktMzYgbGc6cHgtMTIgbGc6cHktNDRcIj5cbiAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJncmlkIGdhcC0xNiBsZzpncmlkLWNvbHMtMTIgbGc6aXRlbXMtc3RhcnQgbGc6Z2FwLTEwXCI+XG4gICAgICAgICAgey8qIHRoZSBjbGFpbSDigJQgaGVsZCBiZXNpZGUgdGhlIHJlZ2lzdGVyIGFzIGl0IHNjcm9sbHMgKi99XG4gICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJsZzpjb2wtc3Bhbi00XCI+XG4gICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImxnOnN0aWNreSBsZzp0b3AtMjhcIj5cbiAgICAgICAgICAgICAgPFJldmVhbD5cbiAgICAgICAgICAgICAgICA8cCBjbGFzc05hbWU9XCJleWVicm93LXNhbnMgdGV4dC13aGl0ZS80MFwiPntXSFkuZXllYnJvd308L3A+XG4gICAgICAgICAgICAgIDwvUmV2ZWFsPlxuICAgICAgICAgICAgICA8UmV2ZWFsIGRlbGF5PXs5MH0+XG4gICAgICAgICAgICAgICAgPGgyIGNsYXNzTmFtZT1cIm10LTEwIGZvbnQtZGlzcGxheSB0ZXh0LVsxM3Z3XSBmb250LW5vcm1hbCBsZWFkaW5nLVswLjk4XSB0cmFja2luZy1bLTAuMDNlbV0gc206dGV4dC1bOHZ3XSBsZzp0ZXh0LVttaW4oNC44dncsODRweCldXCI+XG4gICAgICAgICAgICAgICAgICB7V0hZLmhlYWRsaW5lWzBdfVxuICAgICAgICAgICAgICAgICAgPGJyIC8+XG4gICAgICAgICAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9XCJ0ZXh0LXdoaXRlLzM1XCI+e1dIWS5oZWFkbGluZVsxXX08L3NwYW4+XG4gICAgICAgICAgICAgICAgPC9oMj5cbiAgICAgICAgICAgICAgPC9SZXZlYWw+XG4gICAgICAgICAgICAgIDxSZXZlYWwgZGVsYXk9ezE4MH0+XG4gICAgICAgICAgICAgICAgPHAgY2xhc3NOYW1lPVwibXQtMTAgbWF4LXctc20gdGV4dC1bMTVweF0gbGVhZGluZy1bMS44XSB0ZXh0LXdoaXRlLzYwXCI+e1dIWS5ub3RlfTwvcD5cbiAgICAgICAgICAgICAgPC9SZXZlYWw+XG4gICAgICAgICAgICAgIHsvKiB0aGUgbGl2ZSByZWFkb3V0IOKAlCB3aGljaCBwcmluY2lwbGUgaXMgdW5kZXIgZXhhbWluYXRpb24gKi99XG4gICAgICAgICAgICAgIDxSZXZlYWwgZGVsYXk9ezI0MH0+XG4gICAgICAgICAgICAgICAgPGRpdiBhcmlhLWhpZGRlbj1cInRydWVcIiBjbGFzc05hbWU9XCJtdC0xMiBoaWRkZW4gbGc6YmxvY2tcIj5cbiAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiaC1weCB3LTI0IGJnLVt2YXIoLS1hY2NlbnQpXS82MFwiIC8+XG4gICAgICAgICAgICAgICAgICA8cCBjbGFzc05hbWU9XCJtdC02IGZvbnQtdGVjaCB0ZXh0LVsxMHB4XSB1cHBlcmNhc2UgdHJhY2tpbmctWzAuMjJlbV0gdGV4dC13aGl0ZS8zNVwiPlxuICAgICAgICAgICAgICAgICAgICBVbmRlciBleGFtaW5hdGlvblxuICAgICAgICAgICAgICAgICAgPC9wPlxuICAgICAgICAgICAgICAgICAgPGRpdiBrZXk9e2FjdGl2ZX0gY2xhc3NOYW1lPVwiYWJvdXQtbm90ZS1pblwiPlxuICAgICAgICAgICAgICAgICAgICA8cCBjbGFzc05hbWU9XCJtdC0yIGZvbnQtdGVjaCB0ZXh0LVsxMnB4XSB0cmFja2luZy1bMC4xZW1dIHRleHQtW3ZhcigtLWFjY2VudC1kaXNwbGF5KV1cIj5cbiAgICAgICAgICAgICAgICAgICAgICBQUiB7U3RyaW5nKGFjdGl2ZSArIDEpLnBhZFN0YXJ0KDIsIFwiMFwiKX0gwrcge3ByaW5jaXBsZXNbYWN0aXZlXS50aXRsZX1cbiAgICAgICAgICAgICAgICAgICAgPC9wPlxuICAgICAgICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgICAgIDwvUmV2ZWFsPlxuICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgPC9kaXY+XG5cbiAgICAgICAgICB7LyogdGhlIHJlZ2lzdGVyIOKAlCBzaXggdmVyaWZpZWQgcHJpbmNpcGxlcywgdHdvLWNlbGwgcm93cyAqL31cbiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImxnOmNvbC1zcGFuLThcIj5cbiAgICAgICAgICAgIDxSZXZlYWw+XG4gICAgICAgICAgICAgIDxwIGNsYXNzTmFtZT1cImZvbnQtdGVjaCB0ZXh0LVsxMHB4XSB1cHBlcmNhc2UgdHJhY2tpbmctWzAuMjJlbV0gdGV4dC13aGl0ZS8zNVwiPlxuICAgICAgICAgICAgICAgIHtXSFkucmVnaXN0ZXJ9XG4gICAgICAgICAgICAgIDwvcD5cbiAgICAgICAgICAgIDwvUmV2ZWFsPlxuICAgICAgICAgICAgPG9sIHJlZj17bGlzdFJlZn0gY2xhc3NOYW1lPVwibXQtNlwiIG9uUG9pbnRlckxlYXZlPXsoKSA9PiBzZXR0bGVkICYmIHNldEFjdGl2ZSgtMSl9PlxuICAgICAgICAgICAgICB7cHJpbmNpcGxlcy5tYXAoKHAsIGkpID0+IHtcbiAgICAgICAgICAgICAgICBjb25zdCBsaXZlID0gaSA9PT0gYWN0aXZlO1xuICAgICAgICAgICAgICAgIHJldHVybiAoXG4gICAgICAgICAgICAgICAgICA8bGlcbiAgICAgICAgICAgICAgICAgICAga2V5PXtwLnRpdGxlfVxuICAgICAgICAgICAgICAgICAgICBkYXRhLWluZGV4PXtpfVxuICAgICAgICAgICAgICAgICAgICBvblBvaW50ZXJFbnRlcj17KCkgPT4gc2V0QWN0aXZlKGkpfVxuICAgICAgICAgICAgICAgICAgICBvbkZvY3VzQ2FwdHVyZT17KCkgPT4gc2V0QWN0aXZlKGkpfVxuICAgICAgICAgICAgICAgICAgICBjbGFzc05hbWU9XCJncm91cFwiXG4gICAgICAgICAgICAgICAgICA+XG4gICAgICAgICAgICAgICAgICAgIHsvKiB0aGUgcm93IGhhaXJsaW5lIOKAlCBkcmF3biBhcyB0aGUgcmVnaXN0ZXIgYXJyaXZlcyAqL31cbiAgICAgICAgICAgICAgICAgICAgPGRpdlxuICAgICAgICAgICAgICAgICAgICAgIGFyaWEtaGlkZGVuPVwidHJ1ZVwiXG4gICAgICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPXtgaC1weCBvcmlnaW4tbGVmdCBiZy13aGl0ZS8xNSB0cmFuc2l0aW9uLXRyYW5zZm9ybSBkdXJhdGlvbi1bMTEwMG1zXSBlYXNlLW91dCAke1xuICAgICAgICAgICAgICAgICAgICAgICAgZHJhd24gPyBcInNjYWxlLXgtMTAwXCIgOiBcInNjYWxlLXgtMFwiXG4gICAgICAgICAgICAgICAgICAgICAgfWB9XG4gICAgICAgICAgICAgICAgICAgICAgc3R5bGU9e3sgdHJhbnNpdGlvbkRlbGF5OiBgJHtpICogMTMwICsgMjAwfW1zYCB9fVxuICAgICAgICAgICAgICAgICAgICAvPlxuICAgICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImdyaWQgZ2FwLXgtMTAgbWQ6Z3JpZC1jb2xzLVttaW5tYXgoMCwwLjg1ZnIpX21pbm1heCgwLDEuMTVmcildXCI+XG4gICAgICAgICAgICAgICAgICAgICAgey8qIHRoZSBjbGFpbSBjZWxsICovfVxuICAgICAgICAgICAgICAgICAgICAgIDxidXR0b25cbiAgICAgICAgICAgICAgICAgICAgICAgIHR5cGU9XCJidXR0b25cIlxuICAgICAgICAgICAgICAgICAgICAgICAgb25DbGljaz17KCkgPT4gc2V0QWN0aXZlKGkpfVxuICAgICAgICAgICAgICAgICAgICAgICAgYXJpYS1wcmVzc2VkPXtsaXZlfVxuICAgICAgICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPVwiZmxleCBpdGVtcy1iYXNlbGluZSBnYXAtNSBweS02IHRleHQtbGVmdCBvdXRsaW5lLW5vbmUgZm9jdXMtdmlzaWJsZTpyaW5nLTEgZm9jdXMtdmlzaWJsZTpyaW5nLVt2YXIoLS1hY2NlbnQpXSBmb2N1cy12aXNpYmxlOnJpbmctb2Zmc2V0LTQgZm9jdXMtdmlzaWJsZTpyaW5nLW9mZnNldC1bdmFyKC0taW5rKV0gbWQ6cHktOFwiXG4gICAgICAgICAgICAgICAgICAgICAgPlxuICAgICAgICAgICAgICAgICAgICAgICAgPHNwYW5cbiAgICAgICAgICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPXtgZm9udC10ZWNoIHRleHQtWzExcHhdIHRyYWNraW5nLVswLjFlbV0gdHJhbnNpdGlvbi1jb2xvcnMgZHVyYXRpb24tMzAwICR7XG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgbGl2ZSA/IFwidGV4dC1bdmFyKC0tYWNjZW50LWRpc3BsYXkpXVwiIDogXCJ0ZXh0LXdoaXRlLzMwXCJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgfWB9XG4gICAgICAgICAgICAgICAgICAgICAgICA+XG4gICAgICAgICAgICAgICAgICAgICAgICAgIHtTdHJpbmcoaSArIDEpLnBhZFN0YXJ0KDIsIFwiMFwiKX1cbiAgICAgICAgICAgICAgICAgICAgICAgIDwvc3Bhbj5cbiAgICAgICAgICAgICAgICAgICAgICAgIDxzcGFuXG4gICAgICAgICAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT17YGZvbnQtZGlzcGxheSB0ZXh0LVsyM3B4XSBmb250LW5vcm1hbCBsZWFkaW5nLVsxLjEyXSB0cmFja2luZy1bLTAuMDJlbV0gdHJhbnNpdGlvbi1jb2xvcnMgZHVyYXRpb24tMzAwIG1kOnRleHQtWzI3cHhdICR7XG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgbGl2ZVxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPyBcInRleHQtW3ZhcigtLWFjY2VudC1kaXNwbGF5KV1cIlxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgOiBcInRleHQtd2hpdGUvODAgZ3JvdXAtaG92ZXI6dGV4dC13aGl0ZVwiXG4gICAgICAgICAgICAgICAgICAgICAgICAgIH1gfVxuICAgICAgICAgICAgICAgICAgICAgICAgPlxuICAgICAgICAgICAgICAgICAgICAgICAgICB7cC50aXRsZX1cbiAgICAgICAgICAgICAgICAgICAgICAgIDwvc3Bhbj5cbiAgICAgICAgICAgICAgICAgICAgICA8L2J1dHRvbj5cbiAgICAgICAgICAgICAgICAgICAgICB7LyogdGhlIGV2aWRlbmNlIGNlbGwg4oCUIGFsd2F5cyBwcmVzZW50LCBxdWlldCB1bnRpbCBleGFtaW5lZCAqL31cbiAgICAgICAgICAgICAgICAgICAgICA8ZGl2XG4gICAgICAgICAgICAgICAgICAgICAgICBjbGFzc05hbWU9e2Bib3JkZXItbCBweS0xIHBsLTUgcHItMSB0cmFuc2l0aW9uLVtib3JkZXItY29sb3Isb3BhY2l0eV0gZHVyYXRpb24tNTAwIG1kOnB5LTggbWQ6cGwtNyAke1xuICAgICAgICAgICAgICAgICAgICAgICAgICBsaXZlXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPyBcImJvcmRlci1bdmFyKC0tYWNjZW50KV0vNzAgb3BhY2l0eS0xMDBcIlxuICAgICAgICAgICAgICAgICAgICAgICAgICAgIDogXCJib3JkZXItd2hpdGUvMTAgb3BhY2l0eS02MFwiXG4gICAgICAgICAgICAgICAgICAgICAgICB9YH1cbiAgICAgICAgICAgICAgICAgICAgICA+XG4gICAgICAgICAgICAgICAgICAgICAgICA8cCBjbGFzc05hbWU9XCJtYXgtdy1sZyB0ZXh0LXNtIGxlYWRpbmctWzEuNzVdIHRleHQtd2hpdGUvNjVcIj57cC5ib2R5fTwvcD5cbiAgICAgICAgICAgICAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgICAgICAgICA8L2xpPlxuICAgICAgICAgICAgICAgICk7XG4gICAgICAgICAgICAgIH0pfVxuICAgICAgICAgICAgICA8ZGl2XG4gICAgICAgICAgICAgICAgYXJpYS1oaWRkZW49XCJ0cnVlXCJcbiAgICAgICAgICAgICAgICBjbGFzc05hbWU9e2BoLXB4IG9yaWdpbi1sZWZ0IGJnLXdoaXRlLzE1IHRyYW5zaXRpb24tdHJhbnNmb3JtIGR1cmF0aW9uLVsxMTAwbXNdIGVhc2Utb3V0ICR7XG4gICAgICAgICAgICAgICAgICBkcmF3biA/IFwic2NhbGUteC0xMDBcIiA6IFwic2NhbGUteC0wXCJcbiAgICAgICAgICAgICAgICB9YH1cbiAgICAgICAgICAgICAgICBzdHlsZT17eyB0cmFuc2l0aW9uRGVsYXk6IGAke24gKiAxMzAgKyAyMDB9bXNgIH19XG4gICAgICAgICAgICAgIC8+XG4gICAgICAgICAgICA8L29sPlxuICAgICAgICAgIDwvZGl2PlxuICAgICAgICA8L2Rpdj5cbiAgICAgIDwvZGl2PlxuICAgIDwvc2VjdGlvbj5cbiAgKTtcbn1cbiJdLCJmaWxlIjoiQzovVXNlcnMvc3ZhbnMvT25lRHJpdmUvRGVza3RvcC9Db3Jwb3JhdGUgQ2xhcml0eS9zcmMvY29tcG9uZW50cy9zaXRlL2Fib3V0L1doeUNhcGV4LnRzeCJ9

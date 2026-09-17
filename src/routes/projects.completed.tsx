@@ -176,7 +176,7 @@ function CompletedArchive() {
   const onPlace = (stateSlug: string) => setFilter({ state: stateSlug });
 
   return (
-    <ProjectsExperience brandWordmark="CAPEX" corpus={corpus}>
+    <ProjectsExperience brandWordmark="CAPEX" corpus={corpus} hideNav={true}>
       <ArchiveNav
         overDark={navOverDark}
         brandWordmark="CAPEX"

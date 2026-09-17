@@ -18,7 +18,10 @@ export function Trust() {
     >
       <div className="mx-auto max-w-[1440px] px-6 py-28 md:px-10 md:py-40 lg:px-12 lg:py-48">
         <Reveal>
-          <h2 className="max-w-[16ch] text-balance font-display text-[42px] font-normal leading-[1.05] tracking-[-0.025em] md:text-[64px] lg:text-[80px]">
+          <p className="eyebrow-sans text-muted-foreground">{TRUST.eyebrow}</p>
+        </Reveal>
+        <Reveal delay={90}>
+          <h2 className="mt-10 max-w-[16ch] text-balance font-display text-[42px] font-normal leading-[1.05] tracking-[-0.025em] md:text-[64px] lg:text-[80px]">
             {TRUST.headline}
           </h2>
         </Reveal>

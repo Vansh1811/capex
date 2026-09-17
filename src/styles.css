@@ -396,6 +396,24 @@
   background-size: 22px 22px;
 }
 
+/* About page note swap — quiet rise-and-fade when a register's detail
+ * panel changes content (process stage, principle entry). Page-scoped by
+ * name; keyed re-mount in the component triggers it. */
+@keyframes about-note-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@utility about-note-in {
+  animation: about-note-in 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 /* Rising word — used by the delivery-flow statements; each word arrives
  * from the baseline like a setting line of type. */
 @keyframes rise-line {

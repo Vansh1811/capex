@@ -6,17 +6,14 @@ import { PUBLIC_QUERY_DEFAULTS } from "@/components/site/SiteChrome";
 import { buildSearchCorpus, type SearchCorpus } from "@/components/site/home/SearchOverlay";
 import { AboutExperience } from "@/components/site/about/AboutExperience";
 import { Opening } from "@/components/site/about/Opening";
-import { Manifesto } from "@/components/site/about/Manifesto";
 import { TwoWorlds } from "@/components/site/about/TwoWorlds";
+import { WhyCapex } from "@/components/site/about/WhyCapex";
 import { HowWeWork } from "@/components/site/about/HowWeWork";
 import { Story } from "@/components/site/about/Story";
-import { TheModel } from "@/components/site/about/TheModel";
-import { PhysicalCapex } from "@/components/site/about/PhysicalCapex";
 import { Range } from "@/components/site/about/Range";
 import { PeopleTeaser } from "@/components/site/about/PeopleTeaser";
 import { Presence } from "@/components/site/about/Presence";
 import { Trust } from "@/components/site/about/Trust";
-import { TheRecord } from "@/components/site/about/TheRecord";
 import { AboutClosing } from "@/components/site/about/AboutClosing";
 
 const chromeQuery = queryOptions({
@@ -79,17 +76,14 @@ function AboutPage() {
   return (
     <AboutExperience brandWordmark={settings.brand_wordmark || "CAPEX"} corpus={corpus}>
       <Opening />
-      <Manifesto />
       <TwoWorlds />
+      <WhyCapex />
       <HowWeWork />
       <Story />
-      <TheModel />
-      <PhysicalCapex />
       <Range />
       <PeopleTeaser />
       <Presence />
       <Trust />
-      <TheRecord />
       <AboutClosing />
     </AboutExperience>
   );

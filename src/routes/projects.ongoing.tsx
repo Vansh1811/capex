@@ -172,7 +172,7 @@ function OngoingArchive() {
   ];
 
   return (
-    <ProjectsExperience brandWordmark="CAPEX" corpus={corpus}>
+    <ProjectsExperience brandWordmark="CAPEX" corpus={corpus} hideNav={true}>
       <ArchiveNav
         overDark={navOverDark}
         brandWordmark="CAPEX"

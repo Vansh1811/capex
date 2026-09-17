@@ -1,0 +1,34 @@
+import { spawn } from "node:child_process";
+import { writeFileSync } from "node:fs";
+const CHROME = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
+const chrome = spawn(CHROME, ["--headless=new","--remote-debugging-port=9334",`--user-data-dir=${process.env.TEMP}\\capex-r2b-${Date.now()}`,"--no-first-run","--disable-gpu","--window-size=1440,900","about:blank"]);
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+let t;
+for (let i = 0; i < 30; i++) { try { const l = await (await fetch("http://127.0.0.1:9334/json/list")).json(); t = l.find(x => x.type === "page"); if (t) break; } catch {} await sleep(500); }
+const ws = new WebSocket(t.webSocketDebuggerUrl);
+await new Promise((res, rej) => { ws.onopen = res; ws.onerror = rej; });
+let id = 0; const pending = new Map();
+ws.onmessage = (ev) => { const m = JSON.parse(ev.data); if (m.id && pending.has(m.id)) { pending.get(m.id)(m.result); pending.delete(m.id); } };
+const send = (method, params = {}) => new Promise((res) => { id += 1; pending.set(id, res); ws.send(JSON.stringify({ id, method, params })); });
+const evalJs = async (expr) => (await send("Runtime.evaluate", { expression: expr, returnByValue: true })).result?.value;
+await send("Page.enable");
+await send("Page.navigate", { url: "http://localhost:8082/about" });
+await sleep(6000);
+await send("Emulation.setDeviceMetricsOverride", { width: 1440, height: 900, deviceScaleFactor: 1, mobile: false });
+await sleep(1000);
+const cap = async (name, sel) => {
+  await evalJs(`(function(){var el=document.querySelector("${sel}");var r=el.getBoundingClientRect();window.scrollTo({top:r.top+window.scrollY-70,behavior:'instant'});})()`);
+  await sleep(1800);
+  const s = await send("Page.captureScreenshot", { format: "png" });
+  writeFileSync(`.freebuff/shots/${name}.png`, Buffer.from(s.data, "base64"));
+  console.log("shot:", name);
+};
+await cap("r2-hero", "section[aria-label^='About Capex']");
+await cap("r2-range", "section[aria-label='The range of work']");
+await send("Emulation.setDeviceMetricsOverride", { width: 390, height: 844, deviceScaleFactor: 2, mobile: true });
+await evalJs(`window.scrollTo({top:0,behavior:'instant'})`);
+await sleep(1500);
+const s = await send("Page.captureScreenshot", { format: "png" });
+writeFileSync(".freebuff/shots/r2-m-hero.png", Buffer.from(s.data, "base64"));
+console.log("shot: r2-m-hero");
+ws.close(); chrome.kill(); process.exit(0);

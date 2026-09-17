@@ -22,10 +22,12 @@ export type { SearchCorpus };
 export function ProjectsExperience({
   brandWordmark,
   corpus,
+  hideNav,
   children,
 }: {
   brandWordmark: string;
   corpus: SearchCorpus;
+  hideNav?: boolean;
   children: ReactNode;
 }) {
   const [searchOpen, setSearchOpen] = useState(false);
@@ -40,8 +42,16 @@ export function ProjectsExperience({
         setSearchOpen(true);
       }
     };
+    const openSearch = () => setSearchOpen(true);
+    const openStudio = () => setStudioOpen(true);
     document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
+    window.addEventListener("open-search", openSearch);
+    window.addEventListener("open-studio", openStudio);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      window.removeEventListener("open-search", openSearch);
+      window.removeEventListener("open-studio", openStudio);
+    };
   }, [searchOpen]);
 
   const [navOverDark, setNavOverDark] = useState(true);
@@ -78,6 +88,7 @@ export function ProjectsExperience({
         brandWordmark={brandWordmark}
         onOpenSearch={() => setSearchOpen(true)}
         onOpenStudio={() => setStudioOpen(true)}
+        hideDesktopNav={hideNav}
       />
       <main id="main">{children}</main>
       <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} corpus={corpus} />

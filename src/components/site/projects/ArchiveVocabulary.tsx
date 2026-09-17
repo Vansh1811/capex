@@ -296,7 +296,7 @@ export function ArchiveNav({
         overDark ? "bg-transparent" : "border-b border-border bg-background/92 backdrop-blur-[6px]"
       }`}
     >
-      <div className="mx-auto flex h-20 max-w-[1680px] items-center justify-between px-6 lg:px-12">
+      <div className="mx-auto flex h-20 max-w-[1680px] items-center justify-between gap-8 px-6 lg:px-12">
         <Link
           to="/"
           aria-label={`${brandWordmark} — home`}
@@ -307,7 +307,7 @@ export function ArchiveNav({
 
         {/* the two-state switch — editorial words, not a tab bar. The current
             state carries its count and full presence; the other waits. */}
-        <nav className="hidden items-center gap-10 lg:flex" aria-label="Project states">
+        <nav className="hidden items-center gap-6 lg:flex lg:gap-10" aria-label="Project states">
           {destinations.map((d) => (
             <Link
               key={d.key}
@@ -325,7 +325,13 @@ export function ArchiveNav({
           ))}
         </nav>
 
-        <nav className="hidden items-center gap-10 lg:flex" aria-label="Archive controls">
+        <nav className="hidden items-center gap-6 lg:flex lg:gap-10" aria-label="Archive controls">
+          <Link
+            to="/projects"
+            className={`eyebrow-sans transition-colors duration-300 ${tone.base} ${tone.hover}`}
+          >
+            Projects
+          </Link>
           <button
             onClick={onOpenIndex}
             aria-pressed={indexActive}
@@ -343,10 +349,16 @@ export function ArchiveNav({
           >
             Filter {filterActive ? "·" : "+"}
           </button>
+          <button
+            onClick={() => window.dispatchEvent(new Event("open-search"))}
+            className={`eyebrow-sans transition-colors duration-300 ${tone.base} ${tone.hover}`}
+          >
+            Search
+          </button>
         </nav>
 
         {/* mobile — the switch collapses to the count pair; controls live under the opening */}
-        <div className="flex items-center gap-5 lg:hidden">
+        <div className="mr-14 flex items-center gap-5 lg:hidden">
           {destinations.map((d) => (
             <Link
               key={d.key}

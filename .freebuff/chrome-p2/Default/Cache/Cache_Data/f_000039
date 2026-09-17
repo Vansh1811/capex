@@ -1,0 +1,245 @@
+/**
+* ABOUT CONTENT — the structured, source-verified copy for the About page.
+*
+* Every factual statement below is traceable to the three client-supplied
+* PDFs (DOC A "Company Profile" 21pp · DOC B "HVAC & fire profile" 22pp ·
+* DOC C "Electrical & CGD profile" 20pp) or to the already-verified site
+* corpus. Facts owned by other pages (services detail → /services, sector
+* catalogue → /sectors, project register → /projects, roster → /team,
+* clients → /clients, evidence → /credentials) appear here only as bridges.
+* No legacy statistics (10+ years, 150+ projects, 315+ KM, 24/7) — those
+* are not in the verified record.
+*
+* Delivery verbs: the PDFs describe the turnkey scope variously as
+* "engineering, procurement, execution, testing, commissioning and final
+* handover" (DOC A p4) and "Supply, Installation, Testing & Commissioning"
+* (all three). The six-step line merges the two source formulations
+* without inventing a stage neither document names.
+*/
+import { aboutPlate } from "/src/lib/about-media.ts";
+/** 01 — Opening. Text left, documentary plate right. No statistics. */
+export const OPENING = {
+	eyebrow: "About Capex",
+	lines: [
+		"We build what",
+		"keeps things",
+		"moving."
+	],
+	support: "Capex Construction & Engineering Pvt. Ltd. — a turnkey engineering company since 2012.",
+	plate: aboutPlate("pipeline-work"),
+	plateCaption: "Cross-country pipeline works · company profile record"
+};
+/**
+* 02 — Two worlds / the engineered world. The narrative + the image field
+* that opens it: what people see, then what we actually build.
+*/
+export const TWO_WORLDS = {
+	eyebrow: "The engineered world",
+	statementOne: "What people see is the finished place.",
+	statementTwo: "What we build is everything that makes it work.",
+	body: "Capex Construction & Engineering is a turnkey engineering solutions provider. Under one accountable contract — supply, installation, testing & commissioning — it builds the underground utility, electrical and city-gas networks that move power and fuel beneath cities, and the mechanical, electrical and fire-protection systems that keep buildings alive inside. Two practices, one company, accountable end to end.",
+	plate: aboutPlate("site-team")
+};
+/**
+* 03 — Why Capex. The differentiation, stated as working principles drawn
+* from the record — no invented SLAs, ratings, certifications or counts.
+*/
+export const WHY = {
+	eyebrow: "Why Capex",
+	headline: ["Built on", "rigor."],
+	note: "The difference is structural, not rhetorical — one company, one contract, from the first survey to final handover.",
+	register: "Working principles · from the company record",
+	principles: [
+		{
+			title: "Engineering-led",
+			short: "Turnkey scope",
+			body: "Projects are taken on a complete turnkey basis: engineering, procurement, execution, testing, commissioning and final handover."
+		},
+		{
+			title: "One accountable contract",
+			short: "Single contract",
+			body: "Supply, installation, testing & commissioning under a single contract — the system that runs on day one is the system one company answers for."
+		},
+		{
+			title: "Two practices, one company",
+			short: "Beneath + within",
+			body: "Underground utilities, electrical & CGD beneath the street; MEP, HVAC & fire protection within the building — delivered by the same pool of directors, managers and engineers."
+		},
+		{
+			title: "Planned execution",
+			short: "Noida + sites",
+			body: "Planning, design and coordination run from the Noida corporate office; resident project managers and site engineers hold the work at each site."
+		},
+		{
+			title: "Own plant and people",
+			short: "Own register",
+			body: "Owned rigs, welding and jointing equipment, and a central manufacturing unit in Rajasthan — scheduled from the company's own register, deployed to site."
+		},
+		{
+			title: "Tested before handed over",
+			short: "Segmented tests",
+			body: "Segmented testing and commissioning under the same contract that signed the first drawing, with one safety regime on every site."
+		}
+	]
+};
+/**
+* 04 — How the work moves: the common operating model (source verbs).
+* Each stage carries an output / held-by register line drawn from the same
+* record as the note — descriptors of the documented process, not claims.
+*/
+export const DELIVERY = {
+	eyebrow: "How the work moves",
+	note: "One accountable contract · from the company profile",
+	source: "Company profile, p4",
+	steps: [
+		{
+			word: "Understand",
+			note: "Every engagement starts with the site and the system as they actually are — surveyed, walked, drawn.",
+			output: "Site survey",
+			holder: "Engineering & planning",
+			measure: "The site as it is"
+		},
+		{
+			word: "Engineer",
+			note: "Design and engineering shaped around the project — routes, plant rooms, calculations, panels.",
+			output: "Design & drawings",
+			holder: "Design engineers",
+			measure: "Routes, plant rooms, calculations"
+		},
+		{
+			word: "Supply",
+			note: "Procurement and supply on the turnkey contract, backed by the company's own plant and manufacturing unit.",
+			output: "Procured materials",
+			holder: "Central manufacturing unit",
+			measure: "Own plant, own register"
+		},
+		{
+			word: "Install",
+			note: "Execution by resident project managers and site engineers, with owned rigs and jointing equipment on the ground.",
+			output: "Executed works",
+			holder: "Resident project managers",
+			measure: "Owned rigs on the ground"
+		},
+		{
+			word: "Test",
+			note: "Segmented hydraulic and functional testing — the safety regime applied on every site, for every worker.",
+			output: "Test records",
+			holder: "Site engineers",
+			measure: "Segmented, every section"
+		},
+		{
+			word: "Commission",
+			note: "Commissioning and final handover under the same contract that signed the first drawing.",
+			output: "Final handover",
+			holder: "One company, end to end",
+			measure: "The system runs on day one"
+		}
+	]
+};
+/** 05 — The story: company development, only documented milestones. */
+export const STORY = {
+	eyebrow: "The story",
+	note: "From the certificate of incorporation & company profile",
+	chapters: [
+		{
+			mark: "2012",
+			label: "Foundation",
+			title: "Incorporated",
+			body: "Capex Construction & Engineering Pvt. Ltd. is incorporated on 26 December 2012 at Kanpur, Uttar Pradesh — an engineering company built around a single idea: one accountable contract, from engineering to commissioning."
+		},
+		{
+			mark: "Two practices",
+			label: "How Capex took shape",
+			title: "The company takes shape",
+			body: "The work organises into two connected worlds — underground utilities, electrical and city gas beneath the street; MEP, HVAC and fire protection within the building. Both are delivered turnkey: supply, installation, testing & commissioning."
+		},
+		{
+			mark: "A base to build from",
+			label: "The physical capability",
+			title: "One company, five locations",
+			body: "Project planning, design and coordination run from the Noida corporate office, with branch offices at Patna, Gurugram and Sangli, and a central manufacturing unit in Rajasthan from which the company's own plant, rigs and jointing equipment deploy to sites."
+		},
+		{
+			mark: "On the record",
+			label: "Documented work",
+			title: "Documented work",
+			body: "Programmes now on record span smart-city and metro connectivity — Patna, Banaras, Lucknow Metro, Gurugram, Dhanbad, Aurangabad, Sangli — alongside building-systems work led by World Trade Tower, Noida and World Trade Park, Jaipur."
+		}
+	],
+	statutory: "CIN U45400UP2012PTC054355 · incorporated 26 December 2012 · Kanpur, Uttar Pradesh",
+	plate: aboutPlate("hvac-plant-install")
+};
+/**
+* 06 — Sectors transition. The bridge from About into the Sectors page —
+* no catalogue, no project grid. The sector record lives on /sectors.
+*/
+export const RANGE = {
+	eyebrow: "Where the work lives",
+	headline: "Beneath cities. Within buildings.",
+	body: "Smart-city and metro programmes. City gas distribution. Corporate, industrial, healthcare and institutional buildings. The environments Capex serves are the ones people move through every day — the record lives on the Sectors page.",
+	plate: aboutPlate("boring-interface")
+};
+/** 07 — People transition. The gateway to /team — no roster, no bios. */
+export const PEOPLE = {
+	eyebrow: "The people behind the work",
+	headline: ["Directed by engineers.", "Run by site experience."],
+	body: "A named, real organisation — three directors across both practices, a patron with four decades in HVAC design and execution, delivery and project managers, site and design engineers. Planning, design and coordination run from the Noida corporate office; resident project managers hold the work at each site.",
+	boardNote: "Between them, the boards bring more than a century of combined site experience.",
+	plate: aboutPlate("field-work"),
+	linkLabel: "Meet the team"
+};
+/** 08 — Presence: the geographic index. */
+export const PRESENCE = {
+	places: [
+		{
+			name: "Noida",
+			role: "Corporate office"
+		},
+		{
+			name: "Patna",
+			role: "Branch office"
+		},
+		{
+			name: "Gurugram",
+			role: "Branch office"
+		},
+		{
+			name: "Sangli",
+			role: "Branch office"
+		},
+		{
+			name: "Rajasthan",
+			role: "Central manufacturing unit"
+		}
+	],
+	reach: "Project reach across India and Nepal — radiating from the corporate office and the central manufacturing unit to sites across the country."
+};
+/** 09 — Trust / proof bridge. */
+export const TRUST = {
+	eyebrow: "Trust",
+	headline: "Trust is built in the work.",
+	body: "Long-term associations with public-sector undertakings, gas utilities, EPC majors, corporates, developers and consultants — documented, not claimed.",
+	links: [{
+		label: "Clients",
+		to: "/clients"
+	}, {
+		label: "Credentials",
+		to: "/credentials"
+	}]
+};
+/** 10 — Closing frame into the site footer. */
+export const CLOSING = {
+	eyebrow: "Now you know the company",
+	headline: ["Let's talk about", "what needs to work."],
+	links: [{
+		label: "Projects",
+		to: "/projects"
+	}, {
+		label: "Start a conversation",
+		to: "/contact"
+	}],
+	legal: "Capex Construction & Engineering Pvt. Ltd. · Est. 2012",
+	place: "Noida, India"
+};
+
+//# sourceMappingURL=data:application/json;base64,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Q0FDTDtFQUFFLE9BQU87RUFBVyxJQUFJO0NBQVcsR0FDbkM7RUFBRSxPQUFPO0VBQWUsSUFBSTtDQUFlLENBQzdDO0FBQ0Y7O0FBR0EsT0FBTyxNQUFNLFVBQVU7Q0FDckIsU0FBUztDQUNULFVBQVUsQ0FBQyxvQkFBb0IscUJBQXFCO0NBQ3BELE9BQU8sQ0FDTDtFQUFFLE9BQU87RUFBWSxJQUFJO0NBQVksR0FDckM7RUFBRSxPQUFPO0VBQXdCLElBQUk7Q0FBVyxDQUNsRDtDQUNBLE9BQU87Q0FDUCxPQUFPO0FBQ1QiLCJuYW1lcyI6W10sInNvdXJjZXMiOlsiYWJvdXQtY29udGVudC50cyJdLCJ2ZXJzaW9uIjozLCJzb3VyY2VzQ29udGVudCI6WyIvKipcbiAqIEFCT1VUIENPTlRFTlQg4oCUIHRoZSBzdHJ1Y3R1cmVkLCBzb3VyY2UtdmVyaWZpZWQgY29weSBmb3IgdGhlIEFib3V0IHBhZ2UuXG4gKlxuICogRXZlcnkgZmFjdHVhbCBzdGF0ZW1lbnQgYmVsb3cgaXMgdHJhY2VhYmxlIHRvIHRoZSB0aHJlZSBjbGllbnQtc3VwcGxpZWRcbiAqIFBERnMgKERPQyBBIFwiQ29tcGFueSBQcm9maWxlXCIgMjFwcCDCtyBET0MgQiBcIkhWQUMgJiBmaXJlIHByb2ZpbGVcIiAyMnBwIMK3XG4gKiBET0MgQyBcIkVsZWN0cmljYWwgJiBDR0QgcHJvZmlsZVwiIDIwcHApIG9yIHRvIHRoZSBhbHJlYWR5LXZlcmlmaWVkIHNpdGVcbiAqIGNvcnB1cy4gRmFjdHMgb3duZWQgYnkgb3RoZXIgcGFnZXMgKHNlcnZpY2VzIGRldGFpbCDihpIgL3NlcnZpY2VzLCBzZWN0b3JcbiAqIGNhdGFsb2d1ZSDihpIgL3NlY3RvcnMsIHByb2plY3QgcmVnaXN0ZXIg4oaSIC9wcm9qZWN0cywgcm9zdGVyIOKGkiAvdGVhbSxcbiAqIGNsaWVudHMg4oaSIC9jbGllbnRzLCBldmlkZW5jZSDihpIgL2NyZWRlbnRpYWxzKSBhcHBlYXIgaGVyZSBvbmx5IGFzIGJyaWRnZXMuXG4gKiBObyBsZWdhY3kgc3RhdGlzdGljcyAoMTArIHllYXJzLCAxNTArIHByb2plY3RzLCAzMTUrIEtNLCAyNC83KSDigJQgdGhvc2VcbiAqIGFyZSBub3QgaW4gdGhlIHZlcmlmaWVkIHJlY29yZC5cbiAqXG4gKiBEZWxpdmVyeSB2ZXJiczogdGhlIFBERnMgZGVzY3JpYmUgdGhlIHR1cm5rZXkgc2NvcGUgdmFyaW91c2x5IGFzXG4gKiBcImVuZ2luZWVyaW5nLCBwcm9jdXJlbWVudCwgZXhlY3V0aW9uLCB0ZXN0aW5nLCBjb21taXNzaW9uaW5nIGFuZCBmaW5hbFxuICogaGFuZG92ZXJcIiAoRE9DIEEgcDQpIGFuZCBcIlN1cHBseSwgSW5zdGFsbGF0aW9uLCBUZXN0aW5nICYgQ29tbWlzc2lvbmluZ1wiXG4gKiAoYWxsIHRocmVlKS4gVGhlIHNpeC1zdGVwIGxpbmUgbWVyZ2VzIHRoZSB0d28gc291cmNlIGZvcm11bGF0aW9uc1xuICogd2l0aG91dCBpbnZlbnRpbmcgYSBzdGFnZSBuZWl0aGVyIGRvY3VtZW50IG5hbWVzLlxuICovXG5cbmltcG9ydCB7IGFib3V0UGxhdGUgfSBmcm9tIFwiQC9saWIvYWJvdXQtbWVkaWFcIjtcblxuLyoqIDAxIOKAlCBPcGVuaW5nLiBUZXh0IGxlZnQsIGRvY3VtZW50YXJ5IHBsYXRlIHJpZ2h0LiBObyBzdGF0aXN0aWNzLiAqL1xuZXhwb3J0IGNvbnN0IE9QRU5JTkcgPSB7XG4gIGV5ZWJyb3c6IFwiQWJvdXQgQ2FwZXhcIixcbiAgbGluZXM6IFtcIldlIGJ1aWxkIHdoYXRcIiwgXCJrZWVwcyB0aGluZ3NcIiwgXCJtb3ZpbmcuXCJdLFxuICBzdXBwb3J0OiBcIkNhcGV4IENvbnN0cnVjdGlvbiAmIEVuZ2luZWVyaW5nIFB2dC4gTHRkLiDigJQgYSB0dXJua2V5IGVuZ2luZWVyaW5nIGNvbXBhbnkgc2luY2UgMjAxMi5cIixcbiAgcGxhdGU6IGFib3V0UGxhdGUoXCJwaXBlbGluZS13b3JrXCIpLFxuICBwbGF0ZUNhcHRpb246IFwiQ3Jvc3MtY291bnRyeSBwaXBlbGluZSB3b3JrcyDCtyBjb21wYW55IHByb2ZpbGUgcmVjb3JkXCIsXG59IGFzIGNvbnN0O1xuXG4vKipcbiAqIDAyIOKAlCBUd28gd29ybGRzIC8gdGhlIGVuZ2luZWVyZWQgd29ybGQuIFRoZSBuYXJyYXRpdmUgKyB0aGUgaW1hZ2UgZmllbGRcbiAqIHRoYXQgb3BlbnMgaXQ6IHdoYXQgcGVvcGxlIHNlZSwgdGhlbiB3aGF0IHdlIGFjdHVhbGx5IGJ1aWxkLlxuICovXG5leHBvcnQgY29uc3QgVFdPX1dPUkxEUyA9IHtcbiAgZXllYnJvdzogXCJUaGUgZW5naW5lZXJlZCB3b3JsZFwiLFxuICBzdGF0ZW1lbnRPbmU6IFwiV2hhdCBwZW9wbGUgc2VlIGlzIHRoZSBmaW5pc2hlZCBwbGFjZS5cIixcbiAgc3RhdGVtZW50VHdvOiBcIldoYXQgd2UgYnVpbGQgaXMgZXZlcnl0aGluZyB0aGF0IG1ha2VzIGl0IHdvcmsuXCIsXG4gIGJvZHk6IFwiQ2FwZXggQ29uc3RydWN0aW9uICYgRW5naW5lZXJpbmcgaXMgYSB0dXJua2V5IGVuZ2luZWVyaW5nIHNvbHV0aW9ucyBwcm92aWRlci4gVW5kZXIgb25lIGFjY291bnRhYmxlIGNvbnRyYWN0IOKAlCBzdXBwbHksIGluc3RhbGxhdGlvbiwgdGVzdGluZyAmIGNvbW1pc3Npb25pbmcg4oCUIGl0IGJ1aWxkcyB0aGUgdW5kZXJncm91bmQgdXRpbGl0eSwgZWxlY3RyaWNhbCBhbmQgY2l0eS1nYXMgbmV0d29ya3MgdGhhdCBtb3ZlIHBvd2VyIGFuZCBmdWVsIGJlbmVhdGggY2l0aWVzLCBhbmQgdGhlIG1lY2hhbmljYWwsIGVsZWN0cmljYWwgYW5kIGZpcmUtcHJvdGVjdGlvbiBzeXN0ZW1zIHRoYXQga2VlcCBidWlsZGluZ3MgYWxpdmUgaW5zaWRlLiBUd28gcHJhY3RpY2VzLCBvbmUgY29tcGFueSwgYWNjb3VudGFibGUgZW5kIHRvIGVuZC5cIixcbiAgcGxhdGU6IGFib3V0UGxhdGUoXCJzaXRlLXRlYW1cIiksXG59IGFzIGNvbnN0O1xuXG4vKipcbiAqIDAzIOKAlCBXaHkgQ2FwZXguIFRoZSBkaWZmZXJlbnRpYXRpb24sIHN0YXRlZCBhcyB3b3JraW5nIHByaW5jaXBsZXMgZHJhd25cbiAqIGZyb20gdGhlIHJlY29yZCDigJQgbm8gaW52ZW50ZWQgU0xBcywgcmF0aW5ncywgY2VydGlmaWNhdGlvbnMgb3IgY291bnRzLlxuICovXG5leHBvcnQgY29uc3QgV0hZID0ge1xuICBleWVicm93OiBcIldoeSBDYXBleFwiLFxuICBoZWFkbGluZTogW1wiQnVpbHQgb25cIiwgXCJyaWdvci5cIl0sXG4gIG5vdGU6IFwiVGhlIGRpZmZlcmVuY2UgaXMgc3RydWN0dXJhbCwgbm90IHJoZXRvcmljYWwg4oCUIG9uZSBjb21wYW55LCBvbmUgY29udHJhY3QsIGZyb20gdGhlIGZpcnN0IHN1cnZleSB0byBmaW5hbCBoYW5kb3Zlci5cIixcbiAgcmVnaXN0ZXI6IFwiV29ya2luZyBwcmluY2lwbGVzIMK3IGZyb20gdGhlIGNvbXBhbnkgcmVjb3JkXCIsXG4gIHByaW5jaXBsZXM6IFtcbiAgICB7XG4gICAgICB0aXRsZTogXCJFbmdpbmVlcmluZy1sZWRcIixcbiAgICAgIHNob3J0OiBcIlR1cm5rZXkgc2NvcGVcIixcbiAgICAgIGJvZHk6IFwiUHJvamVjdHMgYXJlIHRha2VuIG9uIGEgY29tcGxldGUgdHVybmtleSBiYXNpczogZW5naW5lZXJpbmcsIHByb2N1cmVtZW50LCBleGVjdXRpb24sIHRlc3RpbmcsIGNvbW1pc3Npb25pbmcgYW5kIGZpbmFsIGhhbmRvdmVyLlwiLFxuICAgIH0sXG4gICAge1xuICAgICAgdGl0bGU6IFwiT25lIGFjY291bnRhYmxlIGNvbnRyYWN0XCIsXG4gICAgICBzaG9ydDogXCJTaW5nbGUgY29udHJhY3RcIixcbiAgICAgIGJvZHk6IFwiU3VwcGx5LCBpbnN0YWxsYXRpb24sIHRlc3RpbmcgJiBjb21taXNzaW9uaW5nIHVuZGVyIGEgc2luZ2xlIGNvbnRyYWN0IOKAlCB0aGUgc3lzdGVtIHRoYXQgcnVucyBvbiBkYXkgb25lIGlzIHRoZSBzeXN0ZW0gb25lIGNvbXBhbnkgYW5zd2VycyBmb3IuXCIsXG4gICAgfSxcbiAgICB7XG4gICAgICB0aXRsZTogXCJUd28gcHJhY3RpY2VzLCBvbmUgY29tcGFueVwiLFxuICAgICAgc2hvcnQ6IFwiQmVuZWF0aCArIHdpdGhpblwiLFxuICAgICAgYm9keTogXCJVbmRlcmdyb3VuZCB1dGlsaXRpZXMsIGVsZWN0cmljYWwgJiBDR0QgYmVuZWF0aCB0aGUgc3RyZWV0OyBNRVAsIEhWQUMgJiBmaXJlIHByb3RlY3Rpb24gd2l0aGluIHRoZSBidWlsZGluZyDigJQgZGVsaXZlcmVkIGJ5IHRoZSBzYW1lIHBvb2wgb2YgZGlyZWN0b3JzLCBtYW5hZ2VycyBhbmQgZW5naW5lZXJzLlwiLFxuICAgIH0sXG4gICAge1xuICAgICAgdGl0bGU6IFwiUGxhbm5lZCBleGVjdXRpb25cIixcbiAgICAgIHNob3J0OiBcIk5vaWRhICsgc2l0ZXNcIixcbiAgICAgIGJvZHk6IFwiUGxhbm5pbmcsIGRlc2lnbiBhbmQgY29vcmRpbmF0aW9uIHJ1biBmcm9tIHRoZSBOb2lkYSBjb3Jwb3JhdGUgb2ZmaWNlOyByZXNpZGVudCBwcm9qZWN0IG1hbmFnZXJzIGFuZCBzaXRlIGVuZ2luZWVycyBob2xkIHRoZSB3b3JrIGF0IGVhY2ggc2l0ZS5cIixcbiAgICB9LFxuICAgIHtcbiAgICAgIHRpdGxlOiBcIk93biBwbGFudCBhbmQgcGVvcGxlXCIsXG4gICAgICBzaG9ydDogXCJPd24gcmVnaXN0ZXJcIixcbiAgICAgIGJvZHk6IFwiT3duZWQgcmlncywgd2VsZGluZyBhbmQgam9pbnRpbmcgZXF1aXBtZW50LCBhbmQgYSBjZW50cmFsIG1hbnVmYWN0dXJpbmcgdW5pdCBpbiBSYWphc3RoYW4g4oCUIHNjaGVkdWxlZCBmcm9tIHRoZSBjb21wYW55J3Mgb3duIHJlZ2lzdGVyLCBkZXBsb3llZCB0byBzaXRlLlwiLFxuICAgIH0sXG4gICAge1xuICAgICAgdGl0bGU6IFwiVGVzdGVkIGJlZm9yZSBoYW5kZWQgb3ZlclwiLFxuICAgICAgc2hvcnQ6IFwiU2VnbWVudGVkIHRlc3RzXCIsXG4gICAgICBib2R5OiBcIlNlZ21lbnRlZCB0ZXN0aW5nIGFuZCBjb21taXNzaW9uaW5nIHVuZGVyIHRoZSBzYW1lIGNvbnRyYWN0IHRoYXQgc2lnbmVkIHRoZSBmaXJzdCBkcmF3aW5nLCB3aXRoIG9uZSBzYWZldHkgcmVnaW1lIG9uIGV2ZXJ5IHNpdGUuXCIsXG4gICAgfSxcbiAgXSBhcyBjb25zdCxcbn0gYXMgY29uc3Q7XG5cbi8qKlxuICogMDQg4oCUIEhvdyB0aGUgd29yayBtb3ZlczogdGhlIGNvbW1vbiBvcGVyYXRpbmcgbW9kZWwgKHNvdXJjZSB2ZXJicykuXG4gKiBFYWNoIHN0YWdlIGNhcnJpZXMgYW4gb3V0cHV0IC8gaGVsZC1ieSByZWdpc3RlciBsaW5lIGRyYXduIGZyb20gdGhlIHNhbWVcbiAqIHJlY29yZCBhcyB0aGUgbm90ZSDigJQgZGVzY3JpcHRvcnMgb2YgdGhlIGRvY3VtZW50ZWQgcHJvY2Vzcywgbm90IGNsYWltcy5cbiAqL1xuZXhwb3J0IGNvbnN0IERFTElWRVJZID0ge1xuICBleWVicm93OiBcIkhvdyB0aGUgd29yayBtb3Zlc1wiLFxuICBub3RlOiBcIk9uZSBhY2NvdW50YWJsZSBjb250cmFjdCDCtyBmcm9tIHRoZSBjb21wYW55IHByb2ZpbGVcIixcbiAgc291cmNlOiBcIkNvbXBhbnkgcHJvZmlsZSwgcDRcIixcbiAgc3RlcHM6IFtcbiAgICB7XG4gICAgICB3b3JkOiBcIlVuZGVyc3RhbmRcIixcbiAgICAgIG5vdGU6IFwiRXZlcnkgZW5nYWdlbWVudCBzdGFydHMgd2l0aCB0aGUgc2l0ZSBhbmQgdGhlIHN5c3RlbSBhcyB0aGV5IGFjdHVhbGx5IGFyZSDigJQgc3VydmV5ZWQsIHdhbGtlZCwgZHJhd24uXCIsXG4gICAgICBvdXRwdXQ6IFwiU2l0ZSBzdXJ2ZXlcIixcbiAgICAgIGhvbGRlcjogXCJFbmdpbmVlcmluZyAmIHBsYW5uaW5nXCIsXG4gICAgICBtZWFzdXJlOiBcIlRoZSBzaXRlIGFzIGl0IGlzXCIsXG4gICAgfSxcbiAgICB7XG4gICAgICB3b3JkOiBcIkVuZ2luZWVyXCIsXG4gICAgICBub3RlOiBcIkRlc2lnbiBhbmQgZW5naW5lZXJpbmcgc2hhcGVkIGFyb3VuZCB0aGUgcHJvamVjdCDigJQgcm91dGVzLCBwbGFudCByb29tcywgY2FsY3VsYXRpb25zLCBwYW5lbHMuXCIsXG4gICAgICBvdXRwdXQ6IFwiRGVzaWduICYgZHJhd2luZ3NcIixcbiAgICAgIGhvbGRlcjogXCJEZXNpZ24gZW5naW5lZXJzXCIsXG4gICAgICBtZWFzdXJlOiBcIlJvdXRlcywgcGxhbnQgcm9vbXMsIGNhbGN1bGF0aW9uc1wiLFxuICAgIH0sXG4gICAge1xuICAgICAgd29yZDogXCJTdXBwbHlcIixcbiAgICAgIG5vdGU6IFwiUHJvY3VyZW1lbnQgYW5kIHN1cHBseSBvbiB0aGUgdHVybmtleSBjb250cmFjdCwgYmFja2VkIGJ5IHRoZSBjb21wYW55J3Mgb3duIHBsYW50IGFuZCBtYW51ZmFjdHVyaW5nIHVuaXQuXCIsXG4gICAgICBvdXRwdXQ6IFwiUHJvY3VyZWQgbWF0ZXJpYWxzXCIsXG4gICAgICBob2xkZXI6IFwiQ2VudHJhbCBtYW51ZmFjdHVyaW5nIHVuaXRcIixcbiAgICAgIG1lYXN1cmU6IFwiT3duIHBsYW50LCBvd24gcmVnaXN0ZXJcIixcbiAgICB9LFxuICAgIHtcbiAgICAgIHdvcmQ6IFwiSW5zdGFsbFwiLFxuICAgICAgbm90ZTogXCJFeGVjdXRpb24gYnkgcmVzaWRlbnQgcHJvamVjdCBtYW5hZ2VycyBhbmQgc2l0ZSBlbmdpbmVlcnMsIHdpdGggb3duZWQgcmlncyBhbmQgam9pbnRpbmcgZXF1aXBtZW50IG9uIHRoZSBncm91bmQuXCIsXG4gICAgICBvdXRwdXQ6IFwiRXhlY3V0ZWQgd29ya3NcIixcbiAgICAgIGhvbGRlcjogXCJSZXNpZGVudCBwcm9qZWN0IG1hbmFnZXJzXCIsXG4gICAgICBtZWFzdXJlOiBcIk93bmVkIHJpZ3Mgb24gdGhlIGdyb3VuZFwiLFxuICAgIH0sXG4gICAge1xuICAgICAgd29yZDogXCJUZXN0XCIsXG4gICAgICBub3RlOiBcIlNlZ21lbnRlZCBoeWRyYXVsaWMgYW5kIGZ1bmN0aW9uYWwgdGVzdGluZyDigJQgdGhlIHNhZmV0eSByZWdpbWUgYXBwbGllZCBvbiBldmVyeSBzaXRlLCBmb3IgZXZlcnkgd29ya2VyLlwiLFxuICAgICAgb3V0cHV0OiBcIlRlc3QgcmVjb3Jkc1wiLFxuICAgICAgaG9sZGVyOiBcIlNpdGUgZW5naW5lZXJzXCIsXG4gICAgICBtZWFzdXJlOiBcIlNlZ21lbnRlZCwgZXZlcnkgc2VjdGlvblwiLFxuICAgIH0sXG4gICAge1xuICAgICAgd29yZDogXCJDb21taXNzaW9uXCIsXG4gICAgICBub3RlOiBcIkNvbW1pc3Npb25pbmcgYW5kIGZpbmFsIGhhbmRvdmVyIHVuZGVyIHRoZSBzYW1lIGNvbnRyYWN0IHRoYXQgc2lnbmVkIHRoZSBmaXJzdCBkcmF3aW5nLlwiLFxuICAgICAgb3V0cHV0OiBcIkZpbmFsIGhhbmRvdmVyXCIsXG4gICAgICBob2xkZXI6IFwiT25lIGNvbXBhbnksIGVuZCB0byBlbmRcIixcbiAgICAgIG1lYXN1cmU6IFwiVGhlIHN5c3RlbSBydW5zIG9uIGRheSBvbmVcIixcbiAgICB9LFxuICBdIGFzIGNvbnN0LFxufSBhcyBjb25zdDtcblxuLyoqIDA1IOKAlCBUaGUgc3Rvcnk6IGNvbXBhbnkgZGV2ZWxvcG1lbnQsIG9ubHkgZG9jdW1lbnRlZCBtaWxlc3RvbmVzLiAqL1xuZXhwb3J0IGNvbnN0IFNUT1JZID0ge1xuICBleWVicm93OiBcIlRoZSBzdG9yeVwiLFxuICBub3RlOiBcIkZyb20gdGhlIGNlcnRpZmljYXRlIG9mIGluY29ycG9yYXRpb24gJiBjb21wYW55IHByb2ZpbGVcIixcbiAgY2hhcHRlcnM6IFtcbiAgICB7XG4gICAgICBtYXJrOiBcIjIwMTJcIixcbiAgICAgIGxhYmVsOiBcIkZvdW5kYXRpb25cIixcbiAgICAgIHRpdGxlOiBcIkluY29ycG9yYXRlZFwiLFxuICAgICAgYm9keTogXCJDYXBleCBDb25zdHJ1Y3Rpb24gJiBFbmdpbmVlcmluZyBQdnQuIEx0ZC4gaXMgaW5jb3Jwb3JhdGVkIG9uIDI2IERlY2VtYmVyIDIwMTIgYXQgS2FucHVyLCBVdHRhciBQcmFkZXNoIOKAlCBhbiBlbmdpbmVlcmluZyBjb21wYW55IGJ1aWx0IGFyb3VuZCBhIHNpbmdsZSBpZGVhOiBvbmUgYWNjb3VudGFibGUgY29udHJhY3QsIGZyb20gZW5naW5lZXJpbmcgdG8gY29tbWlzc2lvbmluZy5cIixcbiAgICB9LFxuICAgIHtcbiAgICAgIG1hcms6IFwiVHdvIHByYWN0aWNlc1wiLFxuICAgICAgbGFiZWw6IFwiSG93IENhcGV4IHRvb2sgc2hhcGVcIixcbiAgICAgIHRpdGxlOiBcIlRoZSBjb21wYW55IHRha2VzIHNoYXBlXCIsXG4gICAgICBib2R5OiBcIlRoZSB3b3JrIG9yZ2FuaXNlcyBpbnRvIHR3byBjb25uZWN0ZWQgd29ybGRzIOKAlCB1bmRlcmdyb3VuZCB1dGlsaXRpZXMsIGVsZWN0cmljYWwgYW5kIGNpdHkgZ2FzIGJlbmVhdGggdGhlIHN0cmVldDsgTUVQLCBIVkFDIGFuZCBmaXJlIHByb3RlY3Rpb24gd2l0aGluIHRoZSBidWlsZGluZy4gQm90aCBhcmUgZGVsaXZlcmVkIHR1cm5rZXk6IHN1cHBseSwgaW5zdGFsbGF0aW9uLCB0ZXN0aW5nICYgY29tbWlzc2lvbmluZy5cIixcbiAgICB9LFxuICAgIHtcbiAgICAgIG1hcms6IFwiQSBiYXNlIHRvIGJ1aWxkIGZyb21cIixcbiAgICAgIGxhYmVsOiBcIlRoZSBwaHlzaWNhbCBjYXBhYmlsaXR5XCIsXG4gICAgICB0aXRsZTogXCJPbmUgY29tcGFueSwgZml2ZSBsb2NhdGlvbnNcIixcbiAgICAgIGJvZHk6IFwiUHJvamVjdCBwbGFubmluZywgZGVzaWduIGFuZCBjb29yZGluYXRpb24gcnVuIGZyb20gdGhlIE5vaWRhIGNvcnBvcmF0ZSBvZmZpY2UsIHdpdGggYnJhbmNoIG9mZmljZXMgYXQgUGF0bmEsIEd1cnVncmFtIGFuZCBTYW5nbGksIGFuZCBhIGNlbnRyYWwgbWFudWZhY3R1cmluZyB1bml0IGluIFJhamFzdGhhbiBmcm9tIHdoaWNoIHRoZSBjb21wYW55J3Mgb3duIHBsYW50LCByaWdzIGFuZCBqb2ludGluZyBlcXVpcG1lbnQgZGVwbG95IHRvIHNpdGVzLlwiLFxuICAgIH0sXG4gICAge1xuICAgICAgbWFyazogXCJPbiB0aGUgcmVjb3JkXCIsXG4gICAgICBsYWJlbDogXCJEb2N1bWVudGVkIHdvcmtcIixcbiAgICAgIHRpdGxlOiBcIkRvY3VtZW50ZWQgd29ya1wiLFxuICAgICAgYm9keTogXCJQcm9ncmFtbWVzIG5vdyBvbiByZWNvcmQgc3BhbiBzbWFydC1jaXR5IGFuZCBtZXRybyBjb25uZWN0aXZpdHkg4oCUIFBhdG5hLCBCYW5hcmFzLCBMdWNrbm93IE1ldHJvLCBHdXJ1Z3JhbSwgRGhhbmJhZCwgQXVyYW5nYWJhZCwgU2FuZ2xpIOKAlCBhbG9uZ3NpZGUgYnVpbGRpbmctc3lzdGVtcyB3b3JrIGxlZCBieSBXb3JsZCBUcmFkZSBUb3dlciwgTm9pZGEgYW5kIFdvcmxkIFRyYWRlIFBhcmssIEphaXB1ci5cIixcbiAgICB9LFxuICBdIGFzIGNvbnN0LFxuICBzdGF0dXRvcnk6IFwiQ0lOIFU0NTQwMFVQMjAxMlBUQzA1NDM1NSDCtyBpbmNvcnBvcmF0ZWQgMjYgRGVjZW1iZXIgMjAxMiDCtyBLYW5wdXIsIFV0dGFyIFByYWRlc2hcIixcbiAgcGxhdGU6IGFib3V0UGxhdGUoXCJodmFjLXBsYW50LWluc3RhbGxcIiksXG59IGFzIGNvbnN0O1xuXG4vKipcbiAqIDA2IOKAlCBTZWN0b3JzIHRyYW5zaXRpb24uIFRoZSBicmlkZ2UgZnJvbSBBYm91dCBpbnRvIHRoZSBTZWN0b3JzIHBhZ2Ug4oCUXG4gKiBubyBjYXRhbG9ndWUsIG5vIHByb2plY3QgZ3JpZC4gVGhlIHNlY3RvciByZWNvcmQgbGl2ZXMgb24gL3NlY3RvcnMuXG4gKi9cbmV4cG9ydCBjb25zdCBSQU5HRSA9IHtcbiAgZXllYnJvdzogXCJXaGVyZSB0aGUgd29yayBsaXZlc1wiLFxuICBoZWFkbGluZTogXCJCZW5lYXRoIGNpdGllcy4gV2l0aGluIGJ1aWxkaW5ncy5cIixcbiAgYm9keTogXCJTbWFydC1jaXR5IGFuZCBtZXRybyBwcm9ncmFtbWVzLiBDaXR5IGdhcyBkaXN0cmlidXRpb24uIENvcnBvcmF0ZSwgaW5kdXN0cmlhbCwgaGVhbHRoY2FyZSBhbmQgaW5zdGl0dXRpb25hbCBidWlsZGluZ3MuIFRoZSBlbnZpcm9ubWVudHMgQ2FwZXggc2VydmVzIGFyZSB0aGUgb25lcyBwZW9wbGUgbW92ZSB0aHJvdWdoIGV2ZXJ5IGRheSDigJQgdGhlIHJlY29yZCBsaXZlcyBvbiB0aGUgU2VjdG9ycyBwYWdlLlwiLFxuICBwbGF0ZTogYWJvdXRQbGF0ZShcImJvcmluZy1pbnRlcmZhY2VcIiksXG59IGFzIGNvbnN0O1xuXG4vKiogMDcg4oCUIFBlb3BsZSB0cmFuc2l0aW9uLiBUaGUgZ2F0ZXdheSB0byAvdGVhbSDigJQgbm8gcm9zdGVyLCBubyBiaW9zLiAqL1xuZXhwb3J0IGNvbnN0IFBFT1BMRSA9IHtcbiAgZXllYnJvdzogXCJUaGUgcGVvcGxlIGJlaGluZCB0aGUgd29ya1wiLFxuICBoZWFkbGluZTogW1wiRGlyZWN0ZWQgYnkgZW5naW5lZXJzLlwiLCBcIlJ1biBieSBzaXRlIGV4cGVyaWVuY2UuXCJdLFxuICBib2R5OiBcIkEgbmFtZWQsIHJlYWwgb3JnYW5pc2F0aW9uIOKAlCB0aHJlZSBkaXJlY3RvcnMgYWNyb3NzIGJvdGggcHJhY3RpY2VzLCBhIHBhdHJvbiB3aXRoIGZvdXIgZGVjYWRlcyBpbiBIVkFDIGRlc2lnbiBhbmQgZXhlY3V0aW9uLCBkZWxpdmVyeSBhbmQgcHJvamVjdCBtYW5hZ2Vycywgc2l0ZSBhbmQgZGVzaWduIGVuZ2luZWVycy4gUGxhbm5pbmcsIGRlc2lnbiBhbmQgY29vcmRpbmF0aW9uIHJ1biBmcm9tIHRoZSBOb2lkYSBjb3Jwb3JhdGUgb2ZmaWNlOyByZXNpZGVudCBwcm9qZWN0IG1hbmFnZXJzIGhvbGQgdGhlIHdvcmsgYXQgZWFjaCBzaXRlLlwiLFxuICBib2FyZE5vdGU6IFwiQmV0d2VlbiB0aGVtLCB0aGUgYm9hcmRzIGJyaW5nIG1vcmUgdGhhbiBhIGNlbnR1cnkgb2YgY29tYmluZWQgc2l0ZSBleHBlcmllbmNlLlwiLFxuICBwbGF0ZTogYWJvdXRQbGF0ZShcImZpZWxkLXdvcmtcIiksXG4gIGxpbmtMYWJlbDogXCJNZWV0IHRoZSB0ZWFtXCIsXG59IGFzIGNvbnN0O1xuXG4vKiogMDgg4oCUIFByZXNlbmNlOiB0aGUgZ2VvZ3JhcGhpYyBpbmRleC4gKi9cbmV4cG9ydCBjb25zdCBQUkVTRU5DRSA9IHtcbiAgcGxhY2VzOiBbXG4gICAgeyBuYW1lOiBcIk5vaWRhXCIsIHJvbGU6IFwiQ29ycG9yYXRlIG9mZmljZVwiIH0sXG4gICAgeyBuYW1lOiBcIlBhdG5hXCIsIHJvbGU6IFwiQnJhbmNoIG9mZmljZVwiIH0sXG4gICAgeyBuYW1lOiBcIkd1cnVncmFtXCIsIHJvbGU6IFwiQnJhbmNoIG9mZmljZVwiIH0sXG4gICAgeyBuYW1lOiBcIlNhbmdsaVwiLCByb2xlOiBcIkJyYW5jaCBvZmZpY2VcIiB9LFxuICAgIHsgbmFtZTogXCJSYWphc3RoYW5cIiwgcm9sZTogXCJDZW50cmFsIG1hbnVmYWN0dXJpbmcgdW5pdFwiIH0sXG4gIF0gYXMgY29uc3QsXG4gIHJlYWNoOlxuICAgIFwiUHJvamVjdCByZWFjaCBhY3Jvc3MgSW5kaWEgYW5kIE5lcGFsIOKAlCByYWRpYXRpbmcgZnJvbSB0aGUgY29ycG9yYXRlIG9mZmljZSBhbmQgdGhlIGNlbnRyYWwgbWFudWZhY3R1cmluZyB1bml0IHRvIHNpdGVzIGFjcm9zcyB0aGUgY291bnRyeS5cIixcbn0gYXMgY29uc3Q7XG5cbi8qKiAwOSDigJQgVHJ1c3QgLyBwcm9vZiBicmlkZ2UuICovXG5leHBvcnQgY29uc3QgVFJVU1QgPSB7XG4gIGV5ZWJyb3c6IFwiVHJ1c3RcIixcbiAgaGVhZGxpbmU6IFwiVHJ1c3QgaXMgYnVpbHQgaW4gdGhlIHdvcmsuXCIsXG4gIGJvZHk6IFwiTG9uZy10ZXJtIGFzc29jaWF0aW9ucyB3aXRoIHB1YmxpYy1zZWN0b3IgdW5kZXJ0YWtpbmdzLCBnYXMgdXRpbGl0aWVzLCBFUEMgbWFqb3JzLCBjb3Jwb3JhdGVzLCBkZXZlbG9wZXJzIGFuZCBjb25zdWx0YW50cyDigJQgZG9jdW1lbnRlZCwgbm90IGNsYWltZWQuXCIsXG4gIGxpbmtzOiBbXG4gICAgeyBsYWJlbDogXCJDbGllbnRzXCIsIHRvOiBcIi9jbGllbnRzXCIgfSxcbiAgICB7IGxhYmVsOiBcIkNyZWRlbnRpYWxzXCIsIHRvOiBcIi9jcmVkZW50aWFsc1wiIH0sXG4gIF0gYXMgY29uc3QsXG59IGFzIGNvbnN0O1xuXG4vKiogMTAg4oCUIENsb3NpbmcgZnJhbWUgaW50byB0aGUgc2l0ZSBmb290ZXIuICovXG5leHBvcnQgY29uc3QgQ0xPU0lORyA9IHtcbiAgZXllYnJvdzogXCJOb3cgeW91IGtub3cgdGhlIGNvbXBhbnlcIixcbiAgaGVhZGxpbmU6IFtcIkxldCdzIHRhbGsgYWJvdXRcIiwgXCJ3aGF0IG5lZWRzIHRvIHdvcmsuXCJdLFxuICBsaW5rczogW1xuICAgIHsgbGFiZWw6IFwiUHJvamVjdHNcIiwgdG86IFwiL3Byb2plY3RzXCIgfSxcbiAgICB7IGxhYmVsOiBcIlN0YXJ0IGEgY29udmVyc2F0aW9uXCIsIHRvOiBcIi9jb250YWN0XCIgfSxcbiAgXSBhcyBjb25zdCxcbiAgbGVnYWw6IFwiQ2FwZXggQ29uc3RydWN0aW9uICYgRW5naW5lZXJpbmcgUHZ0LiBMdGQuIMK3IEVzdC4gMjAxMlwiLFxuICBwbGFjZTogXCJOb2lkYSwgSW5kaWFcIixcbn0gYXMgY29uc3Q7XG4iXX0=

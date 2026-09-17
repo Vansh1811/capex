@@ -1,14 +1,11 @@
 export { AboutExperience } from "./AboutExperience";
 export { Opening } from "./Opening";
-export { Manifesto } from "./Manifesto";
 export { TwoWorlds } from "./TwoWorlds";
+export { WhyCapex } from "./WhyCapex";
 export { HowWeWork } from "./HowWeWork";
 export { Story } from "./Story";
-export { TheModel } from "./TheModel";
-export { PhysicalCapex } from "./PhysicalCapex";
 export { Range } from "./Range";
 export { PeopleTeaser } from "./PeopleTeaser";
 export { Presence } from "./Presence";
 export { Trust } from "./Trust";
-export { TheRecord } from "./TheRecord";
 export { AboutClosing } from "./AboutClosing";
