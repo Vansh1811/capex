@@ -103,7 +103,7 @@ export function ExhibitionHero() {
           The organizations, counterparties and associated parties connected to Capex&rsquo;s
           documented work — stated conservatively, on the record.
         </p>
-        {/* Lower field — rule, one supporting line, quiet scroll cue. The
+        {/* Lower field — rule and one supporting line. The
             flexible space above is photograph, not emptiness. */}
         <div className="mt-auto pt-16">
           <div
@@ -117,13 +117,6 @@ export function ExhibitionHero() {
               style={enter(4).style}
             >
               The clientele, set as an exhibition — one category at a time.
-            </p>
-            <p
-              aria-hidden="true"
-              className={`hidden font-tech text-[10px] uppercase tracking-[0.24em] text-white/40 sm:block ${enter(4).className}`}
-              style={enter(4).style}
-            >
-              Scroll ↓
             </p>
           </div>
         </div>
