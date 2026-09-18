@@ -157,7 +157,7 @@ function LogoMark({
   slug,
   name,
   className = "",
-  eager = false,
+  eager = true,
 }: {
   slug: string;
   name: string;
@@ -166,15 +166,7 @@ function LogoMark({
 }) {
   const src = exhibitionLogo(slug);
   const { failed, onFail, ref } = useLogoFallback();
-  if (!src || failed) {
-    return (
-      <span
-        className={`whitespace-nowrap font-display text-lg font-normal tracking-[-0.01em] text-foreground/70 ${className}`}
-      >
-        {name}
-      </span>
-    );
-  }
+  if (!src || failed) return null;
   return (
     <img
       ref={ref}
@@ -192,48 +184,75 @@ function LogoMark({
 export function LogoShowcase({ clients }: { clients: ClientsPageClient[] }) {
   // Ribbon order follows the registry; only logo-bearing verified clients.
   const ribbon = clients.filter((c) => exhibitionLogo(c.slug));
-  const doubled = [...ribbon, ...ribbon];
+
   return (
     <section
       aria-label="Client logos"
       data-tone="light"
       className="relative overflow-hidden bg-[var(--surface)] text-foreground"
     >
-      {/* Premium tonal transition from the dark hero above */}
+      {/* Precise architectural tonal transition from the dark hero (16-20px band) */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 z-20 h-10 bg-gradient-to-b from-[var(--brand-deep)] to-transparent md:h-12"
+        className="pointer-events-none absolute inset-x-0 top-0 z-20 h-4 md:h-5"
+        style={{
+          background:
+            "linear-gradient(to bottom, var(--brand-deep) 0%, color-mix(in oklab, var(--brand-deep) 50%, var(--surface)) 50%, var(--surface) 100%)",
+        }}
       />
-      {/* Premium tonal transition into the dark section below */}
+      {/* Precise architectural tonal transition into the dark section below */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-10 bg-gradient-to-t from-[var(--brand-deep)] to-transparent md:h-12"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-4 md:h-5"
+        style={{
+          background:
+            "linear-gradient(to top, var(--brand-deep) 0%, color-mix(in oklab, var(--brand-deep) 50%, var(--surface)) 50%, var(--surface) 100%)",
+        }}
       />
 
       <div className="group relative">
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-[var(--surface)] to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-[var(--surface)] to-transparent" />
-        <div className="overflow-hidden py-10 md:py-12">
+        <div
+          className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 md:w-16"
+          style={{
+            background:
+              "linear-gradient(to right, var(--surface) 0%, color-mix(in oklab, var(--surface) 0%, transparent) 100%)",
+          }}
+        />
+        <div
+          className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 md:w-16"
+          style={{
+            background:
+              "linear-gradient(to left, var(--surface) 0%, color-mix(in oklab, var(--surface) 0%, transparent) 100%)",
+          }}
+        />
+        <div
+          tabIndex={0}
+          role="region"
+          aria-label="Client logo showcase"
+          className="overflow-hidden py-7 focus-visible:outline focus-visible:outline-2 focus-visible:outline-inset md:py-9 motion-reduce:overflow-x-auto"
+        >
           <div
-            className="animate-marquee flex w-max items-center hover:[animation-play-state:paused] focus-within:[animation-play-state:paused]"
-            style={{ animationDuration: "70s" }}
+            className="animate-marquee flex w-max items-center hover:[animation-play-state:paused] group-focus-within:[animation-play-state:paused]"
+            style={{ animationDuration: `${ribbon.length * 8}s` }}
           >
             {[0, 1].map((half) => (
-              <div key={half} aria-hidden={half === 1} className="flex items-center">
-                {doubled
-                  .slice(half * ribbon.length, half * ribbon.length + ribbon.length)
-                  .map((c) => (
-                    <span key={`${half}-${c.slug}`} className="flex items-center">
-                      <span className="flex h-14 items-center px-8 md:h-16 md:px-12">
-                        <LogoMark
-                          slug={c.slug}
-                          name={c.name}
-                          className="max-h-9 w-auto max-w-[150px] opacity-70 grayscale transition-opacity duration-300 hover:opacity-100 hover:grayscale-0 md:max-h-11 md:max-w-[170px]"
-                        />
-                      </span>
-                      <span aria-hidden="true" className="h-8 w-px bg-foreground/10" />
+              <div
+                key={half}
+                aria-hidden={half === 1}
+                className={`flex shrink-0 items-center ${half === 1 ? "motion-reduce:hidden" : ""}`}
+              >
+                {ribbon.map((c) => (
+                  <span key={c.slug} className="flex shrink-0 items-center">
+                    <span className="flex h-14 w-[214px] items-center justify-center px-8 md:h-16 md:w-[266px] md:px-12">
+                      <LogoMark
+                        slug={c.slug}
+                        name={c.name}
+                        className="h-auto max-h-9 w-auto max-w-[150px] opacity-70 grayscale transition-opacity duration-300 hover:opacity-100 hover:grayscale-0 md:max-h-11 md:max-w-[170px]"
+                      />
                     </span>
-                  ))}
+                    <span aria-hidden="true" className="h-8 w-px shrink-0 bg-foreground/10" />
+                  </span>
+                ))}
               </div>
             ))}
           </div>
@@ -579,11 +598,6 @@ export function ClientExhibition({
                               {c.name}
                             </span>
                           </span>
-                          {/* Verified logo, if any — small, quiet, aspect-kept.
-                              The name carries the row; the mark never dominates. */}
-                          <span className="flex h-12 w-28 shrink-0 items-center justify-end md:h-14 md:w-36">
-                            <RowLogo slug={c.slug} name={c.name} dim={!isActive} />
-                          </span>
                           <span
                             aria-hidden="true"
                             className={`hidden shrink-0 font-tech text-xs transition-all duration-300 md:block ${
@@ -640,26 +654,5 @@ export function ClientExhibition({
         </div>
       </div>
     </section>
-  );
-}
-
-function RowLogo({ slug, name, dim }: { slug: string; name: string; dim: boolean }) {
-  const src = exhibitionLogo(slug);
-  const { failed, onFail, ref } = useLogoFallback();
-  if (!src || failed) return <span aria-hidden="true" />;
-  return (
-    <img
-      ref={ref}
-      src={src}
-      alt=""
-      aria-hidden="true"
-      loading="lazy"
-      decoding="async"
-      draggable={false}
-      onError={onFail}
-      className={`max-h-10 w-auto max-w-[110px] object-contain transition-all duration-300 md:max-h-12 md:max-w-[140px] ${
-        dim ? "opacity-50 grayscale" : "opacity-90 grayscale-0"
-      }`}
-    />
   );
 }

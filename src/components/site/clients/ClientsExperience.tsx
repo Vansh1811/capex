@@ -78,7 +78,9 @@ export function ClientsExperience({
         onOpenSearch={() => setSearchOpen(true)}
         onOpenStudio={() => setStudioOpen(true)}
       />
-      <main id="main">{children}</main>
+      <main id="main" className="overflow-x-clip">
+        {children}
+      </main>
       <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} corpus={corpus} />
       <StudioMenu open={studioOpen} onClose={() => setStudioOpen(false)} />
     </div>
