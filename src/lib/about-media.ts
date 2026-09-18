@@ -108,9 +108,9 @@ const PLATES: Record<string, AboutPlate> = {
     caption: "City-gas distribution works · site record",
   },
   "field-work": {
-    src: "/uploads/about-capex/field-work.jpg",
-    source: "Electrical & CGD profile, p5 — field work, gallery",
-    alt: "A Capex site crew gathered for a pre-work briefing on a street worksite",
+    src: "/uploads/about-capex/field-work.png",
+    source: "Site photograph — engineer-led site briefing",
+    alt: "Capex engineers and site crew reviewing drawings together on a building site",
     caption: "Site briefing · company record",
   },
   "pipeline-work": {

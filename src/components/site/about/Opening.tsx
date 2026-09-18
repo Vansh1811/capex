@@ -47,22 +47,6 @@ export function Opening() {
           >
             {OPENING.support}
           </p>
-          <div
-            aria-hidden="true"
-            className={`mt-14 hidden lg:block ${enter(5).className}`}
-            style={enter(5).style}
-          >
-            <svg width="14" height="42" viewBox="0 0 14 42" fill="none" className="text-white/60">
-              <path d="M7 0v38" stroke="currentColor" strokeWidth="1" />
-              <path
-                d="M1 33.5 7 41l6-7.5"
-                stroke="currentColor"
-                strokeWidth="1"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
         </div>
 
         {/* the record — a real company photograph, framed, weighted right */}

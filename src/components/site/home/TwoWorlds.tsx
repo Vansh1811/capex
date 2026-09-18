@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Reveal } from "./Reveal";
 import { ClipReveal } from "./ClipReveal";
+import homepagePage02 from "@/assets/Homepage-page-02.png";
 
 /**
  * Two Worlds (final): imagery as substantial composed objects, asymmetric
@@ -108,8 +109,8 @@ export function TwoWorlds() {
             <div className="xl:col-span-8 xl:pt-16">
               <ClipReveal edge="left" ratio="16 / 10">
                 <img
-                  src="/uploads/service-cleanroom.jpg"
-                  alt="Building-services interior — atmospheric reference imagery, not a documented Capex project"
+                  src={homepagePage02}
+                  alt="Hospital clean room with HVAC plant, ducting and red fire-fighting pipework — atmospheric reference imagery, not a documented Capex project"
                   loading="lazy"
                   className="h-full w-full object-cover [filter:saturate(0.9)]"
                 />

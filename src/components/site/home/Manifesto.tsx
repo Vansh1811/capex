@@ -1,5 +1,6 @@
 import { Reveal } from "./Reveal";
 import { ClipReveal } from "./ClipReveal";
+import homepageAImg from "@/assets/homepage-a-img.png";
 
 /**
  * Manifesto (final): the reveal of the idea, staged as a sequence — the
@@ -47,8 +48,8 @@ export function Manifesto() {
           <figure>
             <ClipReveal edge="right" ratio="3 / 4" delay={160} className="w-full">
               <img
-                src="/uploads/service-electrical.jpg"
-                alt="Electrical infrastructure detail — atmospheric reference imagery, not a documented Capex project"
+                src={homepageAImg}
+                alt="Building plant room with HVAC ducting, fire-fighting pipework, electrical panels and pumps — atmospheric reference imagery, not a documented Capex project"
                 loading="lazy"
                 className="h-full w-full object-cover [filter:saturate(0.88)_contrast(0.98)]"
               />

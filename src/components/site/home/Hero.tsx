@@ -4,8 +4,8 @@ import { HeroVideo, useEntrance } from "./HeroVideo";
  * Hero (V3.1): the film is the subject; typography supports it. The
  * headline is deliberately restrained — two short lines, set small
  * against the frame, font-normal so the display sits quiet against the
- * footage. One line of quiet context and a thin downward arrow complete
- * the opening frame. Nothing else. No SCROLL label, no UI.
+ * footage. One line of quiet context completes the opening frame.
+ * Nothing else. No scroll cue, no arrow, no UI.
  */
 export function Hero() {
   const enter = useEntrance();
@@ -44,30 +44,6 @@ export function Hero() {
         </p>
       </div>
 
-      {/* thin downward arrow — quiet, bottom edge, no label */}
-      <div
-        aria-hidden="true"
-        className={`pointer-events-none absolute inset-x-0 bottom-0 flex h-24 items-end justify-center pb-8 md:pb-10 lg:justify-end lg:pb-12 lg:pr-14 ${enter(3).className}`}
-        style={enter(3).style}
-      >
-        <svg
-          width="14"
-          height="42"
-          viewBox="0 0 14 42"
-          fill="none"
-          className="text-white/70"
-          aria-hidden="true"
-        >
-          <path d="M7 0v38" stroke="currentColor" strokeWidth="1" />
-          <path
-            d="M1 33.5 7 41l6-7.5"
-            stroke="currentColor"
-            strokeWidth="1"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </div>
     </section>
   );
 }

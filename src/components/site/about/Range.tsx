@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Reveal } from "@/components/site/home/Reveal";
 import { ClipReveal } from "@/components/site/home/ClipReveal";
 import { RANGE } from "@/lib/about-content";
+import aboutSectorImg from "@/assets/about-page-sector-section.png";
 
 /**
  * Range (About): the range of environments Capex serves — one concise
@@ -24,8 +25,8 @@ export function Range() {
           <div className="lg:col-span-6">
             <ClipReveal edge="left" ratio="4 / 3">
               <img
-                src={plate.src}
-                alt={plate.alt}
+                src={aboutSectorImg}
+                alt="Yellow gas distribution pipes and cable runs on concrete plinths beneath a building deck — the services layer within buildings"
                 loading="lazy"
                 className="h-full w-full object-cover"
               />
