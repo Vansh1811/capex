@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Reveal } from "@/components/site/home/Reveal";
 import { ClipReveal } from "@/components/site/home/ClipReveal";
+import { SiteImage } from "@/components/site/SiteImage";
 import { TRUST } from "@/lib/about-content";
 import { aboutPlate } from "@/lib/about-media";
 
@@ -60,10 +61,12 @@ export function Trust() {
           {/* the proof — site testing, documented, not claimed */}
           <div className="lg:col-span-5">
             <ClipReveal edge="right" ratio="4 / 5" delay={160}>
-              <img
+              <SiteImage
                 src={plate.src}
+                sizes="(max-width: 1024px) 100vw, 42vw"
+                width={plate.width}
+                height={plate.height}
                 alt={plate.alt}
-                loading="lazy"
                 className="h-full w-full object-cover"
               />
             </ClipReveal>

@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Reveal } from "@/components/site/home/Reveal";
 import { ClipReveal } from "@/components/site/home/ClipReveal";
+import { SiteImage, publicSets } from "@/components/site/SiteImage";
 import { PEOPLE } from "@/lib/about-content";
 
 /**
@@ -60,10 +61,13 @@ export function PeopleTeaser() {
           {/* the crew — the people as the work */}
           <div className="lg:col-span-5 lg:col-start-8">
             <ClipReveal edge="right" ratio="4 / 5" delay={120}>
-              <img
+              <SiteImage
                 src={site.src}
+                {...publicSets("/uploads/about-capex/field-work", [640, 1024], 1024)}
+                sizes="(max-width: 1024px) 100vw, 42vw"
+                width={site.width}
+                height={site.height}
                 alt={site.alt}
-                loading="lazy"
                 className="h-full w-full object-cover"
               />
             </ClipReveal>

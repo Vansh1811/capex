@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Reveal } from "@/components/site/home/Reveal";
 import { ClipReveal } from "@/components/site/home/ClipReveal";
+import { SiteImage } from "@/components/site/SiteImage";
 import type { ClientsPageClient } from "@/lib/site-data";
 
 /**
@@ -104,11 +105,10 @@ export function LargeRelationship({ client }: { client: ClientsPageClient }) {
           <div className="lg:col-span-6">
             <Reveal delay={300}>
               <ClipReveal edge="right" ratio="3 / 4" delay={160} className="lg:ml-auto lg:w-[86%]">
-                <img
+                <SiteImage
                   src={client.image}
+                  sizes="(max-width: 1024px) 100vw, 43vw"
                   alt="Atmospheric reference imagery — not a documented Capex project"
-                  loading="lazy"
-                  decoding="async"
                   className="h-full w-full object-cover object-[55%_42%] [filter:saturate(0.85)_contrast(0.98)]"
                 />
               </ClipReveal>
@@ -145,11 +145,10 @@ export function PhotographicField({
     >
       <div className="relative h-[68vh] min-h-[420px] w-full md:h-[80vh]">
         <ClipReveal edge="bottom" className="h-full">
-          <img
+          <SiteImage
             src={image}
+            sizes="100vw"
             alt="Material atmosphere — reference imagery"
-            loading="lazy"
-            decoding="async"
             className="h-full w-full object-cover object-[50%_38%] [filter:saturate(0.72)_contrast(1.02)_brightness(0.9)]"
           />
         </ClipReveal>

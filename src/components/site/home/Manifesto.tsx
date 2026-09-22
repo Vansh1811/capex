@@ -1,6 +1,12 @@
 import { Reveal } from "./Reveal";
 import { ClipReveal } from "./ClipReveal";
-import homepageAImg from "@/assets/homepage-a-img.png";
+import { SiteImage } from "@/components/site/SiteImage";
+import homepageAImg from "@/assets/homepage-a-img.jpg";
+import homepageAImgWebp from "@/assets/homepage-a-img.webp";
+import homepageAImg1024 from "@/assets/homepage-a-img-1024.jpg";
+import homepageAImg1024Webp from "@/assets/homepage-a-img-1024.webp";
+import homepageAImg640 from "@/assets/homepage-a-img-640.jpg";
+import homepageAImg640Webp from "@/assets/homepage-a-img-640.webp";
 
 /**
  * Manifesto (final): the reveal of the idea, staged as a sequence — the
@@ -71,10 +77,14 @@ export function Manifesto() {
         <div className="lg:col-span-5">
           <figure>
             <ClipReveal edge="right" ratio="3 / 4" delay={160} className="w-full">
-              <img
+              <SiteImage
                 src={homepageAImg}
+                srcSet={`${homepageAImg640} 640w, ${homepageAImg1024} 1024w, ${homepageAImg} 1823w`}
+                webpSrcSet={`${homepageAImg640Webp} 640w, ${homepageAImg1024Webp} 1024w, ${homepageAImgWebp} 1823w`}
+                sizes="(max-width: 1024px) 100vw, 40vw"
+                width={1823}
+                height={863}
                 alt="Building plant room with HVAC ducting, fire-fighting pipework, electrical panels and pumps — atmospheric reference imagery, not a documented Capex project"
-                loading="lazy"
                 className="h-full w-full object-cover [filter:saturate(0.88)_contrast(0.98)]"
               />
             </ClipReveal>

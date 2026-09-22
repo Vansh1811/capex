@@ -6,6 +6,7 @@ import { PUBLIC_QUERY_DEFAULTS } from "@/components/site/SiteChrome";
 import { Reveal } from "@/components/site/home/Reveal";
 import { ClipReveal } from "@/components/site/home/ClipReveal";
 import { Closing } from "@/components/site/home/Closing";
+import { SiteImage } from "@/components/site/SiteImage";
 import {
   ArchiveNav,
   MediaCaption,
@@ -189,8 +190,11 @@ function ProjectCaseStudy() {
               every other record renders its principal frame, as before. */}
           <figure className="mx-auto max-w-[1680px] px-6 pb-24 md:px-10 lg:px-12">
             <ClipReveal edge="right" ratio="21 / 9" delay={240}>
-              <img
+              <SiteImage
                 src={p.media.heroSrc ?? p.media.src}
+                sizes="100vw"
+                eager
+                fetchPriority="high"
                 alt={p.media.heroAlt ?? p.media.alt}
                 className={`h-full w-full object-cover ${cropOf(p)} [filter:saturate(0.85)_contrast(1.02)_brightness(0.94)]`}
               />
@@ -304,11 +308,10 @@ function ProjectCaseStudy() {
             <div className="grid gap-10 lg:grid-cols-12">
               <figure className="lg:col-span-8">
                 <ClipReveal edge="left" ratio="16 / 10">
-                  <img
+                  <SiteImage
                     src={p.media.src}
+                    sizes="(max-width: 1024px) 100vw, 66vw"
                     alt={p.media.alt}
-                    loading="lazy"
-                    decoding="async"
                     className={`h-full w-full object-cover ${cropOf(p)} [filter:saturate(0.88)]`}
                   />
                 </ClipReveal>
@@ -345,11 +348,10 @@ function ProjectCaseStudy() {
             <div className="mt-20 grid gap-10 lg:mt-28 lg:grid-cols-12">
               <figure className="lg:col-span-4 lg:col-start-3">
                 <ClipReveal edge="bottom" ratio="4 / 5">
-                  <img
+                  <SiteImage
                     src={p.media.src}
+                    sizes="(max-width: 1024px) 100vw, 33vw"
                     alt={`${p.media.alt} — detail crop`}
-                    loading="lazy"
-                    decoding="async"
                     className={`h-full w-full object-cover ${cropOf(p)} scale-125 [filter:saturate(0.9)_contrast(1.05)]`}
                   />
                 </ClipReveal>
@@ -404,11 +406,10 @@ function ProjectCaseStudy() {
                       aria-label={`${r.title} — ${r.city}`}
                     >
                       <ClipReveal edge={i % 2 === 0 ? "right" : "left"} ratio="4 / 5">
-                        <img
+                        <SiteImage
                           src={r.media.src}
+                          sizes="(max-width: 768px) 100vw, 33vw"
                           alt={r.media.alt}
-                          loading="lazy"
-                          decoding="async"
                           className="h-full w-full object-cover transition-[filter] duration-700 [filter:saturate(0.88)] group-hover:[filter:saturate(1)]"
                         />
                       </ClipReveal>
@@ -454,10 +455,12 @@ function ProjectCaseStudy() {
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-0 hidden lg:block"
               >
-                <img
+                <SiteImage
                   src={next.media.src}
+                  sizes="100vw"
+                  fetchPriority="low"
                   alt=""
-                  loading="lazy"
+                  ariaHidden="true"
                   className={`h-full w-full object-cover object-[60%_50%] opacity-0 transition-all duration-[1100ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02] group-hover:opacity-[0.22] ${cropOf(next)}`}
                 />
                 <div className="absolute inset-0 bg-gradient-to-r from-[var(--ink)] via-[var(--ink)]/60 to-[var(--ink)]/20" />

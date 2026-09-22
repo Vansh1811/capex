@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Reveal } from "@/components/site/home/Reveal";
 import { ClipReveal } from "@/components/site/home/ClipReveal";
+import { SiteImage } from "@/components/site/SiteImage";
 import { ReferenceNote } from "@/components/site/capabilities/CapabilitiesExperience";
 import type { CapabilityPractice } from "@/lib/site-data";
 
@@ -80,10 +81,11 @@ function PracticeRoom({
         }`}
       >
         <div className="h-full w-full scale-100">
-          <img
+          <SiteImage
             src={practice.plate}
+            sizes="(max-width: 1280px) 100vw, 46vw"
             alt=""
-            loading="lazy"
+            ariaHidden="true"
             className={`h-full w-full object-cover ${
               below ? "object-[62%_54%]" : "object-[38%_48%]"
             } ${
@@ -281,10 +283,10 @@ function PracticeRoom({
       {/* sub-xl: the room's plate in-flow, wide */}
       <div className="relative z-10 px-6 pb-16 md:px-10 lg:px-12 xl:hidden">
         <ClipReveal edge={below ? "left" : "right"} ratio="16 / 9" delay={60}>
-          <img
+          <SiteImage
             src={practice.plate}
+            sizes="100vw"
             alt={practice.plateAlt}
-            loading="lazy"
             className={`h-full w-full object-cover ${
               below
                 ? "object-[56%_50%] [filter:saturate(0.7)_contrast(1.03)_brightness(0.85)]"

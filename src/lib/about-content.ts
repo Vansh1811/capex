@@ -102,7 +102,7 @@ export const DELIVERY = {
     },
     {
       word: "Engineer",
-      note: "Design and engineering shaped around the project — routes, plant rooms, calculations, panels.",
+      note: "Engineering shaped around the project — routes, plant rooms, calculations, panels.",
       output: "Design & drawings",
       holder: "Design engineers",
       measure: "Routes, plant rooms, calculations",

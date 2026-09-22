@@ -18,7 +18,13 @@ import {
  * 01 — CINEMATIC HERO (dark deep-earth, existing Capex image)
  * ============================================================ */
 
-import clientHeroImg from "@/assets/client-page-hero-section.png";
+import clientHeroImg from "@/assets/client-page-hero-section.jpg";
+import clientHeroImgWebp from "@/assets/client-page-hero-section.webp";
+import clientHeroImg1024 from "@/assets/client-page-hero-section-1024.jpg";
+import clientHeroImg1024Webp from "@/assets/client-page-hero-section-1024.webp";
+import clientHeroImg640 from "@/assets/client-page-hero-section-640.jpg";
+import clientHeroImg640Webp from "@/assets/client-page-hero-section-640.webp";
+import { SiteImage } from "@/components/site/SiteImage";
 
 export function ExhibitionHero() {
   const enter = useEntrance();
@@ -37,11 +43,17 @@ export function ExhibitionHero() {
       {/* Full-bleed photograph — the hero's visual field, not a backdrop hint.
           The image naturally provides left negative space and right architectural detail. */}
       <div className="absolute inset-0">
-        <img
+        <SiteImage
           src={clientHeroImg}
+          srcSet={`${clientHeroImg640} 640w, ${clientHeroImg1024} 1024w, ${clientHeroImg} 1344w`}
+          webpSrcSet={`${clientHeroImg640Webp} 640w, ${clientHeroImg1024Webp} 1024w, ${clientHeroImgWebp} 1344w`}
+          sizes="100vw"
+          width={1344}
+          height={768}
+          eager
+          fetchPriority="high"
           alt=""
-          aria-hidden="true"
-          loading="eager"
+          ariaHidden="true"
           className={`h-full w-full object-cover object-[65%_50%] transition-[opacity,transform] duration-[2000ms] ease-out md:object-[50%_50%] ${
             placed ? "scale-100 opacity-100" : "scale-[1.045] opacity-0"
           }`}
@@ -147,7 +159,7 @@ function LogoMark({
   slug,
   name,
   className = "",
-  eager = true,
+  eager = false,
 }: {
   slug: string;
   name: string;
@@ -157,19 +169,42 @@ function LogoMark({
   const src = exhibitionLogo(slug);
   const { failed, onFail, ref } = useLogoFallback();
   if (!src || failed) return null;
+  // Intrinsic raster dimensions stabilise layout; SVGs scale freely.
+  const dims = LOGO_DIMS[slug];
   return (
     <img
       ref={ref}
       src={src}
       alt={name}
+      width={dims?.[0]}
+      height={dims?.[1]}
       loading={eager ? "eager" : "lazy"}
       decoding="async"
+      fetchPriority={eager ? "high" : "low"}
       draggable={false}
       onError={onFail}
       className={`object-contain ${className}`}
     />
   );
 }
+
+/**
+ * Intrinsic dimensions of the raster logo assets. The marquee slots are
+ * fixed-size flex boxes, but explicit dimensions let the browser reserve
+ * the right aspect before each file arrives (no shift when logos pop in).
+ */
+const LOGO_DIMS: Record<string, [number, number]> = {
+  acquisory: [640, 183],
+  "apollo-pipes": [180, 90],
+  "bhutani-infra": [166, 88],
+  "bl-agro": [102, 102],
+  bpcl: [640, 94],
+  commscope: [360, 205],
+  imgc: [80, 80],
+  "pearson-education": [312, 96],
+  "tata-advanced-systems": [301, 101],
+  ultratech: [580, 320],
+};
 
 export function LogoShowcase({ clients }: { clients: ClientsPageClient[] }) {
   // Ribbon order follows the registry; only logo-bearing verified clients.

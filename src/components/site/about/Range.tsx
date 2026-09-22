@@ -1,8 +1,14 @@
 import { Link } from "@tanstack/react-router";
 import { Reveal } from "@/components/site/home/Reveal";
 import { ClipReveal } from "@/components/site/home/ClipReveal";
+import { SiteImage } from "@/components/site/SiteImage";
 import { RANGE } from "@/lib/about-content";
-import aboutSectorImg from "@/assets/About-page/about-page-sector-section.png";
+import aboutSectorImg from "@/assets/About-page/about-page-sector-section.jpg";
+import aboutSectorImgWebp from "@/assets/About-page/about-page-sector-section.webp";
+import aboutSectorImg1024 from "@/assets/About-page/about-page-sector-section-1024.jpg";
+import aboutSectorImg1024Webp from "@/assets/About-page/about-page-sector-section-1024.webp";
+import aboutSectorImg640 from "@/assets/About-page/about-page-sector-section-640.jpg";
+import aboutSectorImg640Webp from "@/assets/About-page/about-page-sector-section-640.webp";
 
 /**
  * Range (About): the range of environments Capex serves — one concise
@@ -24,10 +30,14 @@ export function Range() {
           {/* the plate — half the frame, entering from the left */}
           <div className="lg:col-span-6">
             <ClipReveal edge="left" ratio="4 / 3">
-              <img
+              <SiteImage
                 src={aboutSectorImg}
+                srcSet={`${aboutSectorImg640} 640w, ${aboutSectorImg1024} 1024w, ${aboutSectorImg} 1816w`}
+                webpSrcSet={`${aboutSectorImg640Webp} 640w, ${aboutSectorImg1024Webp} 1024w, ${aboutSectorImgWebp} 1816w`}
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                width={1816}
+                height={866}
                 alt="Yellow gas distribution pipes and cable runs on concrete plinths beneath a building deck — the services layer within buildings"
-                loading="lazy"
                 className="h-full w-full object-cover"
               />
             </ClipReveal>

@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Reveal } from "@/components/site/home/Reveal";
 import { FilterLine } from "@/components/site/clients/Vocabulary";
+import { SiteImage } from "@/components/site/SiteImage";
 import type { ClientsPageClient } from "@/lib/site-data";
 
 /**
@@ -225,12 +226,11 @@ function PreviewPlate({
     <div className="flex h-full flex-col">
       {/* the plate image — atmosphere, crossfading between clients */}
       <div className="relative aspect-[4/3] overflow-hidden bg-[var(--surface)] lg:aspect-[4/5]">
-        <img
+        <SiteImage
           key={client.slug}
           src={client.image}
+          sizes="(max-width: 1024px) 100vw, 40vw"
           alt="Atmospheric reference imagery — not a documented Capex project"
-          loading="lazy"
-          decoding="async"
           className="plate-img absolute inset-0 h-full w-full object-cover [filter:saturate(0.82)_contrast(0.98)]"
         />
         {client.projects.length > 1 && (

@@ -1,5 +1,4 @@
 import { Reveal } from "@/components/site/home/Reveal";
-import { ClipReveal } from "@/components/site/home/ClipReveal";
 import { STORY } from "@/lib/about-content";
 
 /**
@@ -8,13 +7,10 @@ import { STORY } from "@/lib/about-content";
  * transition. Chapters read as record entries: the mark (the date where
  * the record dates it — 2012, set in copper as the one dated fact; an
  * archival label where it does not — "Two practices"), a small label,
- * then the factual entry. On wide screens the plate column is held
- * sticky beside the register — the documented site record accompanying
- * the chapters as they scroll. No invented milestones, no invented
- * dates — the statutory line closes.
+ * then the factual entry. Full-width register, no plate. No invented
+ * milestones, no invented dates — the statutory line closes.
  */
 export function Story() {
-  const plate = STORY.plate;
   return (
     <section
       aria-label="Our story"
@@ -33,9 +29,9 @@ export function Story() {
           </div>
         </Reveal>
 
-        {/* the register and the plate — record left, evidence held right */}
-        <div className="mt-14 grid gap-12 md:mt-20 lg:grid-cols-12 lg:gap-10">
-          <div className="lg:col-span-9">
+        {/* the register — full-width record, no plate */}
+        <div className="mt-14 md:mt-20">
+          <div>
             {/* the register head — what this file holds */}
             <Reveal>
               <p className="font-tech text-[10px] uppercase tracking-[0.22em] text-white/30">
@@ -88,29 +84,6 @@ export function Story() {
                 · · End of file · ·
               </p>
             </Reveal>
-          </div>
-
-          {/* the plate — the documented site record, held beside the register */}
-          <div className="lg:col-span-3">
-            <div className="lg:sticky lg:top-28">
-              <ClipReveal edge="right" ratio="4 / 5" delay={200}>
-                <img
-                  src={plate.src}
-                  alt={plate.alt}
-                  loading="lazy"
-                  className="h-full w-full object-cover"
-                />
-              </ClipReveal>
-              <Reveal delay={280}>
-                <p className="mt-4 font-tech text-[10px] uppercase leading-relaxed tracking-[0.18em] text-white/40">
-                  {plate.caption}
-                </p>
-                <div
-                  aria-hidden="true"
-                  className="mt-6 hidden h-px w-16 bg-[var(--accent)]/50 lg:block"
-                />
-              </Reveal>
-            </div>
           </div>
         </div>
       </div>

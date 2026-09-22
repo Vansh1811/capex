@@ -70,6 +70,11 @@ export const Route = createFileRoute("/")({
       { property: "og:image", content: "/media/capex-hero-poster.jpg" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [
+      // The hero film's poster is the LCP image — fetch it early so the first
+      // frame is painted before the video bytes arrive.
+      { rel: "preload", href: "/media/capex-hero-poster.webp", as: "image" },
+    ],
   }),
 });
 

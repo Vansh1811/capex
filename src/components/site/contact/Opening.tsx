@@ -1,6 +1,7 @@
 import { ClipReveal } from "@/components/site/home/ClipReveal";
 import { Reveal } from "@/components/site/home/Reveal";
 import { useEntrance } from "@/components/site/home/HeroVideo";
+import { SiteImage, publicSets } from "@/components/site/SiteImage";
 
 /**
  * Opening (Contact): the first frame of THE OPEN LINE — deep earth, almost
@@ -25,10 +26,15 @@ export function Opening({ phone, email }: { phone: string; email: string }) {
           engineered ground the whole site journey has been standing on */}
       <div className="absolute inset-x-0 bottom-0 h-[58%] md:h-[62%]">
         <ClipReveal edge="left" delay={340} className="h-full w-full">
-          <img
+          <SiteImage
             src="/uploads/contact/hero-tunnel.jpg"
+            {...publicSets("/uploads/contact/hero-tunnel", [640, 1024], 1920)}
+            sizes="100vw"
+            width={1920}
+            height={1440}
+            eager
+            fetchPriority="high"
             alt="A common utility tunnel — reference imagery, not a Capex project"
-            loading="eager"
             className="h-full w-full object-cover [filter:saturate(0.62)_contrast(1.06)_brightness(0.64)]"
           />
         </ClipReveal>

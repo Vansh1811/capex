@@ -1,5 +1,6 @@
 import { useEntrance } from "@/components/site/home/HeroVideo";
 import { ClipReveal } from "@/components/site/home/ClipReveal";
+import { SiteImage } from "@/components/site/SiteImage";
 import { OPENING } from "@/lib/about-content";
 
 /**
@@ -52,8 +53,13 @@ export function Opening() {
         {/* the record — a real company photograph, framed, weighted right */}
         <div className="lg:col-span-5 lg:col-start-8">
           <ClipReveal edge="right" ratio="4 / 3" delay={260}>
-            <img
+            <SiteImage
               src={OPENING.plate.src}
+              sizes="(max-width: 1024px) 100vw, 42vw"
+              width={OPENING.plate.width}
+              height={OPENING.plate.height}
+              eager
+              fetchPriority="high"
               alt={OPENING.plate.alt}
               className="h-full w-full object-cover"
             />

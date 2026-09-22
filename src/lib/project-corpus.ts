@@ -80,7 +80,7 @@ export type ProjectRecord = {
 export const CORPUS_SOURCE_NOTE =
   "Corpus transcribed from company records DOC B pp.8-9, DOC A p17 and DOC C p8; publication states per the Phase 7 verification matrix.";
 
-export const CORPUS_TOTAL_DOCUMENTED = 92;
+export const CORPUS_TOTAL_DOCUMENTED = 97;
 
 /** Atmosphere frame → asset path (shared with the locked homepage). */
 export const CORPUS_IMAGE: Record<ProjectRecord["image"], string> = {
@@ -1355,5 +1355,126 @@ export const PROJECT_CORPUS: ProjectRecord[] = [
     image: "electrical",
     source_ref:
       "DOC C p8 §4.2 #6 — client Capgemini (NSEZ Noida); ongoing confirmed by client 2026-09-10",
+  },
+
+  // ============ 2026-09-22 CLIENT PO-DATA ADDITION — 5 completed CGD records ============
+  // Curated from the client-supplied PO spreadsheet (see audit in the change
+  // report): multiple PO/RO rows per location consolidated into ONE record per
+  // underlying project — the archive carries the project, never the PO row.
+  // All five are Practice 01 / Oil-Gas-CGD, status completed (PO completion
+  // markers and PO dates all lie in the past; no client confirmation of live
+  // running status exists, so none is claimed ongoing). No quantities are
+  // stated — the spreadsheet carries only commercial figures, which are
+  // internal and never published, so metrics is honestly empty. Media
+  // resolves automatically through the gas pool in project-media.ts.
+  {
+    ref: "P1-107",
+    title: "Ahmednagar MDPE & LMC Works",
+    slug: "ahmednagar-mdpe-lmc-works",
+    practice: 1,
+    practice_label: "UG Utilities & Electrical",
+    practice_name: "UG Utilities, Electrical & CGD",
+    practice_slug: "ug-utilities-electrical",
+    city: "Ahmednagar",
+    state: "Maharashtra",
+    status: "completed",
+    scope_line: "MDPE laying and last-mile connectivity works",
+    metrics: [],
+    client_display: "BPCL",
+    services: [
+      { name: "CGD Networks — MDPE & Steel", slug: "cgd-networks" },
+      { name: "LMC Works", slug: "lmc-works" },
+    ],
+    sectors: [{ name: "Oil, Gas & CGD Utilities", slug: "oil-gas-cgd" }],
+    featured: false,
+    image: "ug",
+    source_ref:
+      "Client PO records — BPCL Ahmednagar MDPE/LMC works (8 PO rows across subcontract and direct packages, consolidated)",
+  },
+  {
+    ref: "P1-108",
+    title: "Aurangabad LMC Works",
+    slug: "aurangabad-lmc-works",
+    practice: 1,
+    practice_label: "UG Utilities & Electrical",
+    practice_name: "UG Utilities, Electrical & CGD",
+    practice_slug: "ug-utilities-electrical",
+    city: "Aurangabad",
+    state: "Maharashtra",
+    status: "completed",
+    scope_line: "Last-mile connectivity works",
+    metrics: [],
+    client_display: "BPCL",
+    services: [
+      { name: "LMC Works", slug: "lmc-works" },
+      { name: "CGD Networks — MDPE & Steel", slug: "cgd-networks" },
+    ],
+    sectors: [{ name: "Oil, Gas & CGD Utilities", slug: "oil-gas-cgd" }],
+    featured: false,
+    image: "ug",
+    source_ref:
+      "Client PO records — BPCL Aurangabad LMC works (5 PO rows across packages/contractors, consolidated; distinct from the BGRL Aurangabad MDP record P1-103)",
+  },
+  {
+    ref: "P1-109",
+    title: "Guwahati PE Pipeline & MC Works",
+    slug: "guwahati-pe-pipeline-mc-works",
+    practice: 1,
+    practice_label: "UG Utilities & Electrical",
+    practice_name: "UG Utilities, Electrical & CGD",
+    practice_slug: "ug-utilities-electrical",
+    city: "Guwahati",
+    state: "Assam",
+    status: "completed",
+    scope_line: "Underground PE pipeline laying and MC works",
+    metrics: [],
+    client_display: "Purba Bharati Gas",
+    services: [{ name: "CGD Networks — MDPE & Steel", slug: "cgd-networks" }],
+    sectors: [{ name: "Oil, Gas & CGD Utilities", slug: "oil-gas-cgd" }],
+    featured: false,
+    image: "ug",
+    source_ref:
+      "Client PO records — Purba (Guwahati) U/G PE pipeline & MC works (3 release orders, consolidated)",
+  },
+  {
+    ref: "P1-110",
+    title: "Rohtak MDPE Laying & Associated Work",
+    slug: "rohtak-mdpe-laying",
+    practice: 1,
+    practice_label: "UG Utilities & Electrical",
+    practice_name: "UG Utilities, Electrical & CGD",
+    practice_slug: "ug-utilities-electrical",
+    city: "Rohtak",
+    state: "Haryana",
+    status: "completed",
+    scope_line: "MDPE laying and associated works",
+    metrics: [],
+    client_display: "BPCL",
+    services: [{ name: "CGD Networks — MDPE & Steel", slug: "cgd-networks" }],
+    sectors: [{ name: "Oil, Gas & CGD Utilities", slug: "oil-gas-cgd" }],
+    featured: false,
+    image: "ug",
+    source_ref: "Client PO records — BPCL Rohtak MDPE laying & associated work",
+  },
+  {
+    ref: "P1-111",
+    title: "Sec-13 Pipe Laying",
+    slug: "sec-13-pipe-laying",
+    practice: 1,
+    practice_label: "UG Utilities & Electrical",
+    practice_name: "UG Utilities, Electrical & CGD",
+    practice_slug: "ug-utilities-electrical",
+    city: "Sec-13",
+    state: "Uttar Pradesh",
+    status: "completed",
+    scope_line: "Pipe laying works",
+    metrics: [],
+    client_display: "AG&P",
+    services: [{ name: "CGD Networks — MDPE & Steel", slug: "cgd-networks" }],
+    sectors: [{ name: "Oil, Gas & CGD Utilities", slug: "oil-gas-cgd" }],
+    featured: false,
+    image: "ug",
+    source_ref:
+      "Client PO records — AGP City Gas pipe laying, Sec-13 (UP); host city of Sec-13 unconfirmed, transcribed as stated",
   },
 ];

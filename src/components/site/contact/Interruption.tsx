@@ -1,4 +1,5 @@
 import { ClipReveal } from "@/components/site/home/ClipReveal";
+import { SiteImage } from "@/components/site/SiteImage";
 
 /**
  * Interruption (Contact): the visual breath between the functional content
@@ -16,10 +17,12 @@ export function Interruption() {
     >
       <div className="relative">
         <ClipReveal edge="right" ratio="21 / 9" className="w-full">
-          <img
+          <SiteImage
             src="/uploads/contact/plant-pipes.jpg"
+            sizes="100vw"
+            width={1600}
+            height={800}
             alt="Boiler-room pipework — reference imagery, not a Capex installation"
-            loading="lazy"
             className="h-full w-full object-cover [filter:saturate(0.6)_contrast(1.05)_brightness(0.72)]"
           />
         </ClipReveal>

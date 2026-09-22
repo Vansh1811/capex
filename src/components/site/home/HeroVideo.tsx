@@ -33,14 +33,18 @@ export function HeroVideo({ poster }: { poster: string }) {
       <video
         ref={vref}
         className="h-full w-full object-cover object-[50%_62%] md:object-[50%_50%] lg:object-[46%_50%]"
-        src="/media/capex-hero.mp4"
         poster={poster}
         autoPlay
         muted
         playsInline
         loop
         preload="metadata"
-      />
+      >
+        {/* Small screens get the 640px encode (~0.5MB); larger screens the
+            720p encode (~1.8MB). No visual change — same film, same crop. */}
+        <source src="/media/capex-hero-640.mp4" type="video/mp4" media="(max-width: 640px)" />
+        <source src="/media/capex-hero.mp4" type="video/mp4" />
+      </video>
     </div>
   );
 }

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Reveal } from "@/components/site/home/Reveal";
 import { ClipReveal } from "@/components/site/home/ClipReveal";
+import { SiteImage } from "@/components/site/SiteImage";
 import { PlateArrowLink } from "@/components/site/sectors/SectorsExperience";
 import type { AtlasSector, AtlasProjectLink, SectorAtlas } from "@/lib/site-data";
 
@@ -49,10 +50,15 @@ export function AtlasOpening({ atlas }: { atlas: SectorAtlas }) {
           atmosphere ahead of the words; never a banner, never full-bleed */}
       <div aria-hidden="true" className="absolute bottom-0 right-0 hidden h-[58%] w-[42%] xl:block">
         <ClipReveal edge="right" delay={620} className="absolute bottom-0 right-0 h-full w-full">
-          <img
+          <SiteImage
             src="/uploads/sectors/atlas-opening.jpg"
+            sizes="(max-width: 1280px) 100vw, 42vw"
+            width={1600}
+            height={1200}
+            eager
+            fetchPriority="high"
             alt=""
-            loading="eager"
+            ariaHidden="true"
             className="h-full w-full object-cover [filter:saturate(0.72)_contrast(1.04)_brightness(0.86)]"
           />
         </ClipReveal>
@@ -121,10 +127,13 @@ export function AtlasOpening({ atlas }: { atlas: SectorAtlas }) {
           rendering the same frame twice */}
       <div className="relative z-10 -mt-2 px-6 pb-16 md:px-10 xl:hidden lg:px-12">
         <ClipReveal edge="right" ratio="16 / 9" delay={620} className="w-full">
-          <img
+          <SiteImage
             src="/uploads/sectors/atlas-opening.jpg"
+            sizes="100vw"
+            width={1600}
+            height={1200}
+            eager
             alt="City on a river at dusk — atmospheric reference imagery, not a documented Capex project"
-            loading="eager"
             className="h-full w-full object-cover [filter:saturate(0.72)_contrast(1.04)_brightness(0.92)]"
           />
         </ClipReveal>
@@ -284,10 +293,10 @@ export function AtlasIndex({ atlas }: { atlas: SectorAtlas }) {
                           className="relative overflow-hidden bg-[var(--surface)]"
                           style={{ aspectRatio: "16 / 10" }}
                         >
-                          <img
+                          <SiteImage
                             src={s.plate}
+                            sizes="100vw"
                             alt="Atmospheric reference imagery — not a documented Capex project"
-                            loading="lazy"
                             className={`h-full w-full object-cover ${geo.crop} [filter:saturate(0.82)]`}
                           />
                         </div>
@@ -333,11 +342,12 @@ export function AtlasIndex({ atlas }: { atlas: SectorAtlas }) {
                   const geo = PREVIEW_GEO[i % PREVIEW_GEO.length];
                   const isActive = i === current;
                   return (
-                    <img
+                    <SiteImage
                       key={s.slug}
                       src={s.plate}
+                      sizes="(max-width: 1024px) 100vw, 40vw"
                       alt=""
-                      loading="lazy"
+                      ariaHidden="true"
                       className={`absolute inset-0 h-full w-full object-cover transition-[opacity,transform,filter] duration-[700ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${geo.crop} ${
                         isActive
                           ? "scale-[1.03] opacity-100 [filter:saturate(0.9)]"
@@ -470,10 +480,12 @@ export function TwoWorldsAtlas() {
           </div>
           <div className="lg:col-span-7">
             <ClipReveal edge="left" ratio="4 / 3" delay={120}>
-              <img
+              <SiteImage
                 src="/uploads/sectors/world-below.jpg"
+                sizes="(max-width: 1024px) 100vw, 58vw"
+                width={1600}
+                height={1600}
                 alt="City gas installation — atmospheric reference imagery, not a documented Capex project"
-                loading="lazy"
                 className="h-full w-full object-cover [filter:saturate(0.75)_contrast(1.03)_brightness(0.95)]"
               />
             </ClipReveal>
@@ -502,10 +514,12 @@ export function TwoWorldsAtlas() {
         <div className="relative grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-7">
             <ClipReveal edge="right" ratio="4 / 3" delay={120}>
-              <img
+              <SiteImage
                 src="/uploads/sectors/world-within.jpg"
+                sizes="(max-width: 1024px) 100vw, 58vw"
+                width={1600}
+                height={900}
                 alt="Building interior atrium — atmospheric reference imagery, not a documented Capex project"
-                loading="lazy"
                 className="h-full w-full object-cover [filter:saturate(0.8)_brightness(0.97)]"
               />
             </ClipReveal>

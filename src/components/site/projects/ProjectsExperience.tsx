@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { trapFocus } from "@/lib/focus-trap";
 import { HomeNav } from "@/components/site/HomeNav";
 import { StudioMenu } from "@/components/site/home/StudioMenu";
+import { SiteImage } from "@/components/site/SiteImage";
 import {
   SearchOverlay,
   buildSearchCorpus,
@@ -219,10 +220,12 @@ export function ProjectsGateway({
               world === s.key ? "opacity-[0.32] scale-[1.03]" : "opacity-0 scale-[1]"
             }`}
           >
-            <img
+            <SiteImage
               src={s.plate}
+              sizes="100vw"
+              fetchPriority="low"
               alt=""
-              loading="lazy"
+              ariaHidden="true"
               className={`h-full w-full object-cover [filter:saturate(0.6)_brightness(0.72)] ${
                 s.key === "completed" ? "object-[50%_42%]" : "object-[56%_58%]"
               }`}

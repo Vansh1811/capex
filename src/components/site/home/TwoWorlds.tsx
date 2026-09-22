@@ -1,7 +1,19 @@
 import { Link } from "@tanstack/react-router";
 import { Reveal } from "./Reveal";
 import { ClipReveal } from "./ClipReveal";
-import homepagePage02 from "@/assets/Homepage-page-02.png";
+import { SiteImage } from "@/components/site/SiteImage";
+import homepagePage02 from "@/assets/Homepage-page-02.jpg";
+import homepagePage02Webp from "@/assets/Homepage-page-02.webp";
+import homepagePage02_1024 from "@/assets/Homepage-page-02-1024.jpg";
+import homepagePage02_1024Webp from "@/assets/Homepage-page-02-1024.webp";
+import homepagePage02_640 from "@/assets/Homepage-page-02-640.jpg";
+import homepagePage02_640Webp from "@/assets/Homepage-page-02-640.webp";
+
+const BUILDING_SET = `${homepagePage02_640} 640w, ${homepagePage02_1024} 1024w, ${homepagePage02} 1543w`;
+const BUILDING_SET_WEBP = `${homepagePage02_640Webp} 640w, ${homepagePage02_1024Webp} 1024w, ${homepagePage02Webp} 1543w`;
+const BUILDING_SIZES = "(max-width: 1280px) 100vw, 55vw";
+const BUILDING_ALT =
+  "Hospital clean room with HVAC plant, ducting and red fire-fighting pipework — atmospheric reference imagery, not a documented Capex project";
 
 /**
  * Two Worlds (final): imagery as substantial composed objects, asymmetric
@@ -29,10 +41,12 @@ export function TwoWorlds() {
             delay={80}
             className="absolute bottom-0 right-0 h-[70%] w-full"
           >
-            <img
+            <SiteImage
               src="/uploads/service-ug.jpg"
+              sizes="(max-width: 1280px) 100vw, 52vw"
+              width={1200}
+              height={900}
               alt="Open utility trench and pipeline corridor — atmospheric reference imagery, not a documented Capex project"
-              loading="lazy"
               className="h-full w-full object-cover [filter:saturate(0.78)_contrast(1.02)_brightness(0.92)]"
             />
           </ClipReveal>
@@ -88,10 +102,12 @@ export function TwoWorlds() {
             {/* sub-xl: the image unblinds below the word, wide 4:3 in-flow */}
             <div className="xl:hidden">
               <ClipReveal edge="right" ratio="4 / 3" delay={80}>
-                <img
+                <SiteImage
                   src="/uploads/service-ug.jpg"
+                  sizes="100vw"
+                  width={1200}
+                  height={900}
                   alt="Open utility trench and pipeline corridor — atmospheric reference imagery, not a documented Capex project"
-                  loading="lazy"
                   className="h-full w-full object-cover [filter:saturate(0.78)_contrast(1.02)_brightness(0.92)]"
                 />
               </ClipReveal>
@@ -110,10 +126,14 @@ export function TwoWorlds() {
             {/* the image — wide 16:10 gallery frame, hung high on the left */}
             <div className="xl:col-span-8 xl:pt-16">
               <ClipReveal edge="left" ratio="16 / 10">
-                <img
+                <SiteImage
                   src={homepagePage02}
-                  alt="Hospital clean room with HVAC plant, ducting and red fire-fighting pipework — atmospheric reference imagery, not a documented Capex project"
-                  loading="lazy"
+                  srcSet={BUILDING_SET}
+                  webpSrcSet={BUILDING_SET_WEBP}
+                  sizes={BUILDING_SIZES}
+                  width={1543}
+                  height={1019}
+                  alt={BUILDING_ALT}
                   className="h-full w-full object-cover [filter:saturate(0.9)]"
                 />
               </ClipReveal>

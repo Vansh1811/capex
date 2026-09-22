@@ -1,5 +1,6 @@
 import { Reveal } from "@/components/site/home/Reveal";
 import { ClipReveal } from "@/components/site/home/ClipReveal";
+import { SiteImage } from "@/components/site/SiteImage";
 import { ReferenceNote } from "@/components/site/capabilities/CapabilitiesExperience";
 
 /**
@@ -44,10 +45,12 @@ export function PhysicalCapability({
         {/* the rig frame — the numeral set into the composition */}
         <div className="relative mt-16 md:mt-24">
           <ClipReveal edge="left" ratio="16 / 9" innerClassName="relative">
-            <img
+            <SiteImage
               src="/uploads/capabilities/hdd-rig-drillto.jpg"
+              sizes="100vw"
+              width={1600}
+              height={1066}
               alt="Horizontal directional drilling rig at work — atmospheric reference imagery, not Capex-owned equipment"
-              loading="lazy"
               className="h-full w-full object-cover object-[58%_46%] [filter:saturate(0.85)_contrast(1.05)]"
             />
             {/* the pullback numeral — quietly inside the frame, like the About page's tonnage */}

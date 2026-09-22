@@ -26,12 +26,15 @@
 export type AboutPlate = {
   /** Asset path under /public. */
   src: string;
-  /** Provenance: source PDF · page. */
+  /** Provenance: source PDF A· page. */
   source: string;
   /** Meaningful, honest alt text. */
   alt: string;
   /** Small caption fragment — what the frame documents. */
   caption: string;
+  /** Intrinsic dimensions — stabilise layout before load (no CLS). */
+  width?: number;
+  height?: number;
 };
 
 const PLATES: Record<string, AboutPlate> = {
@@ -58,6 +61,8 @@ const PLATES: Record<string, AboutPlate> = {
     source: "Company profile, p4 — HVAC plant installation",
     alt: "Pipelayers stringing a large-diameter pipeline along an open right-of-way — photograph from the company profile",
     caption: "Pipeline stringing works · company profile record",
+    width: 568,
+    height: 879,
   },
   "below-the-street": {
     src: "/uploads/about-capex/below-the-street.jpg",
@@ -88,6 +93,8 @@ const PLATES: Record<string, AboutPlate> = {
     source: "Company profile, p11 — horizontal boring at the building interface (captioned)",
     alt: "Insulated services pipework running across a building roof — Capex building-systems work, company record",
     caption: "Building-services pipework · company record",
+    width: 585,
+    height: 714,
   },
   "substation-build": {
     src: "/uploads/about-capex/substation-build.jpg",
@@ -106,18 +113,24 @@ const PLATES: Record<string, AboutPlate> = {
     source: "Electrical & CGD profile, p5 — site crew, gallery",
     alt: "Coiled MDPE gas pipe staged at a street excavation — Capex city-gas distribution works, company record",
     caption: "City-gas distribution works · site record",
+    width: 535,
+    height: 650,
   },
   "field-work": {
-    src: "/uploads/about-capex/field-work.png",
+    src: "/uploads/about-capex/field-work.jpg",
     source: "Site photograph — engineer-led site briefing",
     alt: "Capex engineers and site crew reviewing drawings together on a building site",
     caption: "Site briefing · company record",
+    width: 1024,
+    height: 1536,
   },
   "pipeline-work": {
     src: "/uploads/about-capex/pipeline-work.jpg",
     source: "Electrical & CGD profile, p18 — pipeline work",
     alt: "A cross-country pipeline right-of-way crossing open ground — from the company record",
     caption: "Cross-country pipeline works · company record",
+    width: 526,
+    height: 382,
   },
   "hvac-detail": {
     src: "/uploads/about-capex/hvac-detail.jpg",
@@ -136,6 +149,8 @@ const PLATES: Record<string, AboutPlate> = {
     source: "HVAC & fire profile, p6 — safety procedures",
     alt: "Capex site work under the company safety regime",
     caption: "One safety regime, every site · company record",
+    width: 485,
+    height: 393,
   },
   "team-boards": {
     src: "/uploads/about-capex/team-boards.jpg",

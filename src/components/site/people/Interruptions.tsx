@@ -1,5 +1,6 @@
 import { Reveal } from "@/components/site/home/Reveal";
 import { ClipReveal } from "@/components/site/home/ClipReveal";
+import { SiteImage, publicSets } from "@/components/site/SiteImage";
 import { ReferenceNote } from "./PeopleExperience";
 
 /**
@@ -36,10 +37,13 @@ export function InterruptionWide() {
         {/* full-width plate, 21:9 — a wide scene of work, slight right bleed */}
         <div className="mt-14 md:mt-20 lg:-mr-10 xl:-mr-12">
           <ClipReveal edge="bottom" ratio="21 / 9">
-            <img
-              src="/uploads/people/team-page.png"
+            <SiteImage
+              src="/uploads/people/team-page.jpg"
+              {...publicSets("/uploads/people/team-page", [640, 1024], 1844)}
+              sizes="100vw"
+              width={1844}
+              height={853}
               alt="Historic worksite with crew on a riverside cutting — atmospheric reference imagery, not a documented Capex site"
-              loading="lazy"
               className="h-full w-full object-cover [filter:saturate(0.85)_contrast(1.04)]"
             />
           </ClipReveal>
@@ -63,10 +67,12 @@ export function InterruptionTall() {
         {/* tall plate hung left, entering from the left */}
         <div className="lg:col-span-4">
           <ClipReveal edge="left" ratio="3 / 4">
-            <img
+            <SiteImage
               src="/uploads/people/welder.jpg"
+              sizes="(max-width: 1024px) 100vw, 33vw"
+              width={960}
+              height={1280}
               alt="Welder at work, sparks in a dark workshop — atmospheric reference imagery, not a Capex employee"
-              loading="lazy"
               className="h-full w-full object-cover [filter:saturate(0.9)_contrast(1.05)]"
             />
           </ClipReveal>

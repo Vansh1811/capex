@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { trapFocus } from "@/lib/focus-trap";
+import { SiteImage } from "@/components/site/SiteImage";
 import type { ArchiveProject } from "@/lib/site-data";
 
 /**
@@ -117,11 +118,12 @@ export function PrintFrame({
       style={{ aspectRatio: ratio }}
       className={`pointer-events-none overflow-hidden bg-[var(--surface)] ${className}`}
     >
-      <img
+      <SiteImage
         src={p.media.src}
+        sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+        eager={eager}
+        fetchPriority={eager ? "high" : "auto"}
         alt={p.media.alt}
-        loading={eager ? "eager" : "lazy"}
-        decoding="async"
         className={`h-full w-full object-cover ${cropOf(p)} transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03] group-focus-visible:scale-[1.03] ${
           tone === "dark"
             ? "[filter:saturate(0.85)_brightness(0.94)] group-hover:[filter:saturate(1)]"
@@ -568,12 +570,13 @@ export function RegisterOverlay({
             <div className="sticky top-32 pt-2">
               <div className="relative aspect-[4/5] overflow-hidden bg-[var(--surface)]">
                 {projects.slice(0, 24).map((p) => (
-                  <img
+                  <SiteImage
                     key={p.slug}
                     src={p.media.src}
+                    sizes="(max-width: 1024px) 50vw, 25vw"
+                    fetchPriority="low"
                     alt=""
-                    aria-hidden="true"
-                    loading="lazy"
+                    ariaHidden="true"
                     className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ease-out [filter:saturate(0.88)] ${cropOf(p)} ${
                       hovered === p.slug ? "opacity-100" : "opacity-0"
                     }`}

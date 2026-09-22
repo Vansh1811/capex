@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Reveal } from "@/components/site/home/Reveal";
 import { ClipReveal } from "@/components/site/home/ClipReveal";
 import { PlateArrowLink } from "@/components/site/sectors/SectorsExperience";
+import { SiteImage } from "@/components/site/SiteImage";
 import type { AtlasSector, AtlasProjectLink } from "@/lib/site-data";
 
 /**
@@ -65,10 +66,13 @@ export function SectorPlateScenes({
         {/* the environment beneath the title — the plate sits low and wide,
             atmosphere ahead of information */}
         <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-[46%]">
-          <img
+          <SiteImage
             src={sector.plate}
+            sizes="100vw"
+            eager
+            fetchPriority="high"
             alt=""
-            loading="eager"
+            ariaHidden="true"
             className="h-full w-full object-cover [filter:saturate(0.7)_contrast(1.03)_brightness(0.8)]"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[var(--brand-deep)] via-[var(--brand-deep)]/40 to-[var(--brand-deep)]/85" />
@@ -130,10 +134,10 @@ export function SectorPlateScenes({
       >
         <div className="mx-auto max-w-[1680px] px-6 pb-24 pt-20 md:px-10 md:pb-32 md:pt-28 lg:px-12">
           <ClipReveal edge="left" ratio="21 / 10" delay={80} className="w-full">
-            <img
+            <SiteImage
               src={sector.plate}
+              sizes="100vw"
               alt="Atmospheric reference imagery — not a documented Capex project"
-              loading="lazy"
               className="h-full w-full object-cover [filter:saturate(0.82)]"
             />
           </ClipReveal>

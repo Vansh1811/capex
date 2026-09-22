@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Reveal } from "./Reveal";
+import { SiteImage } from "@/components/site/SiteImage";
 
 type Entry = {
   index: string;
@@ -135,12 +136,14 @@ export function SelectedWork() {
               <Reveal delay={80}>
                 <figure className="relative aspect-[4/5] overflow-hidden bg-surface">
                   {ENTRIES.map((e, i) => (
-                    <img
+                    <SiteImage
                       key={e.index}
                       src={e.image}
+                      sizes="(max-width: 1280px) 100vw, 35vw"
+                      width={1200}
+                      height={900}
                       alt="Atmospheric reference imagery — not a documented Capex project"
-                      loading={i === 0 ? "eager" : "lazy"}
-                      aria-hidden={i !== active}
+                      ariaHidden={i !== active}
                       className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-out [filter:saturate(0.82)] ${
                         i === active ? "opacity-100" : "opacity-0"
                       }`}

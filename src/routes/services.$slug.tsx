@@ -6,6 +6,7 @@ import { buildSearchCorpus, type SearchCorpus } from "@/components/site/home/Sea
 import { CapabilitiesExperience } from "@/components/site/capabilities/CapabilitiesExperience";
 import { Reveal } from "@/components/site/home/Reveal";
 import { ClipReveal } from "@/components/site/home/ClipReveal";
+import { SiteImage } from "@/components/site/SiteImage";
 import { ReferenceNote } from "@/components/site/capabilities/CapabilitiesExperience";
 
 const chromeQuery = queryOptions({
@@ -92,10 +93,13 @@ function CapabilityDetailPage() {
         {/* the discipline's plate — hung low, its atmosphere ahead of information */}
         <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-[44%]">
           <ClipReveal edge="bottom" delay={320} className="h-full">
-            <img
+            <SiteImage
               src={service.plate}
+              sizes="100vw"
+              eager
+              fetchPriority="high"
               alt=""
-              loading="eager"
+              ariaHidden="true"
               className={`h-full w-full object-cover opacity-60 [filter:saturate(0.6)_contrast(1.02)_brightness(0.64)] ${service.platePosition}`}
             />
           </ClipReveal>

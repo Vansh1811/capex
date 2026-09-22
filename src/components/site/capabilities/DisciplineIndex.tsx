@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Reveal } from "@/components/site/home/Reveal";
 import { ReferenceNote } from "@/components/site/capabilities/CapabilitiesExperience";
+import { SiteImage } from "@/components/site/SiteImage";
 import type { CapabilityService } from "@/lib/site-data";
 
 /**
@@ -163,12 +164,11 @@ function DisciplineRow({
           <div className="overflow-hidden">
             <div className="pt-4">
               <div className="relative aspect-[16/10] overflow-hidden bg-[var(--surface)]">
-                <img
+                <SiteImage
                   key={s.slug}
                   src={s.plate}
+                  sizes="100vw"
                   alt={s.plateAlt}
-                  loading="lazy"
-                  decoding="async"
                   className={`plate-img absolute inset-0 h-full w-full object-cover ${s.platePosition} [filter:saturate(0.85)_contrast(1.0)]`}
                 />
                 <span className="absolute bottom-3 left-3 font-tech text-[10px] uppercase tracking-[0.18em] text-white/90 mix-blend-difference">
@@ -222,12 +222,11 @@ function DisciplinePlate({ service }: { service: CapabilityService | null }) {
     <div ref={ref} className="flex flex-col">
       {/* the plate image — the discipline's atmosphere, art-directed crop */}
       <div className="relative aspect-[4/3] overflow-hidden bg-[var(--surface)] lg:aspect-[4/5]">
-        <img
+        <SiteImage
           key={service.slug}
           src={service.plate}
+          sizes="(max-width: 1024px) 100vw, 40vw"
           alt={service.plateAlt}
-          loading="lazy"
-          decoding="async"
           className={`plate-img absolute inset-0 h-full w-full object-cover ${service.platePosition} [filter:saturate(0.85)_contrast(1.0)]`}
         />
         <span className="absolute bottom-4 left-4 font-tech text-[10px] uppercase tracking-[0.18em] text-white/90 mix-blend-difference">

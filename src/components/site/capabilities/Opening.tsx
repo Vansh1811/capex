@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useEntrance } from "@/components/site/home/HeroVideo";
 import { ClipReveal } from "@/components/site/home/ClipReveal";
+import { SiteImage, publicSets } from "@/components/site/SiteImage";
 import { ReferenceNote } from "@/components/site/capabilities/CapabilitiesExperience";
 
 /**
@@ -36,10 +37,16 @@ export function Opening({
       {/* the corridor plate — low and wide, entering from the bottom edge */}
       <div className="absolute inset-x-0 bottom-0 h-[42%] md:h-[46%]" aria-hidden="true">
         <ClipReveal edge="bottom" delay={520} className="h-full">
-          <img
+          <SiteImage
             src="/uploads/capabilities/cable-tunnel.jpg"
+            {...publicSets("/uploads/capabilities/cable-tunnel", [640, 1024], 1600)}
+            sizes="100vw"
+            width={1600}
+            height={1066}
+            eager
+            fetchPriority="high"
             alt=""
-            loading="eager"
+            ariaHidden="true"
             className="h-full w-full object-cover object-[58%_82%] opacity-[0.75] [filter:saturate(0.68)_contrast(1.05)_brightness(0.8)]"
           />
         </ClipReveal>

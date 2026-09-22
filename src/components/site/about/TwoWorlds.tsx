@@ -1,7 +1,13 @@
 import { Reveal } from "@/components/site/home/Reveal";
 import { ClipReveal } from "@/components/site/home/ClipReveal";
+import { SiteImage } from "@/components/site/SiteImage";
 import { TWO_WORLDS } from "@/lib/about-content";
-import aboutMainImg from "@/assets/About-page/about-page-main-img.png";
+import aboutMainImg from "@/assets/About-page/about-page-main-img.jpg";
+import aboutMainImgWebp from "@/assets/About-page/about-page-main-img.webp";
+import aboutMainImg1024 from "@/assets/About-page/about-page-main-img-1024.jpg";
+import aboutMainImg1024Webp from "@/assets/About-page/about-page-main-img-1024.webp";
+import aboutMainImg640 from "@/assets/About-page/about-page-main-img-640.jpg";
+import aboutMainImg640Webp from "@/assets/About-page/about-page-main-img-640.webp";
 
 /**
  * TwoWorlds (About): the narrative the page turns on. The words carry the
@@ -47,10 +53,14 @@ export function TwoWorlds() {
           {/* the image field — the visual record begins at this section */}
           <div className="order-1 lg:order-2 lg:col-span-6">
             <ClipReveal edge="left" ratio="4 / 5" delay={120}>
-              <img
+              <SiteImage
                 src={aboutMainImg}
+                srcSet={`${aboutMainImg640} 640w, ${aboutMainImg1024} 1024w, ${aboutMainImg} 1569w`}
+                webpSrcSet={`${aboutMainImg640Webp} 640w, ${aboutMainImg1024Webp} 1024w, ${aboutMainImgWebp} 1569w`}
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                width={1569}
+                height={1002}
                 alt="Orange utility ducts laid in an open trench along a city street, entering a concrete chamber — underground utility works"
-                loading="lazy"
                 className="h-full w-full object-cover"
               />
             </ClipReveal>

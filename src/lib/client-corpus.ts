@@ -108,8 +108,9 @@ export const CLIENT_CORPUS: ClientRecord[] = [
     slug: "bpcl",
     relationship: "client",
     note: "Long-term association.",
-    projects: [],
-    source_ref: "DOC C p3 (long-term association)",
+    projects: ["ahmednagar-mdpe-lmc-works", "aurangabad-lmc-works", "rohtak-mdpe-laying"],
+    source_ref:
+      "DOC C p3 (long-term association) + client PO records (Ahmednagar, Aurangabad, Rohtak)",
     sort_order: 4,
   },
   {
@@ -580,6 +581,31 @@ export const CLIENT_CORPUS: ClientRecord[] = [
     projects: ["prakash-gentech-hvac"],
     source_ref: "DOC B p9 #49 + logo wall p11 — corpus project record (C16 resolved)",
     sort_order: 57,
+  },
+  // --- 2026-09-22 PO-DATA additions: logo-wall brands upgraded by project-table
+  // evidence (the Phase 7A §1a mechanism — the client PO spreadsheet gives these
+  // two DOC A p6/p18 logo-wall brands their first project records). Slugs match
+  // the Phase 6B migration rows ('purba-bharati-gas', 'agp') so a future
+  // database port joins without renames. No logos: none verified (gate #12).
+  {
+    name: "Purba Bharati Gas",
+    slug: "purba-bharati-gas",
+    relationship: "client",
+    note: "U/G PE pipeline and MC works, Guwahati.",
+    projects: ["guwahati-pe-pipeline-mc-works"],
+    source_ref:
+      "Client PO records (client 'PURBA', Guwahati U/G PE pipeline & MC works) + DOC A p6/p18 logo wall 'Purba Bharati Gas' — full legal name to be confirmed",
+    sort_order: 58,
+  },
+  {
+    name: "AG&P",
+    slug: "agp",
+    relationship: "client",
+    note: "Pipe laying works, Sec-13, Uttar Pradesh.",
+    projects: ["sec-13-pipe-laying"],
+    source_ref:
+      "Client PO records (client 'AGP CITY GAS', Sec-13 UP pipe laying) + DOC A p6/p18 logo wall 'AG&P'",
+    sort_order: 59,
   },
   // --- architects & PMC associations (DOC B p2 — conservative wording) ---
   {
