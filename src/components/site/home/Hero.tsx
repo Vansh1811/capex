@@ -36,11 +36,12 @@ export function Hero() {
           })}
         </h1>
         <p
-          className={`mt-6 max-w-md text-sm leading-relaxed text-white/70 md:text-[15px] ${enter(2).className}`}
+          className={`mt-6 max-w-xl text-sm leading-relaxed text-white/70 md:text-[15px] ${enter(2).className}`}
           style={enter(2).style}
         >
-          Underground utilities, electrical &amp; CGD · MEP, HVAC &amp; fire protection — turnkey,
-          pan-India, since 2012.
+          HT &amp; LT Electrical, HVAC Work, Fire Fighting &amp; Alarm Work, City Gas Distribution
+          (CGD), Solar Power Generation, Open Access Facility — Turnkey Project, PAN-India, Since
+          2012.
         </p>
       </div>
 

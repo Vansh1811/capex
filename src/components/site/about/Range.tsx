@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Reveal } from "@/components/site/home/Reveal";
 import { ClipReveal } from "@/components/site/home/ClipReveal";
 import { RANGE } from "@/lib/about-content";
-import aboutSectorImg from "@/assets/about-page-sector-section.png";
+import aboutSectorImg from "@/assets/About-page/about-page-sector-section.png";
 
 /**
  * Range (About): the range of environments Capex serves — one concise

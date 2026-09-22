@@ -184,12 +184,14 @@ function ProjectCaseStudy() {
             </Reveal>
           </div>
 
-          {/* the hero print — a wide frame entering the dark world */}
+          {/* the hero print — a wide frame entering the dark world.
+              Records carrying a dedicated ultra-wide hero frame use it;
+              every other record renders its principal frame, as before. */}
           <figure className="mx-auto max-w-[1680px] px-6 pb-24 md:px-10 lg:px-12">
             <ClipReveal edge="right" ratio="21 / 9" delay={240}>
               <img
-                src={p.media.src}
-                alt={p.media.alt}
+                src={p.media.heroSrc ?? p.media.src}
+                alt={p.media.heroAlt ?? p.media.alt}
                 className={`h-full w-full object-cover ${cropOf(p)} [filter:saturate(0.85)_contrast(1.02)_brightness(0.94)]`}
               />
             </ClipReveal>

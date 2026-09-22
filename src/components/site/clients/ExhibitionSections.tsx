@@ -5,11 +5,8 @@ import {
   useState,
   type KeyboardEvent as ReactKeyboardEvent,
 } from "react";
-import { Link } from "@tanstack/react-router";
 import { useEntrance } from "@/components/site/home/HeroVideo";
 import { Reveal } from "@/components/site/home/Reveal";
-import { ClipReveal } from "@/components/site/home/ClipReveal";
-import { resolveProjectMedia } from "@/lib/project-media";
 import type { ClientsPageClient } from "@/lib/site-data";
 import {
   EXHIBITION_CATEGORIES,
@@ -226,7 +223,7 @@ export function LogoShowcase({ clients }: { clients: ClientsPageClient[] }) {
         >
           <div
             className="animate-marquee flex w-max items-center hover:[animation-play-state:paused] group-focus-within:[animation-play-state:paused]"
-            style={{ animationDuration: `${ribbon.length * 8}s` }}
+            style={{ animationDuration: `${ribbon.length * 2}s` }}
           >
             {[0, 1].map((half) => (
               <div
@@ -252,8 +249,8 @@ export function LogoShowcase({ clients }: { clients: ClientsPageClient[] }) {
         </div>
       </div>
       <p className="sr-only">
-        {ribbon.length} client logos in a slowly moving showcase. Motion pauses on hover and is
-        disabled under reduced-motion settings.
+        {ribbon.length} client logos in a moving showcase. Motion pauses on hover and is disabled
+        under reduced-motion settings.
       </p>
     </section>
   );
@@ -461,75 +458,8 @@ export function CategoryIndex({
 }
 
 /* ============================================================
- * 04 — ACTIVE CLIENT EXHIBITION (editorial list + image plate)
+ * 04 — ACTIVE CLIENT EXHIBITION (editorial list, no image plate)
  * ============================================================ */
-
-function ProjectPlate({ client, tall = false }: { client: ClientsPageClient; tall?: boolean }) {
-  const first = client.projects[0] ?? null;
-  if (!first) {
-    return (
-      <div className="flex h-full min-h-[280px] flex-col justify-between border border-border/70 p-6 lg:min-h-[420px]">
-        <p className="eyebrow-sans text-muted-foreground/60">{client.name}</p>
-        <p className="max-w-[26ch] font-display text-xl font-normal leading-[1.3] text-foreground/70">
-          Documented association — held in the Projects register.
-        </p>
-        <p className="font-tech text-[10px] uppercase tracking-[0.2em] text-muted-foreground/50">
-          On the record
-        </p>
-      </div>
-    );
-  }
-  const media = resolveProjectMedia(first.slug);
-  const real = media.sourceType !== "REFERENCE";
-  return (
-    <div className="flex h-full flex-col">
-      <div
-        className={`relative overflow-hidden bg-[var(--surface)] ${
-          tall ? "aspect-[4/3] lg:aspect-[4/5]" : "aspect-[4/3]"
-        }`}
-      >
-        <img
-          key={first.slug}
-          src={media.src}
-          alt={media.alt}
-          loading="lazy"
-          decoding="async"
-          className="plate-img absolute inset-0 h-full w-full object-cover [filter:saturate(0.85)_contrast(0.98)]"
-        />
-      </div>
-      <div className="mt-5">
-        <p className="font-display text-xl font-normal leading-[1.12] tracking-[-0.015em] md:text-2xl">
-          {first.title}
-        </p>
-        <p className="mt-1.5 font-tech text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-          {first.practice_label}
-        </p>
-        <p className="mt-1 font-tech text-[10px] uppercase tracking-[0.14em] text-muted-foreground/70">
-          {first.city}
-          {first.figure ? ` · ${first.figure}` : ""}
-        </p>
-        <Link
-          to="/projects/$slug"
-          params={{ slug: first.slug }}
-          className="group mt-4 inline-flex items-center gap-3 font-tech text-[11px] uppercase tracking-[0.24em] text-foreground"
-        >
-          <span className="border-b border-border pb-1 transition-colors group-hover:border-foreground">
-            View the project
-          </span>
-          <span
-            aria-hidden="true"
-            className="inline-block transition-transform duration-300 group-hover:translate-x-1"
-          >
-            →
-          </span>
-        </Link>
-      </div>
-      <p className="mt-5 font-tech text-[10px] uppercase leading-relaxed tracking-[0.18em] text-muted-foreground/60">
-        {real ? "Capex works photograph" : "Reference imagery — not a documented Capex project"}
-      </p>
-    </div>
-  );
-}
 
 export function ClientExhibition({
   clients,
@@ -540,21 +470,6 @@ export function ClientExhibition({
   categoryLabel: string;
   categoryN: string;
 }) {
-  const withWork = clients.filter((c) => c.projects.length > 0);
-  const [activeSlug, setActiveSlug] = useState<string | null>(
-    withWork[0]?.slug ?? clients[0]?.slug ?? null,
-  );
-  const active = clients.find((c) => c.slug === activeSlug) ?? null;
-
-  // Category switches replace the set in place — reset emphasis to the
-  // incoming set's first documented relationship.
-  const [seenKey, setSeenKey] = useState(`${categoryN}-${clients.length}`);
-  const currentKey = `${categoryN}-${clients.length}`;
-  if (seenKey !== currentKey) {
-    setSeenKey(currentKey);
-    setActiveSlug(withWork[0]?.slug ?? clients[0]?.slug ?? null);
-  }
-
   return (
     <section
       aria-label={`${categoryLabel} — client exhibition`}
@@ -562,88 +477,18 @@ export function ClientExhibition({
       className="paper bg-background text-foreground"
     >
       <div className="mx-auto max-w-[1680px] px-6 pb-28 pt-10 md:px-10 md:pt-14 lg:px-12 lg:pb-40">
-        <div className="mt-10 grid gap-16 lg:grid-cols-12 lg:gap-10">
-          <div className="lg:col-span-7 xl:col-span-8">
-            <ul aria-label={`${categoryLabel} clients`} aria-live="polite">
-              {clients.map((c, i) => {
-                const isActive = c.slug === activeSlug;
-                return (
-                  <li key={c.slug}>
-                    <div>
-                      <button
-                        type="button"
-                        aria-expanded={isActive}
-                        aria-current={isActive}
-                        onClick={() => setActiveSlug(c.slug)}
-                        onMouseEnter={() => setActiveSlug(c.slug)}
-                        onFocus={() => setActiveSlug(c.slug)}
-                        className="group block w-full border-b border-border py-6 text-left transition-colors duration-300 hover:border-foreground/40 md:py-7"
-                      >
-                        <span className="flex items-center gap-5 md:gap-8">
-                          <span className="min-w-0 flex-1">
-                            <span
-                              className={`block font-display text-[26px] font-normal leading-[1.08] tracking-[-0.02em] transition-all duration-500 ease-out group-hover:translate-x-1.5 sm:text-[32px] md:text-[40px] lg:text-[44px] xl:text-[52px] ${
-                                isActive
-                                  ? "text-foreground"
-                                  : "text-foreground/85 group-hover:text-foreground"
-                              }`}
-                            >
-                              {c.name}
-                            </span>
-                          </span>
-                          <span
-                            aria-hidden="true"
-                            className={`hidden shrink-0 font-tech text-xs transition-all duration-300 md:block ${
-                              isActive
-                                ? "translate-x-0 text-foreground opacity-100"
-                                : "text-foreground/50 opacity-0"
-                            }`}
-                          >
-                            →
-                          </span>
-                        </span>
-                      </button>
-                      {/* Touch expansion — the plate, in-flow under the name. */}
-                      <div className="lg:hidden">
-                        <div
-                          className={`grid transition-[grid-template-rows,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                            isActive ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
-                          }`}
-                        >
-                          <div className="overflow-hidden">
-                            {isActive && (
-                              <div className="pb-8 pt-2">
-                                <ProjectPlate client={c} />
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-
-          {/* Desktop plate — pinned beside the list, crossfading per client. */}
-          <div className="hidden lg:col-span-5 lg:block xl:col-span-4">
-            <div className="sticky top-28" aria-live="polite">
-              {active ? (
-                <ProjectPlate client={active} tall />
-              ) : (
-                <div className="flex h-full min-h-[420px] flex-col justify-between border border-border/70 p-6">
-                  <p className="eyebrow-sans text-muted-foreground/60">Selected client</p>
-                  <p className="max-w-[26ch] font-display text-xl font-normal leading-[1.3] text-foreground/60">
-                    Move through the index — each client&rsquo;s documented work appears here.
-                  </p>
-                  <p className="font-tech text-[10px] uppercase tracking-[0.2em] text-muted-foreground/50">
-                    On the record
-                  </p>
-                </div>
-              )}
-            </div>
-          </div>
+        <div className="mt-10">
+          <ul aria-label={`${categoryLabel} clients`}>
+            {clients.map((c) => {
+              return (
+                <li key={c.slug} className="border-b border-border py-6 text-left md:py-7">
+                  <span className="block font-display text-[26px] font-normal leading-[1.08] tracking-[-0.02em] text-foreground sm:text-[32px] md:text-[40px] lg:text-[44px] xl:text-[52px]">
+                    {c.name}
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </div>
     </section>

@@ -22,7 +22,6 @@ transparency (pixel colors and geometry untouched) so it can sit on ivory.
 | commscope.png                 | CommScope                    | https://www.commscope.com/         | webresources.commscope.com/images/assets/commscope-logo/… (og:image)    | PNG    |
 | imgc.png                      | IMGC                         | https://www.imgc.com/              | /wp-content/themes/imgc/images/logo.png                                 | PNG    |
 | pearson-education.png         | Pearson Education India      | https://in.pearson.com/            | /etc/clientlibs/platform/aem-core/components/content/pearson-banner/…   | PNG    |
-| softcell.png                  | Softcell                     | https://www.softcell.com/          | /media/images/essential/softcell_logo.png                               | PNG    |
 | tata-advanced-systems.png     | TATA Advanced Systems        | https://www.tataadvancedsystems.com/ | /website/images/logo.png                                              | PNG    |
 | tata-aig.svg                  | TATA AIG                     | https://www.tataaig.com/           | /TataAigLogoNew.svg                                                     | SVG    |
 | ultratech.png                 | UltraTech                    | https://www.ultratechcement.com/   | header experience-fragment ultratech-cement-logo.png                    | PNG    |
@@ -54,7 +53,6 @@ and remain listed as text in the index — never fabricated.
 | Arkadin                                   | IT & Technology        | —                           | NO            | NO         |
 | AVNET                                     | IT & Technology        | —                           | NO            | NO         |
 | APC                                       | IT & Technology        | —                           | NO            | NO         |
-| Softcell                                  | IT & Technology        | softcell.png                | YES           | YES        |
 | I-Avatar                                  | IT & Technology        | —                           | NO            | NO         |
 | GEBTECH                                   | IT & Technology        | —                           | NO            | NO         |
 | CHROME                                    | IT & Technology        | —                           | NO            | NO         |

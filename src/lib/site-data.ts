@@ -514,6 +514,10 @@ export type RosterPerson = {
   group: "leadership" | "delivery" | "site_design";
   practice: 1 | 2 | null;
   practice_label: string;
+  profile?: string[];
+  experience?: string;
+  focus?: string[];
+  responsibility?: string;
 };
 
 export type PeopleRoster = {
@@ -525,13 +529,19 @@ export type PeopleRoster = {
 
 export const getPeopleRoster = createServerFn({ method: "GET" }).handler(async () => {
   return {
-    people: PEOPLE_CORPUS.map(({ name, role, group, practice, practice_label }) => ({
-      name,
-      role,
-      group,
-      practice,
-      practice_label,
-    })),
+    people: PEOPLE_CORPUS.map(
+      ({ name, role, group, practice, practice_label, profile, experience, focus, responsibility }) => ({
+        name,
+        role,
+        group,
+        practice,
+        practice_label,
+        profile,
+        experience,
+        focus,
+        responsibility,
+      }),
+    ),
     totalNamed: PEOPLE_TOTAL_NAMED,
     sourceNote: PEOPLE_SOURCE_NOTE,
     source: "corpus",

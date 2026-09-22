@@ -1,16 +1,10 @@
 import { useEntrance } from "@/components/site/home/HeroVideo";
-import { ClipReveal } from "@/components/site/home/ClipReveal";
 import { Reveal } from "@/components/site/home/Reveal";
-import { ReferenceNote } from "./PeopleExperience";
 
 /**
  * Opening (People): the first frame of the human portrait — warm ivory,
- * editorial, photographic from the first scroll. PEOPLE eyebrow, the
- * two-line headline, verified supporting copy, then a large composed
- * image: an engineer with drawings, hung high-right and wide, bleeding to
- * the viewport edge. The scene is light (unlike About's deep-earth opening)
- * so the page immediately reads warmer and more human than the rest of the
- * ecosystem — the invitation to meet people, not to read a database.
+ * editorial, typographic. PEOPLE eyebrow, the two-line headline, verified
+ * supporting copy — no photography: the roster itself is the subject.
  */
 export function Opening() {
   const enter = useEntrance();
@@ -19,7 +13,7 @@ export function Opening() {
     <section
       aria-label="People — the people behind the work"
       data-tone="light"
-      className="paper relative overflow-hidden pt-32 md:pt-40 lg:pt-44"
+      className="paper relative overflow-hidden pb-16 pt-32 md:pb-24 md:pt-40 lg:pb-28 lg:pt-44"
     >
       <div className="mx-auto max-w-[1680px] px-6 md:px-10 lg:px-12">
         <p
@@ -54,41 +48,19 @@ export function Opening() {
             className={`font-tech text-[11px] uppercase leading-[1.9] tracking-[0.18em] text-muted-foreground lg:col-span-3 lg:col-start-10 ${enter(4).className}`}
             style={enter(4).style}
           >
-            22 named people on record
+            15 named people on record
             <br />
-            17 verified &amp; published
+            15 verified &amp; published
             <br />2 practices · field &amp; office
           </p>
         </div>
 
-        {/* the first human image — wide, high-right of the type, entering
-            from the right like a plate being placed into the composition.
-            Reference imagery: the atmosphere of engineering work, never a
-            portrait of a Capex employee. */}
-        <div className="relative mt-16 md:mt-24">
-          <div className="lg:grid lg:grid-cols-12 lg:gap-0">
-            <div className="hidden lg:col-span-2 lg:block" aria-hidden="true" />
-            <div className="lg:col-span-10">
-              <ClipReveal edge="right" ratio="16 / 9" delay={150}>
-                <img
-                  src="/uploads/people/planning.jpg"
-                  alt="Engineer working with drawings on site — atmospheric reference imagery, not a Capex employee"
-                  className="h-full w-full object-cover [filter:saturate(0.85)_contrast(1.03)_brightness(0.99)]"
-                />
-              </ClipReveal>
-            </div>
-          </div>
-          <div className="mt-4 flex flex-wrap items-baseline justify-between gap-4">
-            <ReferenceNote>
-              Fig. 01 — engineering work · atmospheric reference imagery, not a documented Capex
-              person
-            </ReferenceNote>
-            <Reveal delay={300}>
-              <span className="font-tech text-[10px] tracking-[0.18em] text-muted-foreground/60">
-                ROSTER OF RECORD — 01&ndash;16
-              </span>
-            </Reveal>
-          </div>
+        <div className="mt-12 flex flex-wrap items-baseline justify-between gap-4 md:mt-16">
+          <Reveal delay={150}>
+            <span className="font-tech text-[10px] tracking-[0.18em] text-muted-foreground/60">
+              ROSTER OF RECORD — 01&ndash;15
+            </span>
+          </Reveal>
         </div>
       </div>
     </section>

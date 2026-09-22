@@ -54,10 +54,10 @@ export const Route = createFileRoute("/team")({
 /**
  * THE PEOPLE PAGE — a human portrait of the company record. The roster is
  * the verified data (DB-first, audited-corpus fallback); the experience
- * around it is editorial: a warm opening, a typographic index with a
- * hover-plate reveal, photographic interruptions between the chapters,
- * and a deep-earth close. No employee cards, no invented biographies —
- * names and roles of record only.
+ * around it is editorial: a warm opening, a typographic index whose rows
+ * open into personnel dossiers, photographic interruptions between the
+ * chapters, and a deep-earth close. No employee cards, no invented
+ * biographies — supplied names, roles and profiles only.
  */
 function PeoplePage() {
   const { data: chromeData } = useSuspenseQuery(chromeQuery);

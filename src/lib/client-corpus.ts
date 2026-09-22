@@ -492,15 +492,6 @@ export const CLIENT_CORPUS: ClientRecord[] = [
     sort_order: 46,
   },
   {
-    name: "Softcell",
-    slug: "softcell",
-    relationship: "client",
-    note: "20 TR HVAC system, Noida.",
-    projects: ["softcell-hvac"],
-    source_ref: "DOC B p9 #35 — corpus project record",
-    sort_order: 47,
-  },
-  {
     name: "Singhi & Company",
     slug: "singhi-company",
     relationship: "client",

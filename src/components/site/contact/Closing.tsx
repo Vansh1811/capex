@@ -56,7 +56,7 @@ export function Closing({ phone, email }: { phone: string; email: string }) {
               className="group inline-flex items-center gap-4 border-b border-white/50 pb-3 transition-colors hover:border-white"
             >
               <span className="font-display text-xl font-medium tracking-[-0.01em] md:text-2xl">
-                Studio
+                About Us
               </span>
               <span className="text-xl transition-transform duration-300 group-hover:translate-x-1.5 md:text-2xl">
                 →

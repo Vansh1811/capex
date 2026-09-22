@@ -1,31 +1,25 @@
 /**
- * VERIFIED PEOPLE CORPUS — the audited fallback roster for /team.
+ * VERIFIED PEOPLE CORPUS — the audited roster for /team.
  *
- * Source of truth: supabase/migrations/20260903120100_phase6b_entities_seeds.sql
- * (the 22-name team insert, Phase 1 §9 — transcribed from DOC A pp.7-9 and
- * DOC B pp.4-5) with the publication dispositions of
- * 20260903130000_phase7a_content_population.sql §7 applied:
+ * Leadership order and profile content per the approved People-page brief
+ * (client-supplied source content — factual meaning preserved, grammar
+ * lightly cleaned; nothing invented):
  *
- *   published = verification_status 'verified' (RLS additionally requires
- *               is_active)  →  16 people (+ Ashish Sharma, verified by the
- *               2026-09-08 PDF re-audit — see his row)
- *   hidden    = needs_client_review, held back by documented conflicts
- *               C1-C5, C7 (year discrepancies between DOC A and DOC B
- *               bio paragraphs, name-spelling conflicts)  →  5 people,
- *               correctly absent from every public surface, including this.
+ *   leadership  01 Anurag Parashar (Director)
+ *               02 Mayank Kaushal (Director)
+ *               03 Sanjay Sharma (Co-Director)
+ *               04 CA Chitin Sapria (Financial Advisor)
+ *   delivery    Shilpa Choudhary, Vinod Pachori, Rajeshwar Boke,
+ *               Rajneesh Kumar, Vir Kumar Singh, Malkit Singh,
+ *               Deepa Yadav, Vaishnavi Kesari
+ *   site_design Aman Pachori, Deepanshu Sharma, Rajneesh
  *
  * Integrity rules (absolute):
- * - Name + role ONLY. No biographies, no years-of-experience, no
- *   credentials, no invented locations, no photos of real people.
- * - No person/project relationships are asserted: the source record links
- *   people to PRACTICES (practice_id), never to projects, so this corpus
- *   does the same. People pages therefore show practice affiliation, never
- *   "related projects".
- *
- * When the Phase 6/7 entity tables are applied to the live database,
- * site-data.ts reads them FIRST (RLS enforces the same verified+active
- * matrix) and this module stops being used — no route or component
- * references it directly.
+ * - Only the supplied profile / experience / focus / responsibility fields
+ *   are published. Where no bio was supplied, only NAME + ROLE render.
+ * - No education, certifications, companies, awards or locations are asserted.
+ * - No photos of real people, no AI/stock portraits, no placeholders.
+ * - People link to PRACTICES only via the practice field, never to projects.
  */
 
 export type PersonGroup = "leadership" | "delivery" | "site_design";
@@ -34,31 +28,46 @@ export type PersonRecord = {
   name: string;
   role: string;
   group: PersonGroup;
-  /** 1 | 2 — practice affiliation as seeded; null = company-wide. */
+  /** 1 | 2 — practice affiliation; null = company-wide. */
   practice: 1 | 2 | null;
-  /** The practice's registered short label (migration seed). */
+  /** The practice's registered short label. */
   practice_label: string;
-  /** Phase 1 §9 source page of record. */
+  /** Phase 1 source page of record (kept where known). */
   source_ref: string;
+  /** Verified bio paragraphs — omitted entirely when not supplied. */
+  profile?: string[];
+  /** Verified experience figure, e.g. "15+ Years" — omitted when not supplied. */
+  experience?: string;
+  /** Verified focus labels — omitted when not supplied. */
+  focus?: string[];
+  /** Verified responsibility line — omitted when not supplied. */
+  responsibility?: string;
 };
 
 export const PEOPLE_SOURCE_NOTE =
-  "Roster transcribed from the company record (DOC A pp.7-9, DOC B pp.4-5); names and roles as verified by the Phase 7 audit.";
+  "Roster and profiles per the approved company record; names, roles and profile text as supplied — nothing invented.";
 
-export const PEOPLE_TOTAL_NAMED = 22;
+export const PEOPLE_TOTAL_NAMED = 15;
 
 const P1 = "UG Utilities & Electrical";
 const P2 = "MEP, HVAC & Fire";
 
 export const PEOPLE_CORPUS: PersonRecord[] = [
-  // --- leadership (verified rows only) ---
+  // --- leadership (directors first, then co-director and advisor) ---
   {
     name: "Anurag Parashar",
     role: "Director",
     group: "leadership",
     practice: null,
     practice_label: "Company-wide",
-    source_ref: "DOC B p4",
+    source_ref: "Approved roster — 01",
+    profile: [
+      "Anurag is an expert in project execution, including UG Utility work and LMC. He has over 14 years of experience in operations and project management.",
+      "He is a keen planner and strategist with demonstrated abilities in managing project services.",
+      "He has worked in senior positions both with corporate occupiers and service providers.",
+    ],
+    experience: "14+ Years",
+    focus: ["Project Execution", "UG Utilities", "LMC", "Operations", "Project Management"],
   },
   {
     name: "Mayank Kaushal",
@@ -66,7 +75,13 @@ export const PEOPLE_CORPUS: PersonRecord[] = [
     group: "leadership",
     practice: null,
     practice_label: "Company-wide",
-    source_ref: "DOC A p7",
+    source_ref: "Approved roster — 02",
+    profile: [
+      "Mayank Kaushal has expertise in UG Utility work, with over 15 years of experience in the field of UG utilities work, such as electrical, fiber optics, waterline, and oil & gas lines for multiple projects pan-India.",
+      "He has worked in key senior positions both with corporate occupiers and service providers.",
+    ],
+    experience: "15+ Years",
+    focus: ["UG Utilities", "Electrical", "Fiber Optics", "Waterline", "Oil & Gas"],
   },
   {
     name: "Sanjay Sharma",
@@ -74,7 +89,13 @@ export const PEOPLE_CORPUS: PersonRecord[] = [
     group: "leadership",
     practice: null,
     practice_label: "Company-wide",
-    source_ref: "DOC B p4",
+    source_ref: "Approved roster — 03",
+    profile: [
+      "Sanjay Sharma is a renowned property service expert with over 25 years of experience in the field of civil and construction.",
+      "He has worked with several national real estate companies.",
+    ],
+    experience: "25+ Years",
+    focus: ["Civil", "Construction", "Property Services"],
   },
   {
     name: "CA Chitin Sapria",
@@ -82,17 +103,89 @@ export const PEOPLE_CORPUS: PersonRecord[] = [
     group: "leadership",
     practice: null,
     practice_label: "Company-wide",
-    source_ref: "DOC A p8",
+    source_ref: "Approved roster — 04",
+    profile: [
+      "CA Chitin Sapria is responsible for final accounts and all legal work.",
+      "He has been in the financial sector for over 20 years.",
+    ],
+    experience: "20+ Years",
+    focus: ["Final Accounts", "Legal Work", "Finance"],
   },
 
-  // --- delivery (verified rows only) ---
+  // --- delivery (project / business development / operations) ---
   {
-    name: "Vinod Pouchary",
-    role: "Sr. Project Manager – HVAC & Fire",
+    name: "Shilpa Choudhary",
+    role: "Business Development Manager",
+    group: "delivery",
+    practice: null,
+    practice_label: "Company-wide",
+    source_ref: "Approved roster — delivery",
+    profile: [
+      "Shilpa is an expert in the field of utilities work which includes MEP line work.",
+      "She possesses over 12 years of experience of business development in various fields.",
+    ],
+    experience: "12+ Years",
+    focus: ["Utilities", "MEP Line Work", "Business Development"],
+  },
+  {
+    name: "Vinod Pachori",
+    role: "General Manager (MEP)",
     group: "delivery",
     practice: 2,
     practice_label: P2,
-    source_ref: "DOC B p4",
+    source_ref: "Approved roster — delivery",
+    profile: [
+      "Vinod is an expert in the field of MEP, which includes pipeline work.",
+      "He possesses over 20 years of experience in operations and maintenance, project execution, and commissioning.",
+      "He is a keen planner for project execution.",
+    ],
+    experience: "20+ Years",
+    focus: ["MEP", "Pipeline Work", "Operations & Maintenance", "Project Execution", "Commissioning"],
+  },
+  {
+    name: "Rajeshwar Boke",
+    role: "Project Manager (CGD & LMC)",
+    group: "delivery",
+    practice: 1,
+    practice_label: P1,
+    source_ref: "Approved roster — delivery",
+    profile: [
+      "Rajeshwar Boke is an expert in the field of UG Utility work.",
+      "He possesses over 5 years of experience in project execution.",
+    ],
+    experience: "5+ Years",
+    focus: ["UG Utilities", "CGD", "LMC", "Project Execution"],
+    responsibility: "Responsible for project execution for multiple sites.",
+  },
+  {
+    name: "Rajneesh Kumar",
+    role: "Project Manager (CGD & LMC)",
+    group: "delivery",
+    practice: 1,
+    practice_label: P1,
+    source_ref: "Approved roster — delivery",
+    profile: [
+      "Rajneesh Kumar is an expert in the field of LMC and CGD work.",
+      "He possesses over 7 years of experience in project execution.",
+    ],
+    experience: "7+ Years",
+    focus: ["LMC", "CGD", "Project Execution"],
+    responsibility: "Responsible for project execution of multiple sites.",
+  },
+  {
+    name: "Vir Kumar Singh",
+    role: "Project Manager (MEP)",
+    group: "delivery",
+    practice: 2,
+    practice_label: P2,
+    source_ref: "Approved roster — delivery",
+    profile: [
+      "Vir Kumar Singh is an expert in the field of MEP work.",
+      "He possesses over 10 years of experience in project execution.",
+    ],
+    experience: "10+ Years",
+    focus: ["MEP", "Project Execution"],
+    responsibility: "Responsible for project execution of multiple sites.",
   },
   {
     name: "Malkit Singh",
@@ -100,140 +193,64 @@ export const PEOPLE_CORPUS: PersonRecord[] = [
     group: "delivery",
     practice: null,
     practice_label: "Company-wide",
-    source_ref: "DOC B p4",
+    source_ref: "Approved roster — delivery",
+    profile: [
+      "Mr. Malkit Singh has over 42 years experience in designing, implementing, and executing HVAC systems.",
+      "He has been our guiding light on our journey to becoming an icon in the industry.",
+      "His generous expert advice is always there when needed.",
+    ],
+    experience: "42+ Years",
+    focus: ["HVAC", "Design", "Implementation", "Execution"],
   },
   {
-    name: "Shaliendra Sharma",
-    role: "Sr. Project Manager – HVAC",
+    name: "Deepa Yadav",
+    role: "Accountant",
     group: "delivery",
-    practice: 2,
-    practice_label: P2,
-    source_ref: "DOC B p5",
+    practice: null,
+    practice_label: "Company-wide",
+    source_ref: "Approved roster — delivery",
+    profile: [
+      "Deepa Yadav manages day-to-day accounting operations, maintains accurate financial records and ensures timely preparation of financial reports.",
+    ],
   },
   {
-    name: "Sachin Jamdhade",
-    role: "BDM",
+    name: "Vaishnavi Kesari",
+    role: "CPM / MIS",
     group: "delivery",
-    practice: 1,
-    practice_label: P1,
-    source_ref: "DOC A p7",
-  },
-  {
-    name: "Ashish Sharma",
-    role: "Manager Project",
-    group: "delivery",
-    practice: 1,
-    practice_label: P1,
-    // C6 resolved by the 2026-09-08 PDF re-audit: both DOC A p7 ("MANAGER
-    // PROJECT", title block) and DOC C p7 ("(Manager Project)") print the
-    // same role — the earlier "Manager – UG" variant appears in no source.
-    source_ref: "DOC A p7 / DOC C p7 — 'Manager Project' in both",
-  },
-  {
-    name: "Vir Kumar Singh",
-    role: "Manager – UG",
-    group: "delivery",
-    practice: 1,
-    practice_label: P1,
-    source_ref: "DOC A p7",
-  },
-  {
-    name: "Rajeshwar Boke",
-    role: "Project Manager – UG",
-    group: "delivery",
-    practice: 1,
-    practice_label: P1,
-    source_ref: "DOC A p7",
-  },
-  {
-    name: "Rajneesh Kumar",
-    role: "Project Manager – CGD & LMC",
-    group: "delivery",
-    practice: 1,
-    practice_label: P1,
-    source_ref: "DOC A p7",
+    practice: null,
+    practice_label: "Company-wide",
+    source_ref: "Approved roster — delivery",
+    responsibility:
+      "Responsible for preparing and maintaining Management Information System (MIS) reports, analyzing project and operational data.",
   },
 
-  // --- site & design (the crew sheet — all verified) ---
+  // --- site & design (field engineering) ---
   {
-    name: "Pawan Singh",
+    name: "Aman Pachori",
     role: "Site Engineer",
     group: "site_design",
     practice: null,
     practice_label: "Site & design",
-    source_ref: "DOC A p9 / DOC B p5",
+    source_ref: "Approved roster — field",
+    responsibility: "Responsible for day to day report to Project Manager.",
   },
   {
-    name: "Santosh Kumar",
+    name: "Deepanshu Sharma",
     role: "Site Engineer",
     group: "site_design",
     practice: null,
     practice_label: "Site & design",
-    source_ref: "DOC A p9 / DOC B p5",
+    source_ref: "Approved roster — field",
+    responsibility: "Responsible for day to day report to Project Manager.",
   },
   {
-    name: "Gopal Agnihoty",
+    name: "Rajneesh",
     role: "Site Engineer",
     group: "site_design",
     practice: null,
     practice_label: "Site & design",
-    source_ref: "DOC A p9 / DOC B p5",
-  },
-  {
-    name: "Hari Dutt",
-    role: "Site Engineer",
-    group: "site_design",
-    practice: null,
-    practice_label: "Site & design",
-    source_ref: "DOC A p9 / DOC B p5",
-  },
-  {
-    name: "Bechen Kumar",
-    role: "Site Engineer",
-    group: "site_design",
-    practice: null,
-    practice_label: "Site & design",
-    source_ref: "DOC A p9 / DOC B p5",
-  },
-  {
-    name: "Deepak Sharma",
-    role: "Site Engineer",
-    group: "site_design",
-    practice: null,
-    practice_label: "Site & design",
-    source_ref: "DOC A p9 / DOC B p5",
-  },
-  {
-    name: "Ankit Pouchori",
-    role: "Site Engineer",
-    group: "site_design",
-    practice: null,
-    practice_label: "Site & design",
-    source_ref: "DOC A p9 / DOC B p5",
-  },
-  {
-    name: "Mirnal Kumar",
-    role: "Site Engineer",
-    group: "site_design",
-    practice: null,
-    practice_label: "Site & design",
-    source_ref: "DOC A p9 / DOC B p5",
-  },
-  {
-    name: "Balbeer Kumar",
-    role: "Site Engineer",
-    group: "site_design",
-    practice: null,
-    practice_label: "Site & design",
-    source_ref: "DOC A p9 / DOC B p5",
-  },
-  {
-    name: "Piyush Chaudhary",
-    role: "Design Engineer",
-    group: "site_design",
-    practice: null,
-    practice_label: "Site & design",
-    source_ref: "DOC A p9 / DOC B p5",
+    source_ref: "Approved roster — field",
+    responsibility: "Responsible for day to day report to Project Manager.",
   },
 ];
 

@@ -5,6 +5,7 @@ import { Reveal } from "./Reveal";
 type Entry = {
   index: string;
   title: string;
+  slug: string;
   discipline: string;
   place: string;
   figure: string; // documented quantity — one per entry, where it says something
@@ -23,6 +24,7 @@ const ENTRIES: Entry[] = [
   {
     index: "01",
     title: "Lucknow Metro",
+    slug: "lucknow-metro-electrical",
     discipline: "Connectivity electrical · metro programme",
     place: "Uttar Pradesh",
     figure: "20 KM · 220 KV",
@@ -31,6 +33,7 @@ const ENTRIES: Entry[] = [
   {
     index: "02",
     title: "Patna Smart City",
+    slug: "patna-smart-city-electrical",
     discipline: "Underground HT/LT cable programme",
     place: "Bihar",
     figure: "150 KM · 11/33 KV",
@@ -39,6 +42,7 @@ const ENTRIES: Entry[] = [
   {
     index: "03",
     title: "World Trade Tower",
+    slug: "world-trade-tower-hvac-fire",
     discipline: "HVAC plant with integrated fire protection",
     place: "Noida, Uttar Pradesh",
     figure: "4,000 TR",
@@ -77,7 +81,8 @@ export function SelectedWork() {
                 <li key={e.index}>
                   <Reveal delay={Math.min(i * 60, 160)}>
                     <Link
-                      to="/projects"
+                      to="/projects/$slug"
+                      params={{ slug: e.slug }}
                       onMouseEnter={() => setActive(i)}
                       onFocus={() => setActive(i)}
                       onTouchStart={() => setActive(i)}

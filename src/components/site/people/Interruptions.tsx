@@ -37,14 +37,14 @@ export function InterruptionWide() {
         <div className="mt-14 md:mt-20 lg:-mr-10 xl:-mr-12">
           <ClipReveal edge="bottom" ratio="21 / 9">
             <img
-              src="/uploads/people/wide-crew.jpg"
-              alt="Crew working a pipeline slope — atmospheric reference imagery, not a documented Capex site"
+              src="/uploads/people/team-page.png"
+              alt="Historic worksite with crew on a riverside cutting — atmospheric reference imagery, not a documented Capex site"
               loading="lazy"
               className="h-full w-full object-cover [filter:saturate(0.85)_contrast(1.04)]"
             />
           </ClipReveal>
           <ReferenceNote className="mt-4">
-            Fig. 02 — pipeline crew · atmospheric reference imagery, not a documented Capex site
+            Fig. 01 — pipeline crew · atmospheric reference imagery, not a documented Capex site
           </ReferenceNote>
         </div>
       </div>
@@ -71,7 +71,7 @@ export function InterruptionTall() {
             />
           </ClipReveal>
           <ReferenceNote dark className="mt-4">
-            Fig. 03 — the trade · reference imagery
+            Fig. 02 — the trade · reference imagery
           </ReferenceNote>
         </div>
         <div className="lg:col-span-6 lg:col-start-6">

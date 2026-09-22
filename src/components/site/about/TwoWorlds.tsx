@@ -1,7 +1,7 @@
 import { Reveal } from "@/components/site/home/Reveal";
 import { ClipReveal } from "@/components/site/home/ClipReveal";
 import { TWO_WORLDS } from "@/lib/about-content";
-import aboutMainImg from "@/assets/about-page-main-img.png";
+import aboutMainImg from "@/assets/About-page/about-page-main-img.png";
 
 /**
  * TwoWorlds (About): the narrative the page turns on. The words carry the

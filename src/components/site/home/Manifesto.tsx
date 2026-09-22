@@ -40,6 +40,30 @@ export function Manifesto() {
               on.
             </p>
           </Reveal>
+          {/* the standard — the idea deepened, no new claims, nothing the page says elsewhere */}
+          <Reveal delay={560}>
+            <p className="mt-6 max-w-md text-[15px] leading-[1.8] text-muted-foreground">
+              The measure of these systems is how little they are noticed. That is the standard
+              Capex holds its work to — built to be relied on, and then forgotten.
+            </p>
+          </Reveal>
+          {/* the footprint — where the work is held from; appears nowhere else on home */}
+          <Reveal delay={640}>
+            <dl className="mt-12 grid max-w-md grid-cols-3 gap-6 border-t border-foreground/10 pt-6">
+              {[
+                ["Corporate office", "Noida"],
+                ["Manufacturing unit", "Rajasthan"],
+                ["Project reach", "India & Nepal"],
+              ].map(([k, v]) => (
+                <div key={k}>
+                  <dt className="font-tech text-[10px] uppercase tracking-[0.2em] text-muted-foreground/70">
+                    {k}
+                  </dt>
+                  <dd className="mt-2 text-sm font-medium leading-snug text-foreground">{v}</dd>
+                </div>
+              ))}
+            </dl>
+          </Reveal>
         </div>
 
         {/* the image — the substantial visual object of the scene: the full

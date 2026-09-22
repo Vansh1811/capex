@@ -55,7 +55,9 @@ export function TwoWorlds() {
                 </h2>
               </Reveal>
               <Reveal delay={160}>
-                <p className="eyebrow-sans mt-4 text-white/50">UG Utilities · Electrical · CGD</p>
+                <p className="eyebrow-sans mt-4 text-white/50" style={{ fontWeight: 700 }}>
+                  UG Utilities · Electrical · CGD
+                </p>
               </Reveal>
               <Reveal delay={220}>
                 <p className="mt-10 max-w-sm text-sm leading-[1.8] text-white/70">
@@ -135,7 +137,7 @@ export function TwoWorlds() {
                 </h2>
               </Reveal>
               <Reveal delay={150}>
-                <p className="eyebrow-sans mt-4 text-muted-foreground">
+                <p className="eyebrow-sans mt-4 text-muted-foreground" style={{ fontWeight: 700 }}>
                   MEP · HVAC · Fire Fighting · Fire Protection
                 </p>
               </Reveal>

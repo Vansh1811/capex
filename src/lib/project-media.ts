@@ -26,6 +26,9 @@
  */
 
 import { PROJECT_CORPUS } from "@/lib/project-corpus";
+import wtpDiscipline from "@/assets/Projects/World-Trade-Park/PIC-1.jpeg";
+import wtpHero from "@/assets/Projects/World-Trade-Park/pic-3.jpeg";
+// NOTE: pic-2.jpeg in the same folder is a 0-byte file — intentionally not imported.
 
 export type MediaSource = "PDF_EXTRACTED" | "REFERENCE" | "CAPEX_REAL";
 
@@ -39,6 +42,13 @@ export type ProjectMediaEntry = {
   sourceReference: string;
   /** Meaningful alt text — what the frame shows, honestly. */
   alt: string;
+  /**
+   * Optional ultra-wide hero frame (the 21/9 case-study hero). Consumed only
+   * by the case-study hero with `?? src` fallback — every other surface and
+   * record renders exactly as before when absent.
+   */
+  heroSrc?: string;
+  heroAlt?: string;
 };
 
 /** Real Capex plates from the client PDFs — graded, in public/uploads/projects. */
@@ -169,6 +179,22 @@ function buildRegistry(): Map<string, ProjectMediaEntry> {
   };
 
   for (const p of PROJECT_CORPUS) {
+    // World Trade Park — client-supplied original project photography
+    // (CAPEX_REAL). Principal frame PIC-1 carries the 16/10 print and the
+    // 4/5 same-frame detail; pic-3 carries the ultra-wide hero.
+    if (p.slug === "world-trade-park-hvac") {
+      registry.set(p.slug, {
+        slug: p.slug,
+        src: wtpDiscipline,
+        heroSrc: wtpHero,
+        sourceType: "CAPEX_REAL",
+        sourceReference: "Client-supplied project photography — PIC-1 / pic-3",
+        alt: "Chilled-water risers with valves, gauges and flexible connectors in the World Trade Park plant room — Capex works photograph",
+        heroAlt:
+          "Chilled-water pump headers running the length of the World Trade Park plant room — Capex works photograph",
+      });
+      continue;
+    }
     const pinned = PINNED[p.slug];
     if (pinned && PDF_PLATES[pinned]) {
       registry.set(p.slug, pdfEntry(p.slug, pinned));

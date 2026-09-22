@@ -46,7 +46,7 @@ export function Closing() {
           <ul className="grid gap-10 md:grid-cols-3 md:gap-6">
             {[
               { to: "/projects", label: "Projects" },
-              { to: "/about", label: "Studio" },
+              { to: "/about", label: "About Us" },
               { to: "/contact", label: "Contact" },
             ].map((d, i) => (
               <li key={d.label}>

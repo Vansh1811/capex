@@ -10,11 +10,11 @@ import type { CapabilityPractice } from "@/lib/site-data";
  * and not cards. Below the Street is the dark earth room (the tunnel
  * plate, the survey grain); Within the Building is the ivory plant room.
  * Alternating full-width scenes: each practice occupies its own
- * environment, and hovering/focusing one strengthens its typography,
- * brings its plate forward and quiets the other — two rooms sharing one
- * wall. On small screens the rooms become deliberate vertical scenes with
- * tap/focus behaviour; the service list always renders (it is the room's
- * register), with hover only adding emphasis.
+ * environment. The plate is static — hover/focus never alters opacity,
+ * scale or position so no edge line ever appears and hover looks exactly
+ * like the resting state. On small screens the rooms become deliberate
+ * vertical scenes with tap/focus behaviour; the service list always renders
+ * (it is the room's register), with hover only adding emphasis.
  */
 export function TwoPractices({
   practices,
@@ -53,7 +53,10 @@ function PracticeRoom({
 }) {
   const [touchOpen, setTouchOpen] = useState(false);
   const below = practice.number === 1;
-  const emphasis = active || touchOpen;
+  // Hover must not change the room at all — the plate stays exactly as it is
+  // before hovering (no opacity / scale / object-position shift, no edge line).
+  // Only the explicit mobile "Hold the room" toggle may add emphasis to text.
+  const emphasis = touchOpen;
   const ordinal = below ? "01" : "02";
   const title = below ? "Below the street" : "Within the building";
   const subtitle = below
@@ -67,26 +70,23 @@ function PracticeRoom({
       className={`group relative overflow-hidden transition-opacity duration-500 ${
         below ? "bg-[var(--brand)] text-white" : "paper text-foreground"
       }`}
-      onMouseEnter={() => onActive(practice.number)}
-      onMouseLeave={() => onActive(null)}
     >
-      {/* the room's plate — full-height at xl on the quiet side of the room */}
+      {/* the room's plate — full-height at xl on the quiet side of the room.
+          Static: never shifts on hover/focus so no edge line ever appears. */}
       <div
         aria-hidden="true"
-        className={`pointer-events-none absolute inset-y-0 hidden w-[46%] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] xl:block ${
+        className={`pointer-events-none absolute inset-y-0 hidden w-[46%] opacity-45 xl:block ${
           below ? "right-0" : "left-0"
-        } ${emphasis ? "opacity-100" : "opacity-45"} ${otherActive ? "opacity-30" : ""}`}
+        }`}
       >
-        <div
-          className={`h-full w-full ${emphasis ? "scale-[1.02]" : "scale-100"} transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)]`}
-        >
+        <div className="h-full w-full scale-100">
           <img
             src={practice.plate}
             alt=""
             loading="lazy"
-            className={`h-full w-full object-cover transition-[object-position,filter] duration-[1200ms] ${
+            className={`h-full w-full object-cover ${
               below ? "object-[62%_54%]" : "object-[38%_48%]"
-            } ${emphasis ? (below ? "object-[56%_50%]" : "object-[44%_44%]") : ""} ${
+            } ${
               below
                 ? "[filter:saturate(0.66)_contrast(1.03)_brightness(0.78)]"
                 : "[filter:saturate(0.85)_contrast(1.0)]"
