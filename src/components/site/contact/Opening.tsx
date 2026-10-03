@@ -16,7 +16,7 @@ import { SiteImage, publicSets } from "@/components/site/SiteImage";
 export function Opening({ phone, email }: { phone: string; email: string }) {
   const enter = useEntrance(160);
 
-  return (
+  return ( 
     <section
       aria-label="Contact Capex — start with a conversation"
       data-tone="dark"
