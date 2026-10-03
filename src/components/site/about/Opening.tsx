@@ -17,7 +17,7 @@ export function Opening() {
 
   return (
     <section
-      aria-label="About Capex — we build what keeps things moving"
+      aria-label="About Capex — built around the work"
       data-tone="dark"
       className="relative overflow-hidden bg-[var(--brand-deep)] text-white lg:flex lg:min-h-svh lg:flex-col lg:justify-center"
     >

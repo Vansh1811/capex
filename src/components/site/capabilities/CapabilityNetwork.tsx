@@ -133,20 +133,11 @@ export function CapabilityNetwork({ services }: { services: CapabilityService[] 
                     </div>
                     <ul className="mt-3 flex flex-wrap gap-x-8 gap-y-2">
                       {active.sectors.map((sec) => (
-                        <li key={sec.slug}>
-                          <Link
-                            to="/sectors/$slug"
-                            params={{ slug: sec.slug }}
-                            className="group inline-flex items-baseline gap-2 border-b border-border pb-0.5 font-display text-xl font-normal tracking-[-0.015em] transition-colors hover:border-foreground md:text-2xl"
-                          >
-                            {sec.name}
-                            <span
-                              aria-hidden="true"
-                              className="font-tech text-[10px] opacity-0 transition-all duration-300 group-hover:translate-x-0.5 group-hover:opacity-100"
-                            >
-                              →
-                            </span>
-                          </Link>
+                        <li
+                          key={sec.slug}
+                          className="inline-flex items-baseline gap-2 border-b border-border pb-0.5 font-display text-xl font-normal tracking-[-0.015em] md:text-2xl"
+                        >
+                          {sec.name}
                         </li>
                       ))}
                     </ul>

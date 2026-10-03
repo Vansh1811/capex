@@ -14,10 +14,8 @@ import { ReferenceNote } from "@/components/site/capabilities/CapabilitiesExperi
  */
 export function PhysicalCapability({
   fleet,
-  equipment,
 }: {
   fleet: { tonnes: number }[];
-  equipment: { item: string; spec: string | null; qty?: string }[];
 }) {
   return (
     <section
@@ -90,49 +88,6 @@ export function PhysicalCapability({
             <ReferenceNote dark className="mt-5">
               Drillto HDD fleet on the documented register — 32, 28 and 20-tonne pullback machines.
               Rig pictured is reference imagery, not Capex-owned equipment.
-            </ReferenceNote>
-          </Reveal>
-        </div>
-
-        {/* the register — the owned plant, mono column, unit counts from the source rows */}
-        <div className="mt-16 grid gap-10 md:mt-24 lg:grid-cols-12">
-          <Reveal className="lg:col-span-5">
-            <p className="font-display text-[26px] font-normal leading-[1.14] tracking-[-0.02em] text-white/90 md:text-[34px]">
-              The register behind the fleet.
-            </p>
-            <p className="mt-6 max-w-md text-sm leading-[1.8] text-white/60">
-              The wider plant list carried on the company&rsquo;s own equipment register — drilling,
-              welding, jointing, fusion and measuring kit, held for deployment across the
-              practice&rsquo;s UG, CGD and trenchless programmes, with the unit counts as documented
-              on the source register.
-            </p>
-          </Reveal>
-          <Reveal delay={140} className="lg:col-span-7">
-            <ul className="grid gap-x-10 sm:grid-cols-2 lg:grid-cols-3">
-              {equipment.map((e, i) => (
-                <li
-                  key={`${e.item}-${i}`}
-                  className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5 border-b border-white/10 py-3"
-                >
-                  <span className="min-w-0 flex-1 text-[13px] leading-snug text-white/80">
-                    {e.item}
-                  </span>
-                  {e.spec && (
-                    <span className="font-tech text-[10px] uppercase leading-[1.6] tracking-[0.12em] text-white/40">
-                      {e.spec}
-                    </span>
-                  )}
-                  {e.qty && (
-                    <span className="font-tech text-[10px] uppercase leading-[1.6] tracking-[0.12em] text-white/40">
-                      {e.qty} Nos.
-                    </span>
-                  )}
-                </li>
-              ))}
-            </ul>
-            <ReferenceNote dark className="mt-6">
-              Equipment register — DOC A p11 / DOC C p5 · unit counts as printed on the source
-              register
             </ReferenceNote>
           </Reveal>
         </div>

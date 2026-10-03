@@ -28,6 +28,8 @@
 import { PROJECT_CORPUS } from "@/lib/project-corpus";
 import wtpDiscipline from "@/assets/Projects/World-Trade-Park/PIC-1.jpeg";
 import wtpHero from "@/assets/Projects/World-Trade-Park/pic-3.jpeg";
+import infosysDiscipline from "@/assets/Projects/infosys-underground/Infosysy-2-1600.jpg";
+import infosysHero from "@/assets/Projects/infosys-underground/Infosys-1-1600.jpg";
 // NOTE: pic-2.jpeg in the same folder is a 0-byte file — intentionally not imported.
 
 export type MediaSource = "PDF_EXTRACTED" | "REFERENCE" | "CAPEX_REAL";
@@ -192,6 +194,22 @@ function buildRegistry(): Map<string, ProjectMediaEntry> {
         alt: "Chilled-water risers with valves, gauges and flexible connectors in the World Trade Park plant room — Capex works photograph",
         heroAlt:
           "Chilled-water pump headers running the length of the World Trade Park plant room — Capex works photograph",
+      });
+      continue;
+    }
+    // Infosys 33kV — client-supplied original project photography
+    // (CAPEX_REAL). Principal frame Infosysy-2 carries the 16/10 print and
+    // the 4/5 same-frame detail; Infosys-1 carries the ultra-wide hero.
+    if (p.slug === "infosys-33kv-electrical") {
+      registry.set(p.slug, {
+        slug: p.slug,
+        src: infosysDiscipline,
+        heroSrc: infosysHero,
+        sourceType: "CAPEX_REAL",
+        sourceReference: "Client-supplied project photography — Infosys-1 / Infosysy-2",
+        alt: "Orange HT cables drawn through concrete jointing chambers in an open trench — Capex works photograph",
+        heroAlt:
+          "Crew laying HT cables in concrete troughs along a city street, chamber and excavator works behind — Capex works photograph",
       });
       continue;
     }

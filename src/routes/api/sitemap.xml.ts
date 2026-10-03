@@ -1,12 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PRACTICE_CORPUS, SERVICE_CORPUS } from "@/lib/services-corpus";
-import { SECTOR_CORPUS } from "@/lib/sector-corpus";
 import { PROJECT_CORPUS } from "@/lib/project-corpus";
 
 /**
  * /api/sitemap.xml — the public route map, composed from the verified
  * corpora (the single source of which records are published). Static
  * generation-time content; no database involved.
+ *
+ * Sectors is a single-page atlas — only /sectors is listed, no
+ * /sectors/[slug] detail URLs.
  */
 export const Route = createFileRoute("/api/sitemap/xml")({
   server: {
@@ -29,7 +31,6 @@ export const Route = createFileRoute("/api/sitemap/xml")({
         ];
 
         for (const s of SERVICE_CORPUS) urls.push({ loc: `/services/${s.slug}` });
-        for (const s of SECTOR_CORPUS) urls.push({ loc: `/sectors/${s.slug}` });
         for (const p of PROJECT_CORPUS) urls.push({ loc: `/projects/${p.slug}` });
 
         const xml =

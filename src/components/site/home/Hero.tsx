@@ -1,4 +1,4 @@
-import { HeroVideo, useEntrance } from "./HeroVideo";
+import { HeroVideo, useInstantEntrance } from "./HeroVideo";
 
 /**
  * Hero (V3.1): the film is the subject; typography supports it. The
@@ -6,9 +6,14 @@ import { HeroVideo, useEntrance } from "./HeroVideo";
  * against the frame, font-normal so the display sits quiet against the
  * footage. One line of quiet context completes the opening frame.
  * Nothing else. No scroll cue, no arrow, no UI.
+ *
+ * Render timing: the headline + supporting copy are visible on FIRST PAINT
+ * (useInstantEntrance never renders opacity-0) and settle subtly once
+ * mounted. The text never waits for the video — it reads instantly even
+ * if the film loads slowly or fails.
  */
 export function Hero() {
-  const enter = useEntrance();
+  const enter = useInstantEntrance();
 
   return (
     <section

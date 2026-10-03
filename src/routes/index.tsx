@@ -10,12 +10,8 @@ import { TwoWorlds } from "@/components/site/home/TwoWorlds";
 import { HowCapexDelivers } from "@/components/site/home/HowCapexDelivers";
 import { SelectedWork } from "@/components/site/home/SelectedWork";
 import { Closing } from "@/components/site/home/Closing";
-import {
-  SearchOverlay,
-  buildSearchCorpus,
-  type SearchCorpus,
-} from "@/components/site/home/SearchOverlay";
-import { StudioMenu } from "@/components/site/home/StudioMenu";
+import { buildSearchCorpus, type SearchCorpus } from "@/components/site/home/search-corpus";
+import { SearchOverlay, StudioMenu } from "@/components/site/home/overlays";
 
 const chromeQuery = queryOptions({
   queryKey: ["public", "chrome"],

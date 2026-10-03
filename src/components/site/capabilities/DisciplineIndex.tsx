@@ -7,7 +7,7 @@ import type { CapabilityService } from "@/lib/site-data";
 
 /**
  * THE DISCIPLINE INDEX — the centerpiece: a large editorial typographic
- * register, not 11 cards. Each discipline reads as one dominant name set
+ * register, not 9 cards. Each discipline reads as one dominant name set
  * over a hairline rule, with its mono ordinal, practice affiliation and a
  * quiet record note. The signature interaction lives beside it on desktop:
  * a large exhibition plate that holds the selected discipline's
@@ -61,7 +61,7 @@ export function DisciplineIndex({
               hidden here (the row renders it expanded in-flow) */}
           <div className="hidden lg:col-span-5 lg:block xl:col-span-4">
             <div className="sticky top-28">
-              <DisciplinePlate service={active} />
+              <DisciplinePlate service={active} total={services.length} />
             </div>
           </div>
         </div>
@@ -201,7 +201,7 @@ function DisciplineRow({
  * language, crop art-directed per discipline). When nothing is selected the
  * plate holds the register's open state — an instruction, not an empty box.
  */
-function DisciplinePlate({ service }: { service: CapabilityService | null }) {
+function DisciplinePlate({ service, total }: { service: CapabilityService | null; total: number }) {
   const ref = useRef<HTMLDivElement>(null);
 
   if (!service) {
@@ -230,7 +230,7 @@ function DisciplinePlate({ service }: { service: CapabilityService | null }) {
           className={`plate-img absolute inset-0 h-full w-full object-cover ${service.platePosition} [filter:saturate(0.85)_contrast(1.0)]`}
         />
         <span className="absolute bottom-4 left-4 font-tech text-[10px] uppercase tracking-[0.18em] text-white/90 mix-blend-difference">
-          {String(service.n).padStart(2, "0")} / {String(11).padStart(2, "0")}
+          {String(service.n).padStart(2, "0")} / {String(total).padStart(2, "0")}
         </span>
       </div>
 

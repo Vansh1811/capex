@@ -70,13 +70,14 @@ export function TwoWorlds() {
               </Reveal>
               <Reveal delay={160}>
                 <p className="eyebrow-sans mt-4 text-white/50" style={{ fontWeight: 700 }}>
-                  UG Utilities · Electrical · CGD
+                  UG Services · Electrical · City Gas Distribution
                 </p>
               </Reveal>
               <Reveal delay={220}>
                 <p className="mt-10 max-w-sm text-sm leading-[1.8] text-white/70">
-                  HT/LT cable networks for smart-city and metro programmes · city gas distribution
-                  in MDPE and steel · HDD trenchless crossings with an owned Drillto fleet.
+                  Underground power cables for smart cities and metros · city gas pipelines that
+                  bring gas to homes and streets · road crossings done without digging — using our
+                  own drilling machines.
                 </p>
               </Reveal>
               <Reveal delay={280}>
@@ -93,9 +94,11 @@ export function TwoWorlds() {
                 </Link>
               </Reveal>
               <Reveal delay={260}>
-                <p className="mt-12 font-tech text-[10px] uppercase tracking-[0.2em] text-white/40">
-                  Documented programmes — Patna · Banaras · Lucknow Metro
-                </p>
+                <div className="mt-12 space-y-2 font-tech text-[10px] uppercase tracking-[0.2em] text-white/40">
+                  <p>Documented programmes : —</p>
+                  <p>Electrical · Patna · Banaras · Gurugram · Dhanbad</p>
+                  <p>CGD · Guwahati · Aurangabad · Ahmednagar · Rohtak</p>
+                </div>
               </Reveal>
             </div>
 
@@ -163,7 +166,7 @@ export function TwoWorlds() {
               </Reveal>
               <Reveal delay={210}>
                 <p className="mt-10 max-w-sm text-[15px] leading-[1.8] text-muted-foreground">
-                  HVAC and VRV plants. Hospital clean rooms. Hydrant and sprinkler systems.
+                  HVAC and VRV plants. Hydrant and sprinkler systems.
                   Integrated mechanical, electrical and plumbing — engineered, installed and
                   commissioned by one accountable partner.
                 </p>

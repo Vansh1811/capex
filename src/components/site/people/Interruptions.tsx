@@ -100,7 +100,7 @@ export function InterruptionTall() {
 }
 
 /**
- * CLOSING — the deep-earth final frame. The statement keeps the verified
+ * CLOSING — the black final frame. The statement keeps the verified
  * editorial tone: the work is carried by people, which About and Projects
  * both assert. Then two restrained destinations — no footer wall.
  */
@@ -109,7 +109,7 @@ export function PeopleClosing() {
     <footer
       aria-label="The people behind the work — closing"
       data-tone="dark"
-      className="relative overflow-hidden bg-[var(--brand-deep)] text-white"
+      className="relative overflow-hidden bg-black text-white"
     >
       <div className="mx-auto max-w-[1680px] px-6 pb-14 pt-28 md:px-10 md:pt-40 lg:px-12 lg:pt-48">
         <Reveal>

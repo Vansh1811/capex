@@ -5,6 +5,11 @@ import { ClipReveal } from "@/components/site/home/ClipReveal";
 import { SiteImage } from "@/components/site/SiteImage";
 import { ReferenceNote } from "@/components/site/capabilities/CapabilitiesExperience";
 import type { CapabilityPractice } from "@/lib/site-data";
+import withinBuildingImg from "@/assets/Capabilities/Capabilities-within-building.png";
+import withinBuilding1024 from "@/assets/Capabilities/Capabilities-within-building-1024.jpg";
+import withinBuilding640 from "@/assets/Capabilities/Capabilities-within-building-640.jpg";
+
+const WITHIN_SET = `${withinBuilding640} 640w, ${withinBuilding1024} 1024w, ${withinBuildingImg} 1254w`;
 
 /**
  * THE TWO PRACTICES — two rooms inside one practice, not a mirrored pair
@@ -60,6 +65,12 @@ function PracticeRoom({
   const emphasis = touchOpen;
   const ordinal = below ? "01" : "02";
   const title = below ? "Below the street" : "Within the building";
+  // Practice 02 carries the bundled client-supplied frame (imported here so
+  // the client build emits and optimises it); Practice 01 keeps its corpus plate.
+  const plateSrc = below ? practice.plate : withinBuildingImg;
+  const plateAlt = below
+    ? practice.plateAlt
+    : "MEP technicians fitting ductwork beside fire-fighting risers — reference imagery, not a documented Capex project";
   const subtitle = below
     ? "UG Utilities, Electrical & CGD"
     : "MEP, Fire Fighting & Fire Protection";
@@ -76,13 +87,14 @@ function PracticeRoom({
           Static: never shifts on hover/focus so no edge line ever appears. */}
       <div
         aria-hidden="true"
-        className={`pointer-events-none absolute inset-y-0 hidden w-[46%] opacity-45 xl:block ${
-          below ? "right-0" : "left-0"
+        className={`pointer-events-none absolute inset-y-0 hidden w-[46%] xl:block ${
+          below ? "right-0 opacity-45" : "left-0 opacity-70"
         }`}
       >
         <div className="h-full w-full scale-100">
           <SiteImage
-            src={practice.plate}
+            src={plateSrc}
+            srcSet={below ? undefined : WITHIN_SET}
             sizes="(max-width: 1280px) 100vw, 46vw"
             alt=""
             ariaHidden="true"
@@ -97,7 +109,7 @@ function PracticeRoom({
         </div>
         <div
           aria-hidden="true"
-          className={`absolute inset-0 ${below ? "bg-gradient-to-l from-transparent via-[var(--brand)]/30 to-[var(--brand)]" : "bg-gradient-to-r from-transparent via-transparent to-[var(--background)]"}`}
+          className={`absolute inset-0 ${below ? "bg-gradient-to-l from-transparent via-[var(--brand)]/30 to-[var(--brand)]" : "bg-gradient-to-r from-transparent via-[var(--background)]/35 to-[var(--background)]"}`}
         />
       </div>
 
@@ -284,9 +296,10 @@ function PracticeRoom({
       <div className="relative z-10 px-6 pb-16 md:px-10 lg:px-12 xl:hidden">
         <ClipReveal edge={below ? "left" : "right"} ratio="16 / 9" delay={60}>
           <SiteImage
-            src={practice.plate}
+            src={plateSrc}
+            srcSet={below ? undefined : WITHIN_SET}
             sizes="100vw"
-            alt={practice.plateAlt}
+            alt={plateAlt}
             className={`h-full w-full object-cover ${
               below
                 ? "object-[56%_50%] [filter:saturate(0.7)_contrast(1.03)_brightness(0.85)]"
@@ -295,7 +308,7 @@ function PracticeRoom({
           />
         </ClipReveal>
         <ReferenceNote dark={!below ? false : true} className="mt-4">
-          {practice.plateAlt}
+          {plateAlt}
         </ReferenceNote>
       </div>
     </article>

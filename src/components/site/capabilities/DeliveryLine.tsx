@@ -20,9 +20,9 @@ const STAGES = [
   { word: "Understand", note: "The brief, the site, the constraint" },
   { word: "Engineer", note: "Design & engineering" },
   { word: "Supply", note: "Procurement & supply" },
-  { word: "Install", note: "Installation" },
-  { word: "Test", note: "Testing" },
-  { word: "Commission", note: "Commissioning & handover" },
+  { word: "Installation", note: "Installation" },
+  { word: "Testing", note: "Testing" },
+  { word: "Commissioning", note: "Commissioning & handover" },
 ] as const;
 
 export function DeliveryLine() {

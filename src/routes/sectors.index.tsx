@@ -3,14 +3,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
 import { getNavChrome, getSearchCorpus, getSectorsAtlas } from "@/lib/site-data";
 import { PUBLIC_QUERY_DEFAULTS } from "@/components/site/SiteChrome";
-import { buildSearchCorpus, type SearchCorpus } from "@/components/site/home/SearchOverlay";
+import { buildSearchCorpus, type SearchCorpus } from "@/components/site/home/search-corpus";
 import { SectorsExperience } from "@/components/site/sectors/SectorsExperience";
-import {
-  AtlasOpening,
-  AtlasIndex,
-  TwoWorldsAtlas,
-  AtlasClosing,
-} from "@/components/site/sectors/AtlasScenes";
+import { AtlasOpening, AtlasIndex, AtlasClosing } from "@/components/site/sectors/AtlasScenes";
 
 const chromeQuery = queryOptions({
   queryKey: ["public", "chrome"],
@@ -81,7 +76,6 @@ function SectorsPage() {
     <SectorsExperience brandWordmark={settings.brand_wordmark || "CAPEX"} corpus={corpus}>
       <AtlasOpening atlas={atlas} />
       <AtlasIndex atlas={atlas} />
-      <TwoWorldsAtlas />
       <AtlasClosing />
     </SectorsExperience>
   );

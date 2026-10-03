@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Reveal } from "@/components/site/home/Reveal";
 
 /**
- * Closing (Credentials): the final confirmation of trust — deep earth, the
+ * Closing (Credentials): the final confirmation of trust — black, the
  * register's promise restated. "Look closer. It's all on record." carries
  * the Capex tone (quiet, factual, an invitation to verify rather than a
  * sales push), so the suggested direction holds. Two onward paths only:
@@ -14,7 +14,7 @@ export function Closing({ cin }: { cin: string }) {
     <footer
       aria-label="Continue — verification and projects"
       data-tone="dark"
-      className="relative overflow-hidden bg-[var(--brand-deep)] text-white"
+      className="relative overflow-hidden bg-black text-white"
     >
       <div
         aria-hidden="true"

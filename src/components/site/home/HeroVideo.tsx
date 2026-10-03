@@ -63,3 +63,25 @@ export function useEntrance(delayStep = 140) {
     style: { transitionDelay: `${240 + index * delayStep}ms` },
   });
 }
+
+/**
+ * Homepage hero entrance: the text is FULLY VISIBLE on first paint
+ * (opacity-100 in the initial HTML — never opacity-0) and then performs only
+ * a short, subtle positional settle once mounted. It waits for nothing: not
+ * the video, not data, not hydration-delayed "ready" state beyond a single
+ * frame. If the video loads slowly or fails entirely, the headline still
+ * reads instantly.
+ */
+export function useInstantEntrance(delayStep = 70) {
+  const [settled, setSettled] = useState(false);
+  useEffect(() => {
+    const raf = requestAnimationFrame(() => setSettled(true));
+    return () => cancelAnimationFrame(raf);
+  }, []);
+  return (index: number) => ({
+    className: `transition-transform duration-[350ms] ease-out ${
+      settled ? "translate-y-0" : "translate-y-[6px]"
+    }`,
+    style: { transitionDelay: `${index * delayStep}ms` },
+  });
+}

@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import { Resend } from "resend";
 import { submissionClient, requestHeaders } from "@/lib/submission-client";
 
 /**
@@ -14,6 +15,10 @@ import { submissionClient, requestHeaders } from "@/lib/submission-client";
  * and reference allocation are the database's job — this module only
  * validates input, screens bots, hashes the request IP and calls the RPC.
  * Failures surface fixed generic messages — never internals (Phase 2 S7).
+ *
+ * After a successful insert each flow notifies the company inbox via Resend
+ * (reply-to the visitor). Email delivery never fails the submission: notify
+ * errors are logged, the persisted row + reference always win.
  *
  * Static site content never passes through here — see src/lib/site-data.ts.
  */
@@ -58,6 +63,46 @@ async function sourceHashes(headers: Headers) {
   return { ipHash, uaHash };
 }
 
+// ---------- company notification emails (Resend) ----------
+
+const NOTIFY_TO = process.env.NOTIFY_TO ?? "mail2capex@yahoo.in";
+const NOTIFY_FROM = process.env.NOTIFY_FROM ?? "Capex Website <website@capex.example.com>";
+
+/**
+ * Notify the company inbox about a new submission. Fire-and-forget safe:
+ * never throws — a failed email is logged but never fails the submission
+ * itself (the row is already persisted by the RPC before this runs).
+ * Reply-To is the visitor so the inbox can hit "reply" directly.
+ */
+async function notifyCompany(opts: {
+  subject: string;
+  lines: [label: string, value: string][];
+  replyTo?: string;
+}): Promise<void> {
+  const key = process.env.RESEND_API_KEY;
+  if (!key) {
+    console.warn("notification skipped: RESEND_API_KEY not set");
+    return;
+  }
+  const body = opts.lines
+    .filter(([, v]) => v.trim() !== "")
+    .map(([k, v]) => `${k}: ${v}`)
+    .join("\n");
+  try {
+    const resend = new Resend(key);
+    const { error } = await resend.emails.send({
+      from: NOTIFY_FROM,
+      to: [NOTIFY_TO],
+      replyTo: opts.replyTo?.trim() ? opts.replyTo.trim() : undefined,
+      subject: opts.subject,
+      text: body,
+    });
+    if (error) console.error("notification email failed:", error.message ?? "unknown");
+  } catch (err) {
+    console.error("notification email threw:", err instanceof Error ? err.message : err);
+  }
+}
+
 // ---------- contact / enquiry flow ----------
 
 const enquirySchema = z.object({
@@ -65,6 +110,7 @@ const enquirySchema = z.object({
   name: z.string().trim().min(1).max(120),
   email: z.string().trim().email().max(200),
   phone: z.string().trim().max(40).optional().default(""),
+  company: z.string().trim().max(160).optional().default(""),
   subject: z.string().trim().max(160).optional().default(""),
   message: z.string().trim().min(1).max(4000),
   data: z.record(z.string(), z.string()).optional().default({}),
@@ -102,7 +148,12 @@ export const submitEnquiry = createServerFn({ method: "POST" })
       p_phone: data.phone,
       p_subject: data.subject,
       p_message: data.message,
-      p_data: { ...data.data, practice: data.practice, service_slug: data.service_slug },
+      p_data: {
+        ...data.data,
+        practice: data.practice,
+        service_slug: data.service_slug,
+        company: data.company,
+      },
       p_ip_hash: ipHash,
       p_user_agent_hash: uaHash,
       p_practice: data.practice || null,
@@ -113,7 +164,23 @@ export const submitEnquiry = createServerFn({ method: "POST" })
       console.error("enquiry rpc rejected:", error.code ?? "unknown");
       throw new Error(GENERIC_SUBMISSION_ERROR);
     }
-    return { ok: true, ref: (ref as string | null) ?? null };
+    const refValue = (ref as string | null) ?? null;
+    await notifyCompany({
+      subject: `New website enquiry ${refValue ?? ""} — ${data.name}`.trim(),
+      replyTo: data.email,
+      lines: [
+        ["Reference", refValue ?? "—"],
+        ["Name", data.name],
+        ["Organization", data.company],
+        ["Email", data.email],
+        ["Phone", data.phone],
+        ["Service", data.service_slug],
+        ["Practice", data.practice],
+        ["Subject", data.subject],
+        ["Message", data.message],
+      ],
+    });
+    return { ok: true, ref: refValue };
   });
 
 // ---------- credential request flow ----------
@@ -165,5 +232,19 @@ export const submitCredentialRequest = createServerFn({ method: "POST" })
       console.error("credential request rpc rejected:", error.code ?? "unknown");
       throw new Error(GENERIC_SUBMISSION_ERROR);
     }
-    return { ok: true, ref: (ref as string | null) ?? null };
+    const refValue = (ref as string | null) ?? null;
+    await notifyCompany({
+      subject: `New document request ${refValue ?? ""} — ${data.name}`.trim(),
+      replyTo: data.email,
+      lines: [
+        ["Reference", refValue ?? "—"],
+        ["Name", data.name],
+        ["Organization", data.company],
+        ["Email", data.email],
+        ["Phone", data.phone],
+        ["Document", data.credential],
+        ["Message", data.message],
+      ],
+    });
+    return { ok: true, ref: refValue };
   });

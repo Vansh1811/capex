@@ -261,12 +261,12 @@ export function ArchiveNav({
 }) {
   const tone = overDark
     ? {
-        base: "text-white/60",
+        base: "text-white/90 [text-shadow:0_1px_12px_rgba(0,0,0,0.55)]",
         hover: "hover:text-white",
-        brand: "text-white",
+        brand: "text-white [text-shadow:0_1px_12px_rgba(0,0,0,0.55)]",
         line: "border-white/15",
-        active: "text-white",
-        inactive: "text-white/40",
+        active: "text-white [text-shadow:0_1px_12px_rgba(0,0,0,0.55)]",
+        inactive: "text-white/60 [text-shadow:0_1px_12px_rgba(0,0,0,0.55)]",
       }
     : {
         base: "text-muted-foreground",
@@ -302,7 +302,7 @@ export function ArchiveNav({
         <Link
           to="/"
           aria-label={`${brandWordmark} — home`}
-          className={`font-display text-[15px] font-bold tracking-[0.3em] transition-colors duration-300 ${tone.brand}`}
+          className={`font-display text-[15px] font-bold tracking-[0.3em] antialiased transition-colors duration-300 ${tone.brand}`}
         >
           {brandWordmark}
         </Link>
@@ -314,7 +314,7 @@ export function ArchiveNav({
             <Link
               key={d.key}
               to={d.to}
-              className={`eyebrow-sans flex items-baseline gap-2 transition-colors duration-300 ${
+              className={`eyebrow-sans flex items-baseline gap-2 font-bold antialiased transition-colors duration-300 ${
                 state === d.key ? tone.active : `${tone.inactive} ${tone.hover}`
               }`}
               aria-current={state === d.key ? "page" : undefined}
@@ -330,14 +330,14 @@ export function ArchiveNav({
         <nav className="hidden items-center gap-6 lg:flex lg:gap-10" aria-label="Archive controls">
           <Link
             to="/projects"
-            className={`eyebrow-sans transition-colors duration-300 ${tone.base} ${tone.hover}`}
+            className={`eyebrow-sans font-bold antialiased transition-colors duration-300 ${tone.base} ${tone.hover}`}
           >
             Projects
           </Link>
           <button
             onClick={onOpenIndex}
             aria-pressed={indexActive}
-            className={`eyebrow-sans transition-colors duration-300 ${
+            className={`eyebrow-sans font-bold antialiased transition-colors duration-300 ${
               indexActive || filterActive ? tone.active : `${tone.base} ${tone.hover}`
             }`}
           >
@@ -345,7 +345,7 @@ export function ArchiveNav({
           </button>
           <button
             onClick={onOpenFilter}
-            className={`eyebrow-sans transition-colors duration-300 ${tone.hover} ${
+            className={`eyebrow-sans font-bold antialiased transition-colors duration-300 ${tone.hover} ${
               filterActive ? tone.active : tone.base
             }`}
           >
@@ -353,7 +353,7 @@ export function ArchiveNav({
           </button>
           <button
             onClick={() => window.dispatchEvent(new Event("open-search"))}
-            className={`eyebrow-sans transition-colors duration-300 ${tone.base} ${tone.hover}`}
+            className={`eyebrow-sans font-bold antialiased transition-colors duration-300 ${tone.base} ${tone.hover}`}
           >
             Search
           </button>

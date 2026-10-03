@@ -144,14 +144,6 @@ const PLATES: Record<string, AboutPlate> = {
     alt: "Detail of a Capex fire-fighting and hydrant installation",
     caption: "Fire-fighting & hydrant system · practice record",
   },
-  "safety-site": {
-    src: "/uploads/about-capex/safety-site.jpg",
-    source: "HVAC & fire profile, p6 — safety procedures",
-    alt: "Capex site work under the company safety regime",
-    caption: "One safety regime, every site · company record",
-    width: 485,
-    height: 393,
-  },
   "team-boards": {
     src: "/uploads/about-capex/team-boards.jpg",
     source: "HVAC & fire profile, p4 — management team",

@@ -2,8 +2,8 @@ import { Link } from "@tanstack/react-router";
 import { Reveal } from "@/components/site/home/Reveal";
 
 /**
- * CLOSING (Capabilities): the engine room's exit — deep earth, near black,
- * deliberately minimal after the register's density. The capability
+ * CLOSING (Capabilities): the engine room's exit — black, deliberately
+ * minimal after the register's density. The capability
  * narrative completes: from disciplines and tonnage to the first
  * conversation. Two quiet onward lines (conversation / projects) instead
  * of a single CTA.
@@ -13,7 +13,7 @@ export function CapabilitiesClosing({ serviceCount }: { serviceCount: number }) 
     <section
       aria-label="Know what you need?"
       data-tone="dark"
-      className="relative overflow-hidden bg-[var(--brand-deep)] text-white"
+      className="relative overflow-hidden bg-black text-white"
     >
       {/* the survey field fades back in — the same grain as the opening */}
       <div

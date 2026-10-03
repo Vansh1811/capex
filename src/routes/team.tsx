@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
 import { getNavChrome, getSearchCorpus, getPeopleRoster } from "@/lib/site-data";
 import { PUBLIC_QUERY_DEFAULTS } from "@/components/site/SiteChrome";
-import { buildSearchCorpus, type SearchCorpus } from "@/components/site/home/SearchOverlay";
+import { buildSearchCorpus, type SearchCorpus } from "@/components/site/home/search-corpus";
 import {
   PeopleExperience,
   Opening,

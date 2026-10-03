@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
 import { getNavChrome, getSearchCorpus, getCapabilityDetail } from "@/lib/site-data";
 import { PUBLIC_QUERY_DEFAULTS } from "@/components/site/SiteChrome";
-import { buildSearchCorpus, type SearchCorpus } from "@/components/site/home/SearchOverlay";
+import { buildSearchCorpus, type SearchCorpus } from "@/components/site/home/search-corpus";
 import { CapabilitiesExperience } from "@/components/site/capabilities/CapabilitiesExperience";
 import { Reveal } from "@/components/site/home/Reveal";
 import { ClipReveal } from "@/components/site/home/ClipReveal";
@@ -124,7 +124,8 @@ function CapabilityDetailPage() {
                 </span>
               </Link>
               <p className="font-tech text-[10px] uppercase tracking-[0.2em] text-white/40">
-                Discipline {String(service.n).padStart(2, "0")} / 11
+                Discipline {String(service.n).padStart(2, "0")} /{" "}
+                {String(corpusData.services.length).padStart(2, "0")}
               </p>
             </nav>
           </Reveal>
@@ -289,25 +290,23 @@ function CapabilityDetailPage() {
                     <p className="eyebrow-sans text-muted-foreground/70">Sectors</p>
                     <ul className="mt-4">
                       {service.sectors.map((s) => (
-                        <li key={s.slug}>
-                          <Link
-                            to="/sectors/$slug"
-                            params={{ slug: s.slug }}
-                            className="group flex items-baseline justify-between gap-4 border-b border-border py-4 transition-colors hover:border-foreground/40"
-                          >
-                            <span className="font-display text-xl font-normal tracking-[-0.015em] text-foreground/85 transition-colors group-hover:text-foreground md:text-2xl">
-                              {s.name}
-                            </span>
-                            <span
-                              aria-hidden="true"
-                              className="font-tech text-xs text-foreground/50 transition-transform duration-300 group-hover:translate-x-1"
-                            >
-                              →
-                            </span>
-                          </Link>
+                        <li
+                          key={s.slug}
+                          className="flex items-baseline justify-between gap-4 border-b border-border py-4"
+                        >
+                          <span className="font-display text-xl font-normal tracking-[-0.015em] text-foreground/85 md:text-2xl">
+                            {s.name}
+                          </span>
                         </li>
                       ))}
                     </ul>
+                    <Link
+                      to="/sectors"
+                      className="mt-6 inline-flex items-center gap-2 font-tech text-[11px] uppercase tracking-[0.2em] text-foreground"
+                    >
+                      <span className="border-b border-border pb-1">Explore sectors</span>
+                      <span aria-hidden="true">→</span>
+                    </Link>
                   </Reveal>
                 </div>
               )}
@@ -337,11 +336,11 @@ function CapabilityDetailPage() {
         </section>
       )}
 
-      {/* ---------- 05 · onward — the next discipline, dark ---------- */}
+      {/* ---------- 05 · onward — the next discipline, black ---------- */}
       <section
         aria-label="Continue the register"
         data-tone="dark"
-        className="relative overflow-hidden bg-[var(--brand-deep)] text-white"
+        className="relative overflow-hidden bg-black text-white"
       >
         <div
           aria-hidden="true"

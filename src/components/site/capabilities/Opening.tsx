@@ -24,7 +24,7 @@ export function Opening({
 
   return (
     <section
-      aria-label="Capabilities — how the work gets built"
+      aria-label="Services — how the work gets built"
       data-tone="dark"
       className="relative flex min-h-svh flex-col overflow-hidden bg-[var(--brand-deep)] text-white"
     >
@@ -64,7 +64,7 @@ export function Opening({
 
       <div className="relative z-10 mx-auto flex w-full max-w-[1680px] flex-1 flex-col px-6 pb-24 pt-32 md:px-10 md:pt-40 lg:px-12">
         <p className={`eyebrow-sans text-white/40 ${enter(0).className}`} style={enter(0).style}>
-          Capabilities
+          Services
         </p>
 
         <div className="mt-10">

@@ -24,12 +24,12 @@ type Entry = {
 const ENTRIES: Entry[] = [
   {
     index: "01",
-    title: "Lucknow Metro",
-    slug: "lucknow-metro-electrical",
-    discipline: "Connectivity electrical · metro programme",
-    place: "Uttar Pradesh",
-    figure: "20 KM · 220 KV",
-    image: "/uploads/service-electrical.jpg",
+    title: "Infosys 33kV Electrical",
+    slug: "infosys-33kv-electrical",
+    discipline: "Underground HT cable network · campus programme",
+    place: "Noida, Uttar Pradesh",
+    figure: "33 KV",
+    image: "/uploads/capabilities/cable-tunnel.jpg",
   },
   {
     index: "02",
@@ -47,7 +47,7 @@ const ENTRIES: Entry[] = [
     discipline: "HVAC plant with integrated fire protection",
     place: "Noida, Uttar Pradesh",
     figure: "4,000 TR",
-    image: "/uploads/service-cleanroom.jpg",
+    image: "/uploads/service-fire.jpg",
   },
 ];
 

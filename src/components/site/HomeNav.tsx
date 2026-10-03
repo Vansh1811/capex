@@ -38,7 +38,11 @@ export function HomeNav({ overDark, brandWordmark, onOpenSearch, onOpenStudio, h
   }, [open]);
 
   const tone = overDark
-    ? { base: "text-white/60", hover: "hover:text-white", brand: "text-white" }
+    ? {
+        base: "text-white/90 [text-shadow:0_1px_12px_rgba(0,0,0,0.55)]",
+        hover: "hover:text-white",
+        brand: "text-white [text-shadow:0_1px_12px_rgba(0,0,0,0.55)]",
+      }
     : { base: "text-muted-foreground", hover: "hover:text-foreground", brand: "text-foreground" };
 
   return (
@@ -54,7 +58,7 @@ export function HomeNav({ overDark, brandWordmark, onOpenSearch, onOpenStudio, h
           <Link
             to="/"
             aria-label={`${brandWordmark} — home`}
-            className={`font-display text-[15px] font-bold tracking-[0.3em] transition-colors duration-300 ${tone.brand}`}
+            className={`font-display text-[15px] font-bold tracking-[0.3em] antialiased transition-colors duration-300 ${tone.brand}`}
           >
             {brandWordmark}
           </Link>
@@ -63,19 +67,19 @@ export function HomeNav({ overDark, brandWordmark, onOpenSearch, onOpenStudio, h
           <nav className="hidden items-center gap-10 lg:flex" aria-label="Primary">
             <Link
               to="/projects"
-              className={`eyebrow-sans transition-colors duration-300 ${tone.base} ${tone.hover}`}
+              className={`eyebrow-sans font-bold antialiased transition-colors duration-300 ${tone.base} ${tone.hover}`}
             >
               Projects
             </Link>
             <button
               onClick={onOpenStudio}
-              className={`eyebrow-sans transition-colors duration-300 ${tone.base} ${tone.hover}`}
+              className={`eyebrow-sans font-bold antialiased transition-colors duration-300 ${tone.base} ${tone.hover}`}
             >
               Studio
             </button>
             <button
               onClick={onOpenSearch}
-              className={`eyebrow-sans transition-colors duration-300 ${tone.base} ${tone.hover}`}
+              className={`eyebrow-sans font-bold antialiased transition-colors duration-300 ${tone.base} ${tone.hover}`}
             >
               Search
             </button>
@@ -85,7 +89,7 @@ export function HomeNav({ overDark, brandWordmark, onOpenSearch, onOpenStudio, h
           <button
             onClick={() => setOpen(true)}
             aria-label="Open menu"
-            className={`eyebrow-sans transition-colors lg:hidden ${tone.brand}`}
+            className={`eyebrow-sans font-bold antialiased transition-colors lg:hidden ${tone.brand}`}
           >
             Menu
           </button>

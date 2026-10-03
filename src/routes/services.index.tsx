@@ -3,13 +3,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
 import { getNavChrome, getSearchCorpus, getCapabilitiesPage } from "@/lib/site-data";
 import { PUBLIC_QUERY_DEFAULTS } from "@/components/site/SiteChrome";
-import { buildSearchCorpus, type SearchCorpus } from "@/components/site/home/SearchOverlay";
+import { buildSearchCorpus, type SearchCorpus } from "@/components/site/home/search-corpus";
 import { CapabilitiesExperience } from "@/components/site/capabilities/CapabilitiesExperience";
 import { Opening } from "@/components/site/capabilities/Opening";
 import { TwoPractices } from "@/components/site/capabilities/TwoPractices";
 import { DisciplineIndex } from "@/components/site/capabilities/DisciplineIndex";
-import { CapabilityNetwork } from "@/components/site/capabilities/CapabilityNetwork";
-import { DeliveryLine } from "@/components/site/capabilities/DeliveryLine";
 import { PhysicalCapability } from "@/components/site/capabilities/PhysicalCapability";
 import { CapabilitiesClosing } from "@/components/site/capabilities/CapabilitiesClosing";
 
@@ -45,7 +43,7 @@ export const Route = createFileRoute("/services/")({
       {
         name: "description",
         content:
-          "How the work gets built — eleven disciplines across two integrated practices: UG utilities, electrical & CGD below the street; MEP, HVAC & fire protection within the building. Turnkey supply, installation, testing & commissioning.",
+          "How the work gets built — nine disciplines across two integrated practices: UG utilities, electrical & CGD below the street; MEP, HVAC & fire protection within the building. Turnkey supply, installation, testing & commissioning.",
       },
       { property: "og:title", content: "Capabilities Capex — How the work gets built" },
       { property: "og:type", content: "website" },
@@ -86,9 +84,7 @@ function CapabilitiesPage() {
         onActive={setActivePractice}
       />
       <DisciplineIndex services={data.services} activeSlug={activeSlug} onActive={setActiveSlug} />
-      <CapabilityNetwork services={data.services} />
-      <DeliveryLine />
-      <PhysicalCapability fleet={data.fleet} equipment={data.equipment} />
+      <PhysicalCapability fleet={data.fleet} />
       <CapabilitiesClosing serviceCount={data.services.length} />
     </CapabilitiesExperience>
   );

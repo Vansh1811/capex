@@ -53,22 +53,21 @@ export function Manifesto() {
               Capex holds its work to — built to be relied on, and then forgotten.
             </p>
           </Reveal>
-          {/* the footprint — where the work is held from; appears nowhere else on home */}
-          <Reveal delay={640}>
-            <dl className="mt-12 grid max-w-md grid-cols-3 gap-6 border-t border-foreground/10 pt-6">
-              {[
-                ["Corporate office", "Noida"],
-                ["Manufacturing unit", "Rajasthan"],
-                ["Project reach", "India & Nepal"],
-              ].map(([k, v]) => (
-                <div key={k}>
-                  <dt className="font-tech text-[10px] uppercase tracking-[0.2em] text-muted-foreground/70">
-                    {k}
-                  </dt>
-                  <dd className="mt-2 text-sm font-medium leading-snug text-foreground">{v}</dd>
-                </div>
-              ))}
-            </dl>
+          {/* the complexity — every part, every interface, made to feel simple */}
+          <Reveal delay={620}>
+            <p className="mt-6 max-w-md text-[15px] leading-[1.8] text-muted-foreground">
+              Every part has a role, every interface has a consequence, and every system has to
+              work together. The work is in making that complexity feel simple when everything is
+              finally in place.
+            </p>
+          </Reveal>
+          {/* the close — from first drawing to final test, one working system */}
+          <Reveal delay={680}>
+            <p className="mt-6 max-w-md text-[15px] leading-[1.8] text-muted-foreground">
+              From the first drawing to the final test, Capex brings the disciplines together — so
+              the infrastructure beneath and within a place works as one system, quietly and
+              reliably.
+            </p>
           </Reveal>
         </div>
 

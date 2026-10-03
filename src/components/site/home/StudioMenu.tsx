@@ -10,7 +10,7 @@ type Destination = { label: string; to: string };
  */
 const DESTINATIONS: Destination[] = [
   { label: "About", to: "/about" },
-  { label: "Capabilities", to: "/services" },
+  { label: "Services", to: "/services" },
   { label: "Sectors", to: "/sectors" },
   { label: "People", to: "/team" },
   { label: "Clients", to: "/clients" },

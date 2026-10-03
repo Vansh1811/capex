@@ -155,36 +155,55 @@ function useLogoFallback() {
   return { failed, onFail: () => setFailed(true), ref };
 }
 
-function LogoMark({
+function RibbonMark({
   slug,
   name,
   className = "",
-  eager = false,
 }: {
   slug: string;
   name: string;
   className?: string;
-  eager?: boolean;
 }) {
   const src = exhibitionLogo(slug);
   const { failed, onFail, ref } = useLogoFallback();
-  if (!src || failed) return null;
-  // Intrinsic raster dimensions stabilise layout; SVGs scale freely.
-  const dims = LOGO_DIMS[slug];
+  // Fade each mark in the moment its file arrives instead of popping a blank
+  // slot mid-scroll. The slot keeps a reserved aspect (LOGO_DIMS) so the
+  // strip never reflows while images stream in.
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (el && el.complete && el.naturalWidth > 0) setReady(true);
+  }, [src, ref]);
+  if (src && !failed) {
+    // Intrinsic raster dimensions stabilise layout; SVGs scale freely.
+    const dims = LOGO_DIMS[slug];
+    return (
+      <img
+        ref={ref}
+        src={src}
+        alt={name}
+        width={dims?.[0]}
+        height={dims?.[1]}
+        loading="eager"
+        decoding="async"
+        fetchPriority="high"
+        draggable={false}
+        onError={onFail}
+        onLoad={() => setReady(true)}
+        className={`object-contain transition-opacity duration-500 ${ready ? "opacity-70" : "opacity-0"} ${className}`}
+      />
+    );
+  }
+  // No verified logo file (or the file failed) — elegant typography instead
+  // of a gap. Never a fabricated logo; the real mark replaces this text the
+  // moment an official asset is verified in exhibition.ts.
   return (
-    <img
-      ref={ref}
-      src={src}
-      alt={name}
-      width={dims?.[0]}
-      height={dims?.[1]}
-      loading={eager ? "eager" : "lazy"}
-      decoding="async"
-      fetchPriority={eager ? "high" : "low"}
-      draggable={false}
-      onError={onFail}
-      className={`object-contain ${className}`}
-    />
+    <span
+      title={name}
+      className="max-w-[150px] truncate text-center font-display text-[15px] font-medium leading-[1.15] tracking-[-0.01em] text-foreground/70 transition-opacity duration-300 hover:opacity-100 md:max-w-[170px] md:text-base"
+    >
+      {name}
+    </span>
   );
 }
 
@@ -195,24 +214,39 @@ function LogoMark({
  */
 const LOGO_DIMS: Record<string, [number, number]> = {
   acquisory: [640, 183],
+  "aditya-birla": [640, 376],
+  agp: [288, 50],
+  aon: [640, 242],
+  "apl-apollo-steel": [195, 77],
   "apollo-pipes": [180, 90],
   "bhutani-infra": [166, 88],
   "bl-agro": [102, 102],
   bpcl: [640, 94],
+  bptp: [170, 68],
   commscope: [360, 205],
+  eldeco: [640, 112],
+  "icici-lombard": [640, 694],
+  igl: [640, 638],
   imgc: [80, 80],
+  jcpenney: [640, 285],
+  lakhani: [179, 93],
+  "paras-buildtech": [336, 91],
   "pearson-education": [312, 96],
+  "purba-bharati-gas": [640, 109],
+  regus: [300, 127],
   "tata-advanced-systems": [301, 101],
   ultratech: [580, 320],
 };
 
 export function LogoShowcase({ clients }: { clients: ClientsPageClient[] }) {
-  // Ribbon order follows the registry; only logo-bearing verified clients.
-  const ribbon = clients.filter((c) => exhibitionLogo(c.slug));
+  // Ribbon order follows the registry; EVERY client rides the ribbon.
+  // Verified logo file where one exists, elegant type where it doesn't —
+  // so no company from the CLIENT LIST wall is missing from the moving strip.
+  const ribbon = clients;
 
   return (
     <section
-      aria-label="Client logos"
+      aria-label="Clients"
       data-tone="light"
       className="relative overflow-hidden bg-[var(--surface)] text-foreground"
     >
@@ -253,7 +287,7 @@ export function LogoShowcase({ clients }: { clients: ClientsPageClient[] }) {
         <div
           tabIndex={0}
           role="region"
-          aria-label="Client logo showcase"
+          aria-label="Client showcase"
           className="overflow-hidden py-7 focus-visible:outline focus-visible:outline-2 focus-visible:outline-inset md:py-9 motion-reduce:overflow-x-auto"
         >
           <div
@@ -269,10 +303,10 @@ export function LogoShowcase({ clients }: { clients: ClientsPageClient[] }) {
                 {ribbon.map((c) => (
                   <span key={c.slug} className="flex shrink-0 items-center">
                     <span className="flex h-14 w-[214px] items-center justify-center px-8 md:h-16 md:w-[266px] md:px-12">
-                      <LogoMark
+                      <RibbonMark
                         slug={c.slug}
                         name={c.name}
-                        className="h-auto max-h-9 w-auto max-w-[150px] opacity-70 grayscale transition-opacity duration-300 hover:opacity-100 hover:grayscale-0 md:max-h-11 md:max-w-[170px]"
+                        className="h-auto max-h-9 w-auto max-w-[150px] grayscale hover:grayscale-0 md:max-h-11 md:max-w-[170px]"
                       />
                     </span>
                     <span aria-hidden="true" className="h-8 w-px shrink-0 bg-foreground/10" />
@@ -284,8 +318,8 @@ export function LogoShowcase({ clients }: { clients: ClientsPageClient[] }) {
         </div>
       </div>
       <p className="sr-only">
-        {ribbon.length} client logos in a moving showcase. Motion pauses on hover and is disabled
-        under reduced-motion settings.
+        {ribbon.length} clients in a moving showcase (logos where verified, names otherwise). Motion
+        pauses on hover and is disabled under reduced-motion settings.
       </p>
     </section>
   );

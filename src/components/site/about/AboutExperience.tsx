@@ -1,12 +1,8 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { HomeNav } from "@/components/site/HomeNav";
-import { StudioMenu } from "@/components/site/home/StudioMenu";
-import {
-  SearchOverlay,
-  buildSearchCorpus,
-  type SearchCorpus,
-} from "@/components/site/home/SearchOverlay";
+import { SearchOverlay, StudioMenu } from "@/components/site/home/overlays";
+import { buildSearchCorpus, type SearchCorpus } from "@/components/site/home/search-corpus";
 
 export type { SearchCorpus };
 

@@ -607,6 +607,131 @@ export const CLIENT_CORPUS: ClientRecord[] = [
       "Client PO records (client 'AGP CITY GAS', Sec-13 UP pipe laying) + DOC A p6/p18 logo wall 'AG&P'",
     sort_order: 59,
   },
+  // --- 2026-09-23 DOC A p6 CLIENT LIST logo-wall additions (image supplied):
+  // brands appearing on the company CLIENT LIST wall with no project-table
+  // record yet. Listed as clients per the wall grouping; projects: [] and
+  // note: null so no unverified claim is published. Logo assets intentionally
+  // unmapped until an official logo is verified (gate #12) — these render as
+  // text in the index and are omitted from the logo marquee, never fabricated.
+  // ARCADIAN in the image = Arkadin per Phase 1 C18 (already listed above).
+  // APL Apollo (Steel Pipes) is kept distinct from Apollo Pipes Limited per
+  // Phase 7 population report (different companies — never conflated).
+  {
+    name: "Infosys",
+    slug: "infosys",
+    relationship: "client",
+    note: "33 KV underground electrical work, Noida.",
+    projects: ["infosys-33kv-electrical"],
+    source_ref:
+      "DOC A p6 CLIENT LIST wall, IT group (image supplied 2026-09-23) + client-provided scope for the 33 KV underground electrical work",
+    sort_order: 60,
+  },
+  {
+    name: "Cadence",
+    slug: "cadence",
+    relationship: "client",
+    note: null,
+    projects: [],
+    source_ref: "DOC A p6 CLIENT LIST wall, IT group (image supplied 2026-09-23)",
+    sort_order: 61,
+  },
+  {
+    name: "Tata Consultancy Services",
+    slug: "tata-consultancy-services",
+    relationship: "client",
+    note: null,
+    projects: [],
+    source_ref: "DOC A p6 CLIENT LIST wall, IT group 'tcs' (image supplied 2026-09-23)",
+    sort_order: 62,
+  },
+  {
+    name: "THINK GAS",
+    slug: "think-gas",
+    relationship: "client",
+    note: null,
+    projects: [],
+    source_ref: "DOC A p6 CLIENT LIST wall, Corporates group (image supplied 2026-09-23)",
+    sort_order: 63,
+  },
+  {
+    name: "oneindia",
+    slug: "oneindia",
+    relationship: "client",
+    note: null,
+    projects: [],
+    source_ref: "DOC A p6 CLIENT LIST wall, Corporates group (image supplied 2026-09-23)",
+    sort_order: 64,
+  },
+  {
+    name: "APL Apollo Steel Pipes",
+    slug: "apl-apollo-steel",
+    relationship: "client",
+    note: null,
+    projects: [],
+    source_ref:
+      "DOC A p6 CLIENT LIST wall, Corporates group 'APL APOLLO STEEL PIPES' (image supplied 2026-09-23) — distinct from Apollo Pipes Limited",
+    sort_order: 65,
+  },
+  {
+    name: "ACE",
+    slug: "ace",
+    relationship: "client",
+    note: null,
+    projects: [],
+    source_ref:
+      "DOC A p6 CLIENT LIST wall, Builder and Developer group '2ACE / aACE' (image supplied 2026-09-23)",
+    sort_order: 66,
+  },
+  {
+    name: "Eldeco",
+    slug: "eldeco",
+    relationship: "client",
+    note: null,
+    projects: [],
+    source_ref:
+      "DOC A p6 CLIENT LIST wall, Builder and Developer group (image supplied 2026-09-23)",
+    sort_order: 67,
+  },
+  {
+    name: "Paras Buildtech",
+    slug: "paras-buildtech",
+    relationship: "client",
+    note: null,
+    projects: [],
+    source_ref:
+      "DOC A p6 CLIENT LIST wall, Builder and Developer group 'PARAS BUILDTECH' (image supplied 2026-09-23)",
+    sort_order: 68,
+  },
+  {
+    name: "Tata Value Homes",
+    slug: "tata-value-homes",
+    relationship: "client",
+    note: null,
+    projects: [],
+    source_ref:
+      "DOC A p6 CLIENT LIST wall, Builder and Developer group 'TATA VALUE HOMES' (image supplied 2026-09-23)",
+    sort_order: 69,
+  },
+  {
+    name: "Godrej Properties",
+    slug: "godrej-properties",
+    relationship: "client",
+    note: null,
+    projects: [],
+    source_ref:
+      "DOC A p6 CLIENT LIST wall, Builder and Developer group 'Godrej | PROPERTIES' (image supplied 2026-09-23)",
+    sort_order: 69.1,
+  },
+  {
+    name: "BPTP",
+    slug: "bptp",
+    relationship: "client",
+    note: null,
+    projects: [],
+    source_ref:
+      "DOC A p6 CLIENT LIST wall, Builder and Developer group (green 4-circle mark, read as BPTP — image supplied 2026-09-23; spelling to be confirmed against original)",
+    sort_order: 69.2,
+  },
   // --- architects & PMC associations (DOC B p2 — conservative wording) ---
   {
     name: "JLL",

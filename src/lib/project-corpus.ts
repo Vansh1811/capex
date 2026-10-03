@@ -177,7 +177,6 @@ export const PROJECT_CORPUS: ProjectRecord[] = [
     services: [
       { name: "HVAC Systems", slug: "hvac-systems" },
       { name: "Fire Fighting & Hydrant Systems", slug: "fire-fighting-hydrant" },
-      { name: "Testing & Commissioning", slug: "testing-commissioning" },
     ],
     sectors: [{ name: "Corporate & Commercial Real Estate", slug: "corporate-commercial" }],
     featured: true,
@@ -1476,5 +1475,25 @@ export const PROJECT_CORPUS: ProjectRecord[] = [
     image: "ug",
     source_ref:
       "Client PO records — AGP City Gas pipe laying, Sec-13 (UP); host city of Sec-13 unconfirmed, transcribed as stated",
+  },
+  {
+    ref: "P1-112",
+    title: "Infosys 33kV Underground Electrical Work",
+    slug: "infosys-33kv-electrical",
+    practice: 1,
+    practice_label: "UG Utilities & Electrical",
+    practice_name: "UG Utilities, Electrical & CGD",
+    practice_slug: "ug-utilities-electrical",
+    city: "Noida",
+    state: "Uttar Pradesh",
+    status: "completed",
+    scope_line: "33 KV underground HT cable network",
+    metrics: [{ label: "Voltage class", value: "33", unit: "KV" }],
+    client_display: "Infosys",
+    services: [{ name: "UG HT/LT Cable Laying", slug: "ug-ht-lt-cable-laying" }],
+    sectors: [{ name: "Corporate & Commercial Real Estate", slug: "corporate-commercial" }],
+    featured: false,
+    image: "electrical",
+    source_ref: "Client-provided scope (2026-09-23) — quantities to be verified against PO",
   },
 ];

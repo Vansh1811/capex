@@ -19,8 +19,6 @@ approved Capex photography arrives.
 | hotels-hospitality.jpg       | Hotel lobby, warm interior                         | "The leela lobby - panoramio"                                                              | Arun Muralidhar (panoramio) | CC BY-SA 3.0 |
 | residential-townships.jpg    | Residential cluster, mid-rise                      | "Unitech - Gateway Cluster 1 - Residential Complex - Santragachi - Howrah 2014-04-06 0611" | Biswarup Ganguly            | CC BY 3.0    |
 | public-sector.jpg            | Central Secretariat, civic scale                   | "Central Secretariat (Kendriya Sachivalaya)"                                               | Baap8969                    | CC0          |
-| world-below.jpg              | CNG station forecourt — Below the Street           | "Cng,ag&p, Pratham"                                                                        | Sujithshivam511             | CC BY-SA 4.0 |
-| world-within.jpg             | Mall atrium interior — Within the Building         | "Shopping Mall Atrium"                                                                     | Abbasidaniyal               | CC0          |
 
 ## Notes
 

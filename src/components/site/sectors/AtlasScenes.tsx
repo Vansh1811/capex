@@ -1,33 +1,26 @@
-import { useEffect, useRef, useState } from "react";
-import { Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { Reveal } from "@/components/site/home/Reveal";
 import { ClipReveal } from "@/components/site/home/ClipReveal";
 import { SiteImage } from "@/components/site/SiteImage";
 import { PlateArrowLink } from "@/components/site/sectors/SectorsExperience";
-import type { AtlasSector, AtlasProjectLink, SectorAtlas } from "@/lib/site-data";
+import type { SectorAtlas } from "@/lib/site-data";
 
 /**
- * THE FIELD — the Sectors atlas.
+ * THE ATLAS — the Sectors page as a simple single-page directory.
  *
- * Projects is an exhibition; About is a portrait; Capabilities is a catalogue.
- * Sectors is a FIELD GUIDE: where Capex's engineering operates. The dominant
- * movement is IMAGE → TYPE → IMAGE → TYPE — plates interrupt and interrupt
- * again — so the page reads as a map of environments, never as cards, stripes
- * or a database. Every word and count is verified; plates are reference
- * imagery and say so.
- *
- * Scenes: 01 the opening (deep earth, the statement, the archive line, the
- * first plate) → 02 THE INDEX — the large typographic atlas with its
- * floating plate field → 03-04 TWO WORLDS (below the street / within the
- * building, split by a threshold) → 05 the closing field (EVERY PLACE HAS A
- * SYSTEM. + two onward routes).
+ * One page only: HERO / INTRO → SECTOR INDEX → simple closing statement
+ * → shared black footer. No detail pages, no tabs, no filters, no counts,
+ * no capability/project registers. Each row carries only its number, its
+ * verified name, and its short verified standfirst where the record has
+ * one. Rows are not links — hover/tap only changes the plate preview on
+ * the same page.
  */
 
-/* ============================================================
- * 01 · THE OPENING
- * ============================================================ */
-
 const num = (i: number) => String(i).padStart(2, "0");
+
+/* ============================================================
+ * 01 · HERO / INTRO
+ * ============================================================ */
 
 export function AtlasOpening({ atlas }: { atlas: SectorAtlas }) {
   const sectors = atlas.sectors;
@@ -148,8 +141,7 @@ export function AtlasOpening({ atlas }: { atlas: SectorAtlas }) {
 }
 
 /* ============================================================
- * 02 · THE INDEX — the large typographic sector list with its
- *       floating plate field. No cards. No grid of blocks.
+ * 02 · SECTOR INDEX — a clean editorial list. No links out.
  * ============================================================ */
 
 /** Per-sector preview geometry: the plate field re-weights itself so the
@@ -174,12 +166,6 @@ const PREVIEW_GEO: {
   { ratio: "3 / 4", crop: "object-[46%_58%]", align: "left", shift: "md:mt-6" },
 ];
 
-const TIER_WORD: Record<AtlasSector["evidence_tier"], string> = {
-  hub: "Evidence hub",
-  service_led: "Service-led",
-  list_only: "On the record",
-};
-
 export function AtlasIndex({ atlas }: { atlas: SectorAtlas }) {
   const sectors = atlas.sectors;
   const [active, setActive] = useState(0);
@@ -190,8 +176,6 @@ export function AtlasIndex({ atlas }: { atlas: SectorAtlas }) {
   }, []);
   const current = canHover ? active : -1;
   const activeGeo = PREVIEW_GEO[(current >= 0 ? current : 0) % PREVIEW_GEO.length];
-
-  const linksFor = (slug: string): AtlasProjectLink[] => atlas.linksBySector[slug] ?? [];
 
   return (
     <section
@@ -227,18 +211,16 @@ export function AtlasIndex({ atlas }: { atlas: SectorAtlas }) {
           >
             {sectors.map((s, i) => {
               const geo = PREVIEW_GEO[i % PREVIEW_GEO.length];
-              const links = linksFor(s.slug);
               const isActive = i === current;
               return (
                 <li key={s.slug} className={geo.shift}>
                   <Reveal delay={Math.min(i * 60, 300)}>
-                    <Link
-                      to="/sectors/$slug"
-                      params={{ slug: s.slug }}
+                    <div
                       onMouseEnter={() => setActive(i)}
                       onFocus={() => setActive(i)}
-                      aria-label={`${s.name} — ${TIER_WORD[s.evidence_tier]}${links.length > 0 ? `, ${links.length} linked records` : ""}`}
-                      className="group block border-b border-border py-8 transition-colors hover:border-foreground/40 md:py-10"
+                      tabIndex={0}
+                      aria-label={`${num(s.n)} — ${s.name}`}
+                      className="group block border-b border-border py-8 outline-none transition-colors focus-visible:border-foreground/40 hover:border-foreground/40 md:py-10"
                     >
                       <div
                         className={`flex items-baseline gap-5 md:gap-8 ${
@@ -265,16 +247,6 @@ export function AtlasIndex({ atlas }: { atlas: SectorAtlas }) {
                         >
                           {s.name}
                         </span>
-                        {/* the verified count / tier mark */}
-                        <span
-                          className={`hidden shrink-0 font-tech text-[11px] uppercase tracking-[0.14em] transition-colors duration-300 sm:block ${
-                            isActive ? "text-foreground" : "text-muted-foreground/70"
-                          }`}
-                        >
-                          {links.length > 0
-                            ? `${num(links.length)} records`
-                            : TIER_WORD[s.evidence_tier]}
-                        </span>
                       </div>
                       {/* the environment's standfirst — quiet, under the name */}
                       {s.standfirst && (
@@ -286,8 +258,7 @@ export function AtlasIndex({ atlas }: { atlas: SectorAtlas }) {
                           {s.standfirst}
                         </p>
                       )}
-                      {/* the plate, in-flow on touch/small screens — a deliberate
-                          tap-index: the number stays, the image stays prominent */}
+                      {/* the plate, in-flow on touch/small screens */}
                       <div className="mt-6 lg:hidden">
                         <div
                           className="relative overflow-hidden bg-[var(--surface)]"
@@ -300,21 +271,11 @@ export function AtlasIndex({ atlas }: { atlas: SectorAtlas }) {
                             className={`h-full w-full object-cover ${geo.crop} [filter:saturate(0.82)]`}
                           />
                         </div>
-                        <div className="mt-3 flex items-baseline justify-between gap-4">
-                          <span className="font-tech text-[10px] uppercase tracking-[0.18em] text-muted-foreground/70">
-                            {links.length > 0
-                              ? `${num(links.length)} linked records`
-                              : TIER_WORD[s.evidence_tier]}
-                          </span>
-                          <span className="inline-flex items-center gap-2 font-tech text-[11px] uppercase tracking-[0.2em] text-foreground">
-                            View sector
-                            <span className="transition-transform duration-300 group-hover:translate-x-1">
-                              →
-                            </span>
-                          </span>
-                        </div>
+                        <p className="mt-3 font-tech text-[10px] uppercase tracking-[0.2em] text-muted-foreground/60">
+                          Reference imagery — not a documented Capex project
+                        </p>
                       </div>
-                    </Link>
+                    </div>
                   </Reveal>
                 </li>
               );
@@ -324,8 +285,7 @@ export function AtlasIndex({ atlas }: { atlas: SectorAtlas }) {
           {/* ---------- the plate field — the atlas' visual answer.
               One sticky frame with ALL plates absolutely stacked inside it;
               plates crossfade + crop-shift between sectors; the frame itself
-              re-weights per position (aspect, anchor, weight) so it never
-              reads as a widget or a tooltip. */}
+              re-weights per position so it never reads as a widget. */}
           <div className="hidden lg:col-span-5 lg:block" aria-hidden="true">
             <div className="sticky top-28">
               {/* the frame — its aspect follows the active sector's geometry */}
@@ -362,38 +322,18 @@ export function AtlasIndex({ atlas }: { atlas: SectorAtlas }) {
                   {num(sectors[current >= 0 ? current : 0]?.n ?? 1)}
                 </span>
               </div>
-              {/* the plate's typographic companion — concise, verified */}
+              {/* the plate's typographic companion — name only */}
               <div className="mt-6 grid gap-3">
                 {sectors.map((s, i) => {
-                  const links = linksFor(s.slug);
-                  const services = s.services.slice(0, 3).map((x) => x.name);
                   const isActive = i === current;
                   if (!isActive) return null;
                   return (
                     <div key={s.slug} className="animate-fade-up">
                       <p className="font-tech text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
-                        {num(s.n)} · {TIER_WORD[s.evidence_tier]}
+                        {num(s.n)}
                       </p>
                       <p className="mt-2 font-display text-[26px] font-normal leading-[1.1] tracking-[-0.015em]">
                         {s.name}
-                      </p>
-                      {services.length > 0 && (
-                        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                          {services.join(" · ")}
-                        </p>
-                      )}
-                      <p className="mt-2 font-tech text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
-                        {links.length > 0
-                          ? `${num(links.length)} linked records`
-                          : s.places.length > 0
-                            ? s.places.join(" · ")
-                            : TIER_WORD[s.evidence_tier]}
-                      </p>
-                      <p className="mt-4 inline-flex items-center gap-3 font-tech text-[11px] uppercase tracking-[0.24em] text-foreground">
-                        <span className="border-b border-border pb-1">View sector</span>
-                        <span className="transition-transform duration-300 group-hover:translate-x-1">
-                          →
-                        </span>
                       </p>
                     </div>
                   );
@@ -411,174 +351,7 @@ export function AtlasIndex({ atlas }: { atlas: SectorAtlas }) {
 }
 
 /* ============================================================
- * 03 · TWO WORLDS — below the street / within the building,
- *       split by a threshold. New spatial composition: a single
- *       dark field crossed by one light band — the ground line —
- *       with the two worlds hanging either side of it.
- * ============================================================ */
-
-export function TwoWorldsAtlas() {
-  return (
-    <section
-      aria-label="Two worlds — below the street and within the building"
-      data-tone="dark"
-      className="relative overflow-hidden bg-[var(--ink)] text-white"
-    >
-      <div className="mx-auto max-w-[1680px] px-6 pb-28 pt-24 md:px-10 md:pb-36 md:pt-32 lg:px-12 lg:pb-44">
-        <Reveal>
-          <div className="flex flex-wrap items-baseline justify-between gap-6">
-            <p className="eyebrow-sans text-white/45">The field · 02 — two worlds, one system</p>
-            <p className="font-tech text-[10px] uppercase tracking-[0.2em] text-white/30">
-              Every sector sits on one side of the threshold or the other
-            </p>
-          </div>
-        </Reveal>
-
-        {/* ---------- BELOW THE STREET ---------- */}
-        <div className="relative mt-14 grid gap-10 md:mt-20 lg:grid-cols-12">
-          <div className="lg:col-span-5 lg:flex lg:flex-col lg:justify-end">
-            <Reveal>
-              <p className="font-tech text-[11px] uppercase tracking-[0.22em] text-white/40">
-                World 01 · Underground
-              </p>
-            </Reveal>
-            <Reveal delay={100}>
-              <h3 className="mt-6 font-display text-[12vw] font-normal leading-[0.98] tracking-[-0.025em] md:text-[64px] lg:text-[84px]">
-                Below
-                <br />
-                <span className="text-white/50">the street</span>
-              </h3>
-            </Reveal>
-            <Reveal delay={180}>
-              <p className="mt-8 max-w-sm text-sm leading-[1.8] text-white/65">
-                The sectors that live under the surface: smart-city grids, metro connectivity, city
-                gas distribution. Capex lays the HT/LT cable, MDPE and steel mains, and the
-                trenchless crossings that never open the road above.
-              </p>
-            </Reveal>
-            <Reveal delay={240}>
-              <div className="mt-8 flex flex-wrap gap-x-8 gap-y-3">
-                {[
-                  { label: "UG HT/LT Cable Laying", slug: "ug-ht-lt-cable-laying" },
-                  { label: "City Gas Distribution", slug: "city-gas-distribution-cgd" },
-                  { label: "Substation & Electrical Works", slug: "substation-construction" },
-                ].map((s) => (
-                  <Link
-                    key={s.slug}
-                    to="/services/$slug"
-                    params={{ slug: s.slug }}
-                    className="group inline-flex items-baseline gap-2 border-b border-white/25 pb-1 font-tech text-[11px] uppercase tracking-[0.18em] text-white/70 transition-colors hover:border-white hover:text-white"
-                  >
-                    {s.label}
-                    <span className="transition-transform duration-300 group-hover:translate-x-1">
-                      →
-                    </span>
-                  </Link>
-                ))}
-              </div>
-            </Reveal>
-          </div>
-          <div className="lg:col-span-7">
-            <ClipReveal edge="left" ratio="4 / 3" delay={120}>
-              <SiteImage
-                src="/uploads/sectors/world-below.jpg"
-                sizes="(max-width: 1024px) 100vw, 58vw"
-                width={1600}
-                height={1600}
-                alt="City gas installation — atmospheric reference imagery, not a documented Capex project"
-                className="h-full w-full object-cover [filter:saturate(0.75)_contrast(1.03)_brightness(0.95)]"
-              />
-            </ClipReveal>
-            <Reveal delay={260}>
-              <p className="mt-3 font-tech text-[10px] uppercase tracking-[0.2em] text-white/30">
-                Reference imagery — not a documented Capex project
-              </p>
-            </Reveal>
-          </div>
-        </div>
-
-        {/* ---------- THE THRESHOLD — the ground line ---------- */}
-        <div className="relative my-20 md:my-28" aria-hidden="true">
-          <Reveal>
-            <div className="flex items-center gap-6">
-              <span className="h-px flex-1 bg-white/25" />
-              <span className="font-tech text-[10px] uppercase tracking-[0.3em] text-white/40">
-                Ground level
-              </span>
-              <span className="h-px flex-1 bg-white/25" />
-            </div>
-          </Reveal>
-        </div>
-
-        {/* ---------- WITHIN THE BUILDING ---------- */}
-        <div className="relative grid gap-10 lg:grid-cols-12">
-          <div className="lg:col-span-7">
-            <ClipReveal edge="right" ratio="4 / 3" delay={120}>
-              <SiteImage
-                src="/uploads/sectors/world-within.jpg"
-                sizes="(max-width: 1024px) 100vw, 58vw"
-                width={1600}
-                height={900}
-                alt="Building interior atrium — atmospheric reference imagery, not a documented Capex project"
-                className="h-full w-full object-cover [filter:saturate(0.8)_brightness(0.97)]"
-              />
-            </ClipReveal>
-            <Reveal delay={260}>
-              <p className="mt-3 font-tech text-[10px] uppercase tracking-[0.2em] text-white/30">
-                Reference imagery — not a documented Capex project
-              </p>
-            </Reveal>
-          </div>
-          <div className="lg:col-span-5 lg:flex lg:flex-col lg:justify-end">
-            <Reveal>
-              <p className="font-tech text-[11px] uppercase tracking-[0.22em] text-white/40">
-                World 02 · Interior
-              </p>
-            </Reveal>
-            <Reveal delay={100}>
-              <h3 className="mt-6 font-display text-[12vw] font-normal leading-[0.98] tracking-[-0.025em] md:text-[64px] lg:text-[84px]">
-                Within
-                <br />
-                <span className="text-white/50">the building</span>
-              </h3>
-            </Reveal>
-            <Reveal delay={180}>
-              <p className="mt-8 max-w-sm text-sm leading-[1.8] text-white/65">
-                The sectors that live inside the envelope: offices, industry, hospitals,
-                hospitality, campuses, homes. Air through the plant, water at pressure where a fire
-                starts — MEP, HVAC and fire protection as one accountable scope.
-              </p>
-            </Reveal>
-            <Reveal delay={240}>
-              <div className="mt-8 flex flex-wrap gap-x-8 gap-y-3">
-                {[
-                  { label: "HVAC Systems", slug: "hvac-systems" },
-                  { label: "Fire Fighting & Hydrant Systems", slug: "fire-fighting-hydrant" },
-                  { label: "MEP Services", slug: "mep-services" },
-                ].map((s) => (
-                  <Link
-                    key={s.slug}
-                    to="/services/$slug"
-                    params={{ slug: s.slug }}
-                    className="group inline-flex items-baseline gap-2 border-b border-white/25 pb-1 font-tech text-[11px] uppercase tracking-[0.18em] text-white/70 transition-colors hover:border-white hover:text-white"
-                  >
-                    {s.label}
-                    <span className="transition-transform duration-300 group-hover:translate-x-1">
-                      →
-                    </span>
-                  </Link>
-                ))}
-              </div>
-            </Reveal>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ============================================================
- * 04 · THE CLOSING FIELD
+ * 03 · SIMPLE CLOSING STATEMENT — black, then the shared footer
  * ============================================================ */
 
 export function AtlasClosing() {
@@ -586,7 +359,7 @@ export function AtlasClosing() {
     <section
       aria-label="Every place has a system"
       data-tone="dark"
-      className="relative overflow-hidden bg-[var(--brand-deep)] text-white"
+      className="relative overflow-hidden bg-black text-white"
     >
       <div
         aria-hidden="true"
@@ -594,28 +367,24 @@ export function AtlasClosing() {
       />
       <div className="relative mx-auto max-w-[1680px] px-6 pb-32 pt-28 md:px-10 md:pt-40 lg:px-12 lg:pb-44 lg:pt-52">
         <Reveal>
-          <p className="eyebrow-sans text-white/45">The field · 03</p>
-        </Reveal>
-        <Reveal delay={120}>
           <h2 className="mt-10 max-w-[18ch] font-display text-[11vw] font-normal leading-[1.0] tracking-[-0.025em] md:text-[80px] lg:text-[110px]">
             Every place
             <br />
             <span className="text-white/55">has a system.</span>
           </h2>
         </Reveal>
-        <Reveal delay={240}>
+        <Reveal delay={200}>
           <p className="mt-10 max-w-md text-sm leading-[1.8] text-white/65 md:text-[15px]">
-            The environments change; the engineering discipline does not. Follow it into the
-            catalogue, or into the archive.
+            Where Capex works — beneath cities and within buildings.
           </p>
         </Reveal>
         <div className="mt-14 flex flex-col gap-6 sm:flex-row sm:items-baseline sm:gap-16">
-          <Reveal delay={320}>
+          <Reveal delay={280}>
             <PlateArrowLink to="/services" tone="dark">
               Explore capabilities
             </PlateArrowLink>
           </Reveal>
-          <Reveal delay={400}>
+          <Reveal delay={340}>
             <PlateArrowLink to="/projects" tone="dark">
               Explore projects
             </PlateArrowLink>

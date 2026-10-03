@@ -15,9 +15,9 @@ import { Reveal } from "./Reveal";
 const FLOW = [
   { word: "Engineering", note: "Engineering" },
   { word: "Supply", note: "Procurement & supply" },
-  { word: "Install", note: "Installation" },
-  { word: "Test", note: "Testing" },
-  { word: "Commission", note: "Commissioning" },
+  { word: "Installation", note: "Installation" },
+  { word: "Testing", note: "Testing" },
+  { word: "Commissioning", note: "Commissioning" },
 ] as const;
 
 export function HowCapexDelivers() {

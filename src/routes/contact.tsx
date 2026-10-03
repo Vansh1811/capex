@@ -8,7 +8,7 @@ import {
   getContactOptions,
 } from "@/lib/site-data";
 import { PUBLIC_QUERY_DEFAULTS } from "@/components/site/SiteChrome";
-import { buildSearchCorpus, type SearchCorpus } from "@/components/site/home/SearchOverlay";
+import { buildSearchCorpus, type SearchCorpus } from "@/components/site/home/search-corpus";
 import { ContactExperience } from "@/components/site/contact/ContactExperience";
 import { Opening } from "@/components/site/contact/Opening";
 import { Direct } from "@/components/site/contact/Direct";

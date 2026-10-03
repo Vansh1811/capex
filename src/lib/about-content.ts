@@ -22,8 +22,9 @@ import { aboutPlate } from "@/lib/about-media";
 /** 01 — Opening. Text left, documentary plate right. No statistics. */
 export const OPENING = {
   eyebrow: "About Capex",
-  lines: ["We build what", "keeps things", "moving."],
-  support: "Capex Construction & Engineering Pvt. Ltd. — a turnkey engineering company since 2012.",
+  lines: ["Built around the work.", "Driven by what makes it work."],
+  support:
+    "Capex Construction & Engineering Pvt. Ltd. is a turnkey engineering company established in 2012, delivering utility, electrical, MEP, fire protection and allied infrastructure works from engineering and procurement through execution, testing and commissioning.",
   plate: aboutPlate("pipeline-work"),
   plateCaption: "Cross-country pipeline works · company profile record",
 } as const;
@@ -115,21 +116,21 @@ export const DELIVERY = {
       measure: "Own plant, own register",
     },
     {
-      word: "Install",
+      word: "Installation",
       note: "Execution by resident project managers and site engineers, with owned rigs and jointing equipment on the ground.",
       output: "Executed works",
       holder: "Resident project managers",
       measure: "Owned rigs on the ground",
     },
     {
-      word: "Test",
+      word: "Testing",
       note: "Segmented hydraulic and functional testing — the safety regime applied on every site, for every worker.",
       output: "Test records",
       holder: "Site engineers",
       measure: "Segmented, every section",
     },
     {
-      word: "Commission",
+      word: "Commissioning",
       note: "Commissioning and final handover under the same contract that signed the first drawing.",
       output: "Final handover",
       holder: "One company, end to end",

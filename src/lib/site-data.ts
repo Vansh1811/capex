@@ -696,7 +696,7 @@ export type ContactPageData = {
   source: "database" | "fallback";
 };
 
-/** The capability index — the 11 verified disciplines from the services corpus. */
+/** The capability index — the 9 verified disciplines from the services corpus. */
 function contactCapabilities(): ContactCapability[] {
   return SERVICE_CORPUS.map((s: ServiceRecord) => ({
     name: s.name,

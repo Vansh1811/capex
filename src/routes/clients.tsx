@@ -9,7 +9,7 @@ import {
 } from "@/lib/site-data";
 import { PUBLIC_QUERY_DEFAULTS } from "@/components/site/SiteChrome";
 import { Footer } from "@/components/site/Footer";
-import { buildSearchCorpus, type SearchCorpus } from "@/components/site/home/SearchOverlay";
+import { buildSearchCorpus, type SearchCorpus } from "@/components/site/home/search-corpus";
 import { ClientsExperience } from "@/components/site/clients/ClientsExperience";
 import { ClientsClosing } from "@/components/site/clients/Vocabulary";
 import {

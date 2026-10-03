@@ -68,6 +68,7 @@ function withStaticCache(request: Request, response: Response): Response {
   } else if (
     pathname.startsWith("/uploads/") ||
     pathname.startsWith("/media/") ||
+    pathname.startsWith("/fonts/") ||
     pathname === "/favicon.png" ||
     pathname === "/og.png" ||
     pathname === "/robots.txt"

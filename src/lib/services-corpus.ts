@@ -2,12 +2,12 @@
  * VERIFIED SERVICE CORPUS — the audited fallback for the Capabilities page
  * (THE ENGINE ROOM).
  *
- * Source of truth for the 11 services + 2 practices:
+ * Source of truth for the 9 services + 2 practices:
  *   supabase/migrations/20260903120100_phase6b_entities_seeds.sql
  *   (names, slugs, taglines, standfirsts, overviews, included lists, icons,
  *   source_refs transcribed verbatim — no invented rows. The seed marks
  *   every row is_active=false pending client wording review; the corpus
- *   carries the same 11 rows so the published surface shows the canonical
+ *   carries the same 9 rows so the published surface shows the canonical
  *   taxonomy, exactly as the Contact page's capability index already does.)
  * Source of truth for the HDD fleet + equipment register:
  *   the same migration's equipment inserts (DOC A p11 / DOC C p5 —
@@ -85,19 +85,16 @@ export type PracticeRecord = {
  */
 const PLATE = {
   ug: "/uploads/service-ug.jpg",
-  electrical: "/uploads/service-electrical.jpg",
-  cleanroom: "/uploads/service-cleanroom.jpg",
   fire: "/uploads/service-fire.jpg",
   tunnel: "/uploads/capabilities/cable-tunnel.jpg",
   gasTrench: "/uploads/capabilities/gas-trench.jpg",
   substation: "/uploads/capabilities/substation-build.jpg",
   hddRig: "/uploads/capabilities/hdd-rig-drillto.jpg",
   sprinkler: "/uploads/capabilities/sprinkler-ceiling.jpg",
-  cleanroomLab: "/uploads/capabilities/cleanroom-lab.jpg",
   plantRoom: "/uploads/about/plant-room.jpg",
 } as const;
 
-/** The 11 services — transcribed verbatim from phase6b_entities_seeds. */
+/** The 9 services — transcribed verbatim from phase6b_entities_seeds. */
 const SERVICE_ROWS: Omit<ServiceRecord, "projects" | "sectors" | "places" | "figure">[] = [
   {
     n: 1,
@@ -241,63 +238,20 @@ const SERVICE_ROWS: Omit<ServiceRecord, "projects" | "sectors" | "places" | "fig
   },
   {
     n: 9,
-    name: "Clean Rooms — Hospital",
-    slug: "clean-rooms",
-    tagline: "Controlled Environments",
-    standfirst:
-      "Hospital, pharmaceutical and laboratory clean rooms with HEPA filtration and pressure control.",
-    overview:
-      "Clean rooms for hospitals and controlled environments with HEPA filtration, laminar flow and pressure cascade.",
-    included: ["HEPA filtration", "Laminar flow", "Pressure cascade", "Validation support"],
-    practice: 2,
-    source_ref: "DOC B p3 (Clean Room – Hospital)",
-    plate: PLATE.cleanroomLab,
-    platePosition: "object-[50%_42%]",
-    plateAlt:
-      "Cleanroom interior with filtered ceiling — reference imagery, not a documented Capex project",
-  },
-  {
-    n: 10,
     name: "MEP Services",
     slug: "mep-services",
     tagline: "Integrated MEP",
     standfirst:
-      "Mechanical, electrical and plumbing execution as a single accountable partner — from BOQ to commissioning.",
+      "Mechanical, electrical and plumbing execution as a single accountable partner — from BOQ to handover.",
     overview:
-      "MEP services delivered on a turnkey basis — supply, installation, testing & commissioning — for both practices.",
-    included: [
-      "Design & BOQ",
-      "Multi-trade execution",
-      "Testing & commissioning",
-      "Handover support",
-    ],
+      "MEP services delivered on a turnkey basis — supply, installation and handover support — for both practices.",
+    included: ["Design & BOQ", "Multi-trade execution", "Handover support"],
     practice: 2,
     source_ref: "DOC A p5 (listed under both practices)",
     plate: PLATE.tunnel,
     platePosition: "object-[46%_60%]",
     plateAlt:
       "Services corridor carrying cable racks — reference imagery, not a documented Capex project",
-  },
-  {
-    n: 11,
-    name: "Testing & Commissioning",
-    slug: "testing-commissioning",
-    tagline: "Commissioning Rigor",
-    standfirst:
-      "Ten named testing & commissioning services from air & water balancing to pre-construction plan review.",
-    overview:
-      "Testing & commissioning: air & water balancing, functional performance testing, control system verification, HVAC commissioning, cleanroom testing, sound & vibration, fume hood, duct leakage, cooling tower performance and pre-construction plan review.",
-    included: [
-      "Air & water balancing",
-      "Functional performance testing",
-      "Cleanroom testing",
-      "Duct leakage testing",
-    ],
-    practice: 2,
-    source_ref: "DOC A p15 / DOC B p6",
-    plate: PLATE.electrical,
-    platePosition: "object-[50%_50%]",
-    plateAlt: "Electrical engineering detail — reference imagery, not a documented Capex project",
   },
 ];
 
@@ -342,14 +296,14 @@ const PRACTICE_ROWS: Omit<PracticeRecord, "services" | "projectCount">[] = [
     short_label: "MEP, HVAC & Fire",
     slug: "mep-fire-protection",
     scope_line:
-      "HVAC, VRV, clean rooms, fire fighting & hydrant systems and MEP services with testing, commissioning and SLA-backed service.",
+      "HVAC, VRV, fire fighting & hydrant systems and MEP services delivered turnkey under one accountable contract.",
     source_ref: "DOC A p5 — Practice Two",
     plate: PLATE.plantRoom,
     plateAlt: "Chiller plant room ductwork — reference imagery, not a documented Capex project",
   },
 ];
 
-/** The register — all 11 verified services, migration order. */
+/** The register — all 9 verified services, migration order. */
 export const SERVICE_CORPUS: ServiceRecord[] = SERVICE_ROWS.map(buildService);
 
 /** The two practices, each with its services + published archive count. */

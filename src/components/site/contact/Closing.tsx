@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Reveal } from "@/components/site/home/Reveal";
 
 /**
- * Closing (Contact): the final dark frame — the natural conclusion of the
+ * Closing (Contact): the final black frame — the natural conclusion of the
  * site journey. The conversation is open; what remains is to walk back
  * through what Capex has built. One quiet invitation pair (PROJECTS ·
  * STUDIO) and one statutory line — no link wall, no repeat form.
@@ -12,7 +12,7 @@ export function Closing({ phone, email }: { phone: string; email: string }) {
     <footer
       aria-label="Continue through the site"
       data-tone="dark"
-      className="relative overflow-hidden bg-[var(--brand-deep)] text-white"
+      className="relative overflow-hidden bg-black text-white"
     >
       <div
         aria-hidden="true"

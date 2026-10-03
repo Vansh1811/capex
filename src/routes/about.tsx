@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
 import { getNavChrome, getSearchCorpus } from "@/lib/site-data";
 import { PUBLIC_QUERY_DEFAULTS } from "@/components/site/SiteChrome";
-import { buildSearchCorpus, type SearchCorpus } from "@/components/site/home/SearchOverlay";
+import { buildSearchCorpus, type SearchCorpus } from "@/components/site/home/search-corpus";
 import { AboutExperience } from "@/components/site/about/AboutExperience";
 import { Opening } from "@/components/site/about/Opening";
 import { TwoWorlds } from "@/components/site/about/TwoWorlds";
@@ -50,7 +50,7 @@ export const Route = createFileRoute("/about")({
         content:
           "Who Capex is — a turnkey engineering company since 2012, building the systems beneath infrastructure and within buildings: underground utilities, electrical & CGD, and MEP, HVAC & fire protection.",
       },
-      { property: "og:title", content: "About Capex — We build what keeps things moving" },
+      { property: "og:title", content: "About Capex — built around the work" },
     ],
   }),
 });

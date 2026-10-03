@@ -16,7 +16,7 @@ import {
   CompletedClose,
 } from "@/components/site/projects/ArchiveScenes";
 import { ProjectsExperience } from "@/components/site/projects/ProjectsExperience";
-import { buildSearchCorpus } from "@/components/site/home/SearchOverlay";
+import { buildSearchCorpus } from "@/components/site/home/search-corpus";
 
 type Search = {
   practice?: string;
