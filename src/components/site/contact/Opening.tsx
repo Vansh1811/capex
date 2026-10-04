@@ -1,8 +1,8 @@
 import { ClipReveal } from "@/components/site/home/ClipReveal";
 import { Reveal } from "@/components/site/home/Reveal";
 import { useEntrance } from "@/components/site/home/HeroVideo";
-import { SiteImage, publicSets } from "@/components/site/SiteImage";
-
+import { SiteImage, publicSets } from "@/components/site/SiteImage" ;
+ 
 /**
  * Opening (Contact): the first frame of THE OPEN LINE — deep earth, almost
  * black, the beginning of a relationship rather than a request for details.
