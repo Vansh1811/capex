@@ -1,19 +1,14 @@
-import { useEffect, useState } from "react";
+import { type ReactNode } from "react";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
-import { getProjectCaseStudy, getProjectsArchive, type ArchiveProject } from "@/lib/site-data";
+import { getProjectCaseStudy, getSearchCorpus, type ArchiveProject } from "@/lib/site-data";
 import { PUBLIC_QUERY_DEFAULTS } from "@/components/site/SiteChrome";
-import { Reveal } from "@/components/site/home/Reveal";
-import { ClipReveal } from "@/components/site/home/ClipReveal";
 import { Closing } from "@/components/site/home/Closing";
-import { SiteImage } from "@/components/site/SiteImage";
-import {
-  ArchiveNav,
-  MediaCaption,
-  StatusMark,
-  ProjectCtaArrow,
-  cropOf,
-} from "@/components/site/projects/ArchiveVocabulary";
+import { Reveal } from "@/components/site/home/Reveal";
+import { ProjectsExperience } from "@/components/site/projects/ProjectsExperience";
+import { StatusMark } from "@/components/site/projects/ArchiveVocabulary";
+import { panelTitle } from "@/components/site/projects/RegisterPanels";
+import { buildSearchCorpus } from "@/components/site/home/search-corpus";
 
 const detailQuery = (slug: string) =>
   queryOptions({
@@ -22,9 +17,9 @@ const detailQuery = (slug: string) =>
     ...PUBLIC_QUERY_DEFAULTS,
   });
 
-const archiveQuery = queryOptions({
-  queryKey: ["public", "projects-archive"],
-  queryFn: () => getProjectsArchive(),
+const searchCorpusQuery = queryOptions({
+  queryKey: ["public", "search-corpus"],
+  queryFn: () => getSearchCorpus(),
   ...PUBLIC_QUERY_DEFAULTS,
 });
 
@@ -47,7 +42,7 @@ export const Route = createFileRoute("/projects/$slug")({
           to="/projects"
           className="mt-8 inline-block border-b border-border pb-1 font-tech text-[11px] uppercase tracking-[0.24em] hover:border-foreground"
         >
-          The archive
+          The register
         </Link>
       </div>
     </div>
@@ -64,434 +59,411 @@ export const Route = createFileRoute("/projects/$slug")({
 });
 
 /**
- * THE CASE STUDY — entering another layer of the archive. The journey the
- * page answers, in order: what is it → where is it → what did Capex do →
- * how large was it → what does the work look like → what else is related.
- * Sections breathe between compositions; only verified fields render — a
- * missing field is omitted, never faked. Ends in NEXT PROJECT, the archive's
- * own quiet way onward.
+ * THE PROJECT SHEET — a short, photographic-free record.
+ *
+ * Five movements and nothing more: an oversized typographic opening, the
+ * figures of record as the page's visual centrepiece, one paragraph of
+ * documented scope, the related records, then the locked black footer.
+ * No hero photograph, no scope lists, no dashboards — the record is
+ * carried entirely by type, verified figures and hairlines.
+ *
+ * Composition adapts to what each record actually holds: two figures
+ * spread asymmetrically, a single figure anchored to a full-width rule,
+ * or — where the source publishes no quantities — no figures section at
+ * all. Nothing is invented to fill space.
  */
 function ProjectCaseStudy() {
   const { slug } = Route.useParams();
   const { data } = useSuspenseQuery(detailQuery(slug));
-  const { data: archive } = useSuspenseQuery(archiveQuery);
-  const [navOverDark, setNavOverDark] = useState(true);
-
-  useEffect(() => {
-    const scenes = Array.from(document.querySelectorAll<HTMLElement>("#main [data-tone]"));
-    if (scenes.length === 0) return;
-    const visible = new Map<HTMLElement, boolean>();
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) visible.set(e.target as HTMLElement, e.isIntersecting);
-        const live = scenes
-          .filter((s) => visible.get(s))
-          .sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top)[0];
-        if (live) setNavOverDark(live.dataset.tone !== "light");
-      },
-      { rootMargin: "-72px 0px -35% 0px", threshold: 0 },
-    );
-    for (const s of scenes) io.observe(s);
-    return () => io.disconnect();
-  }, []);
+  const { data: corpusData } = useSuspenseQuery(searchCorpusQuery);
+  const corpus = buildSearchCorpus({
+    services: corpusData.services,
+    sectors: corpusData.sectors,
+    projects: corpusData.projects,
+    people: corpusData.people,
+    clients: corpusData.clients,
+    credentials: corpusData.credentials,
+  });
 
   if (!data) return null;
-  const { project: p, related, next, work } = data;
-  const clientName = p.client_display;
-  // the record's own register — Completed or Ongoing, never both
+  const { project: p, related, next } = data;
   const register = p.status === "ongoing" ? "ongoing" : "completed";
   const registerTo = register === "ongoing" ? "/projects/ongoing" : "/projects/completed";
   const registerLabel = register === "ongoing" ? "Ongoing" : "Completed";
 
   return (
-    <div className="min-h-screen bg-background">
-      <a
-        href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-black"
-      >
-        Skip to content
-      </a>
-      <ArchiveNav
-        overDark={navOverDark}
-        brandWordmark="CAPEX"
-        state={register}
-        completedCount={archive.completedCount}
-        ongoingCount={archive.ongoingCount}
-        onOpenIndex={() => {}}
-        indexActive={false}
-        onOpenFilter={() => {}}
-        filterActive={false}
+    <ProjectsExperience
+      brandWordmark="CAPEX"
+      corpus={corpus}
+      initialTone="dark"
+      footer={<Closing />}
+    >
+      <ProjectOpening
+        p={p}
+        registerTo={registerTo}
+        registerLabel={registerLabel}
+        brief={openingBrief(p)}
       />
-      <main id="main">
-        {/* ---------- 01 · the opening — the record states itself, then the print ---------- */}
-        <section
-          aria-label={p.title}
-          data-tone="dark"
-          className="relative overflow-hidden bg-[var(--brand)] text-white"
-        >
-          <div className="mx-auto max-w-[1680px] px-6 pb-20 pt-32 md:px-10 md:pt-40 lg:px-12">
-            <Reveal>
-              <nav aria-label="Breadcrumb" className="flex items-baseline justify-between gap-6">
-                <Link
-                  to={registerTo}
-                  className="eyebrow-sans text-white/45 transition-colors hover:text-white"
-                >
-                  {registerLabel} projects
-                </Link>
-                <span className="flex items-baseline gap-6">
-                  <StatusMark status={p.status} onDark />
-                  <span className="font-tech text-[11px] uppercase tracking-[0.2em] text-white/40">
-                    Sheet {p.ref}
-                  </span>
-                </span>
-              </nav>
-            </Reveal>
-            {/* the title arrives as setting lines — each word-group rises */}
-            <h1 className="mt-10 max-w-[16ch] font-display text-[9.5vw] font-normal leading-[1.02] tracking-[-0.025em] md:text-[68px] lg:text-[84px]">
-              {p.title
-                .split(" ")
-                .reduce<string[][]>(
-                  (lines, word, i) => {
-                    const li = Math.min(Math.floor(i / 3), 2);
-                    lines[li] = [...(lines[li] ?? []), word];
-                    return lines;
-                  },
-                  [[], [], []],
-                )
-                .map((line, i) =>
-                  line.length > 0 ? (
-                    <span key={i} className="block overflow-hidden">
-                      <span
-                        className="rise-line block"
-                        style={{ animationDelay: `${90 + i * 140}ms` }}
-                      >
-                        {line.join(" ")}
-                      </span>
-                    </span>
-                  ) : null,
-                )}
+
+      <FiguresOfRecord p={p} />
+
+      <WorkBrief text={workParagraph(p)} />
+
+      <RelatedWork
+        related={related}
+        next={next}
+        register={register}
+        registerLabel={registerLabel}
+        registerTo={registerTo}
+      />
+    </ProjectsExperience>
+  );
+}
+
+/* ==================================================================
+ * 01 — THE OPENING. Oversized name, a two-line factual brief and the
+ * compact metadata line. The layout is deliberately asymmetric — the
+ * brief is set off-axis — so the composition reads composed rather
+ * than as a missing image column.
+ * ================================================================== */
+
+function openingBrief(p: ArchiveProject): string {
+  const verb = p.status === "ongoing" ? "In delivery" : "Delivered";
+  const who = p.client_display ? ` for ${p.client_display}` : "";
+  return `${verb}${who} — ${p.scope_line}.`;
+}
+
+function ProjectOpening({
+  p,
+  brief,
+  registerTo,
+  registerLabel,
+}: {
+  p: ArchiveProject;
+  brief: string;
+  registerTo: string;
+  registerLabel: string;
+}) {
+  return (
+    <section aria-label={p.title} data-tone="dark" className="band-espresso">
+      <div className="mx-auto max-w-[1680px] px-6 pb-20 pt-32 md:px-10 md:pb-28 md:pt-40 lg:px-12">
+        <Reveal>
+          <nav
+            aria-label="Breadcrumb"
+            className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2"
+          >
+            <Link
+              to={registerTo}
+              className="eyebrow-sans text-muted-foreground transition-colors hover:text-foreground"
+            >
+              {registerLabel} projects
+            </Link>
+            <span className="font-tech text-[10px] uppercase tracking-[0.2em] text-muted-foreground/50">
+              Capex project record
+            </span>
+          </nav>
+        </Reveal>
+
+        <div className="mt-14 lg:mt-20 lg:grid lg:grid-cols-12 lg:gap-x-12">
+          <Reveal className="lg:col-span-12">
+            <p className="font-tech text-[11px] uppercase tracking-[0.22em] text-[var(--accent)]">
+              {registerLabel} project · Sheet {p.ref}
+            </p>
+          </Reveal>
+
+          <Reveal delay={90} className="lg:col-span-11">
+            <h1 className="mt-7 font-display text-[clamp(2.75rem,8.5vw,7rem)] font-normal leading-[0.98] tracking-[-0.03em]">
+              {p.title}
             </h1>
-            <Reveal delay={340}>
-              <p className="mt-6 max-w-xl text-sm leading-[1.8] text-white/70 md:text-[15px]">
-                {p.scope_line}
-              </p>
-            </Reveal>
-            <Reveal delay={420}>
-              <p className="mt-8 font-tech text-[11px] uppercase tracking-[0.2em] text-white/45">
-                {[p.city, p.state, p.sectors[0]?.name, p.practice_label]
-                  .filter(Boolean)
-                  .join(" · ")}
-              </p>
-            </Reveal>
-          </div>
+          </Reveal>
 
-          {/* the hero print — a wide frame entering the dark world.
-              Records carrying a dedicated ultra-wide hero frame use it;
-              every other record renders its principal frame, as before. */}
-          <figure className="mx-auto max-w-[1680px] px-6 pb-24 md:px-10 lg:px-12">
-            <ClipReveal edge="right" ratio="21 / 9" delay={240}>
-              <SiteImage
-                src={p.media.heroSrc ?? p.media.src}
-                sizes="100vw"
-                eager
-                fetchPriority="high"
-                alt={p.media.heroAlt ?? p.media.alt}
-                className={`h-full w-full object-cover ${cropOf(p)} [filter:saturate(0.85)_contrast(1.02)_brightness(0.94)]`}
-              />
-            </ClipReveal>
-            <Reveal delay={380}>
-              <MediaCaption p={p} right={`${p.ref} · record`} onDark />
-            </Reveal>
-          </figure>
-        </section>
+          <Reveal delay={180} className="lg:col-span-7">
+            <p className="mt-9 max-w-[46ch] text-balance font-display text-[21px] font-normal leading-[1.4] tracking-[-0.01em] text-foreground/85 md:text-[27px]">
+              {brief}
+            </p>
+          </Reveal>
+        </div>
 
-        {/* ---------- 02 · the work — the narrative + the quiet factual rail ---------- */}
-        <section aria-label="The work" data-tone="light" className="paper bg-background">
-          <div className="mx-auto max-w-[1680px] px-6 py-24 md:px-10 md:py-36 lg:px-12 lg:py-44">
-            <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
-              <div className="lg:col-span-7">
-                <Reveal>
-                  <p className="eyebrow-sans text-muted-foreground">The work</p>
-                </Reveal>
-                <Reveal delay={110}>
-                  <p className="mt-8 max-w-[34ch] text-balance font-display text-[26px] font-normal leading-[1.3] tracking-[-0.01em] text-foreground md:text-[34px]">
-                    {work}
-                  </p>
-                </Reveal>
-                {clientName && (
-                  <Reveal delay={220}>
-                    <p className="mt-10 max-w-md text-[15px] leading-[1.8] text-muted-foreground">
-                      Record held for {clientName}, {p.city}. The published sheet carries the
-                      quantities Capex contracted to deliver.
-                    </p>
-                  </Reveal>
-                )}
-              </div>
-              {/* the factual rail — verified fields only, omitted when empty;
-                  each row enters on its own as the rail scrolls into view */}
-              <div className="lg:col-span-4 lg:col-start-9">
-                <dl className="border-t border-border">
-                  {[
-                    ["Project", p.title],
-                    ["Location", `${p.city}, ${p.state}`],
-                    ["Practice", p.practice_label],
-                    ["Sector", p.sectors.map((s) => s.name).join(" · ") || null],
-                    ["Scope", p.scope_line],
-                    clientName ? ["Client", clientName] : null,
-                    p.status === "completed" ? ["Status", "Completed"] : ["Status", "Ongoing"],
-                  ]
-                    .filter((r): r is [string, string] => Array.isArray(r) && Boolean(r[1]))
-                    .map(([k, v], i) => (
-                      <Reveal key={k} delay={i * 90}>
-                        <div className="border-b border-border py-4 transition-colors">
-                          <dt className="font-tech text-[10px] uppercase tracking-[0.06em] text-muted-foreground">
-                            {k}
-                          </dt>
-                          <dd className="mt-1 text-sm font-medium leading-relaxed text-foreground">
-                            {v}
-                          </dd>
-                        </div>
-                      </Reveal>
-                    ))}
-                </dl>
-              </div>
-            </div>
-          </div>
-        </section>
+        <Reveal delay={260}>
+          <dl className="mt-14 flex flex-wrap gap-x-12 gap-y-6 border-t border-border pt-7">
+            <MetaItem k="Reference" v={p.ref} />
+            <MetaItem k="Location" v={`${p.city}, ${p.state}`} />
+            <MetaItem k="Practice" v={p.practice_label} />
+            {p.client_display && <MetaItem k="Client" v={p.client_display} />}
+            <MetaItem k="Completion" v={<StatusMark status={p.status} onDark />} />
+          </dl>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
 
-        {/* ---------- 03 · scale — the figures of record, large and quiet ---------- */}
-        {p.metrics.length > 0 && (
-          <section
-            aria-label="Scale"
-            data-tone="dark"
-            className="relative bg-[var(--ink)] text-white"
-          >
-            <div className="mx-auto max-w-[1680px] px-6 py-24 md:px-10 md:py-36 lg:px-12">
+function MetaItem({ k, v }: { k: string; v: ReactNode }) {
+  return (
+    <div className="min-w-0">
+      <dt className="font-tech text-[10px] uppercase tracking-[0.2em] text-muted-foreground/55">
+        {k}
+      </dt>
+      <dd className="mt-2.5 text-sm leading-[1.6] text-foreground/90 md:text-[15px]">{v}</dd>
+    </div>
+  );
+}
+
+/* ==================================================================
+ * 02 — FIGURES OF RECORD. The page's centrepiece: the record's verified
+ * figures as architecture, not KPI cards. Two figures spread across an
+ * asymmetric grid; a single figure anchored to a rule that runs to the
+ * edge. Units stay in the mono register; every figure is labelled.
+ * The section omits itself when the source publishes no quantities.
+ * ================================================================== */
+
+type Metric = { label: string; value: string; unit: string };
+
+const FIG_LEAD = "text-[clamp(4.25rem,14vw,12.5rem)]";
+const FIG_SECOND = "text-[clamp(2.5rem,7vw,6rem)]";
+
+function FiguresOfRecord({ p }: { p: ArchiveProject }) {
+  const metrics = p.metrics;
+  if (metrics.length === 0) return null;
+  const paired = metrics.length > 1;
+
+  return (
+    <section aria-label="Figures of record" data-tone="light" className="paper bg-background">
+      <div className="mx-auto max-w-[1680px] px-6 py-20 md:px-10 md:py-28 lg:px-12 lg:py-36">
+        <Reveal>
+          <SectionRule
+            label="Figures of record"
+            right={
+              <span className="font-tech text-[10px] uppercase tracking-[0.2em] text-muted-foreground/55">
+                {p.practice_label}
+              </span>
+            }
+          />
+        </Reveal>
+
+        {paired ? (
+          <div className="mt-14 grid gap-y-16 lg:mt-20 lg:grid-cols-12 lg:gap-x-16">
+            <div className="lg:col-span-7">
               <Reveal>
-                <p className="eyebrow-sans text-white/50">Scale · figures of record</p>
-              </Reveal>
-              <div className="mt-12 grid gap-10 md:grid-cols-2 md:gap-8">
-                {p.metrics.map((m, i) => (
-                  <Reveal key={m.label} delay={i * 140}>
-                    <div className="border-t border-white/15 pt-6">
-                      {/* the figure rises from its baseline like a setting line */}
-                      <p className="rise-line font-tech text-[54px] font-medium leading-none tracking-[0.02em] text-white md:text-[72px]">
-                        {m.value}
-                        {m.unit && (
-                          <span className="ml-3 text-[22px] tracking-[0.1em] text-white/55 md:text-[28px]">
-                            {m.unit}
-                          </span>
-                        )}
-                      </p>
-                      <p className="mt-4 font-tech text-[11px] uppercase tracking-[0.2em] text-white/45">
-                        {m.label}
-                      </p>
-                    </div>
-                  </Reveal>
-                ))}
-              </div>
-              <Reveal delay={300}>
-                <p className="mt-14 max-w-md text-sm leading-[1.8] text-white/50">
-                  Quantities as documented in the company record — supply, installation, testing and
-                  commissioning under one accountable contract.
-                </p>
+                <Figure m={metrics[0]} size={FIG_LEAD} />
               </Reveal>
             </div>
-          </section>
-        )}
-
-        {/* ---------- 04 · the discipline — an editorial image sequence: large
-            print, then a smaller offset detail from the same reference frame
-            (crop-shifted, never claimed as a different photograph) ---------- */}
-        <section aria-label="The discipline" data-tone="light" className="paper bg-background">
-          <div className="mx-auto max-w-[1680px] px-6 py-24 md:px-10 md:py-36 lg:px-12">
-            <div className="grid gap-10 lg:grid-cols-12">
-              <figure className="lg:col-span-8">
-                <ClipReveal edge="left" ratio="16 / 10">
-                  <SiteImage
-                    src={p.media.src}
-                    sizes="(max-width: 1024px) 100vw, 66vw"
-                    alt={p.media.alt}
-                    className={`h-full w-full object-cover ${cropOf(p)} [filter:saturate(0.88)]`}
-                  />
-                </ClipReveal>
-                <Reveal delay={140}>
-                  <MediaCaption p={p} />
-                </Reveal>
-              </figure>
-              <div className="lg:col-span-4 lg:flex lg:flex-col lg:justify-end">
-                <Reveal>
-                  <p className="eyebrow-sans text-muted-foreground">The discipline</p>
-                </Reveal>
-                <Reveal delay={110}>
-                  <h2 className="mt-8 font-display text-3xl font-normal leading-[1.1] tracking-[-0.02em] md:text-[40px]">
-                    {p.practice === 1 ? "Below the street." : "Within the building."}
-                  </h2>
-                </Reveal>
-                <Reveal delay={210}>
-                  <p className="mt-8 max-w-sm text-[15px] leading-[1.8] text-muted-foreground">
-                    {p.practice === 1
-                      ? "Trench, duct, cable, joint, reinstate — the connectivity layer of a city, engineered to disappear until it is needed."
-                      : "Plant, ductwork, pipework, controls — the systems a building breathes through, engineered to be felt and never seen."}
-                  </p>
-                </Reveal>
-                <Reveal delay={280}>
-                  <p className="mt-8 font-tech text-[10px] uppercase tracking-[0.2em] text-muted-foreground/70">
-                    {p.services.map((s) => s.name).join(" · ")}
-                  </p>
-                </Reveal>
-              </div>
+            <div className="lg:col-span-5 lg:self-end lg:border-l lg:border-border lg:pl-16 lg:pb-2">
+              <Reveal delay={120}>
+                <Figure m={metrics[1]} size={FIG_SECOND} />
+              </Reveal>
             </div>
-
-            {/* the offset detail — the same frame, re-cropped; sits off the
-                left margin like a study beside the principal print */}
-            <div className="mt-20 grid gap-10 lg:mt-28 lg:grid-cols-12">
-              <figure className="lg:col-span-4 lg:col-start-3">
-                <ClipReveal edge="bottom" ratio="4 / 5">
-                  <SiteImage
-                    src={p.media.src}
-                    sizes="(max-width: 1024px) 100vw, 33vw"
-                    alt={`${p.media.alt} — detail crop`}
-                    className={`h-full w-full object-cover ${cropOf(p)} scale-125 [filter:saturate(0.9)_contrast(1.05)]`}
-                  />
-                </ClipReveal>
-                <Reveal delay={180}>
-                  <figcaption className="mt-3 flex items-baseline justify-between gap-6">
-                    <span className="font-tech text-[10px] uppercase tracking-[0.2em] text-muted-foreground/70">
-                      {p.media.sourceType === "REFERENCE"
-                        ? "Reference detail — same frame, re-cropped"
-                        : "Works photograph — same frame, re-cropped"}
-                    </span>
-                    <span className="shrink-0 font-tech text-[10px] tracking-[0.2em] text-muted-foreground/70">
-                      {p.ref}
-                    </span>
-                  </figcaption>
-                </Reveal>
-              </figure>
-              <div className="lg:col-span-4 lg:col-start-8 lg:flex lg:flex-col lg:justify-end">
-                <Reveal delay={120}>
-                  <p className="max-w-sm text-[15px] leading-[1.9] text-muted-foreground/90">
-                    {p.practice === 1
-                      ? "Every metre is measured, jointed and tested before the trench closes — the street forgets the work, the network does not."
-                      : "Balanced, charged, flow-verified and commissioned before handover — the plant runs quiet because the engineering was loud."}
-                  </p>
-                </Reveal>
-              </div>
-            </div>
-
-            <Reveal delay={200}>
-              <p className="mt-16 max-w-2xl text-[13px] leading-[1.9] text-muted-foreground/80">
-                {p.media.sourceType === "REFERENCE"
-                  ? "Site photography, installation evidence and commissioning documentation for this project are held in the Capex project file — published here as the media library comes online. Nothing on this page presents reference imagery as project photography."
-                  : "Photography on this page comes from the Capex company record (the client-supplied profile documents). Full site photography, installation evidence and commissioning documentation are held in the Capex project file."}
-              </p>
+          </div>
+        ) : (
+          <div className="mt-14 lg:mt-20">
+            <Reveal>
+              <Figure m={metrics[0]} size={FIG_LEAD} />
             </Reveal>
           </div>
-        </section>
+        )}
+      </div>
+    </section>
+  );
+}
 
-        {/* ---------- 05 · related — the archive's own way onward ---------- */}
+function Figure({ m, size }: { m: Metric; size: string }) {
+  return (
+    <div>
+      <p className={`font-display font-normal leading-[0.8] tracking-[-0.045em] ${size}`}>
+        {m.value}
+        {m.unit && (
+          <span className="ml-[0.14em] align-baseline font-tech text-[0.17em] uppercase tracking-[0.1em] text-[var(--accent)]">
+            {m.unit}
+          </span>
+        )}
+      </p>
+      <div className="mt-6 flex items-center gap-5">
+        <p className="font-tech text-[10px] uppercase tracking-[0.2em] text-muted-foreground/80">
+          {m.label}
+        </p>
+        <span aria-hidden="true" className="h-px flex-1 bg-border" />
+      </div>
+    </div>
+  );
+}
+
+/* ==================================================================
+ * 03 — THE WORK, BRIEFLY. One paragraph, composed only from the
+ * record's own scope, practice, sector and status fields. No lists.
+ * ================================================================== */
+
+function workParagraph(p: ArchiveProject): string {
+  const svc = p.services.map((s) => s.name).join(", ");
+  const scope = svc
+    ? `The documented scope covers ${svc}.`
+    : `The documented scope: ${p.scope_line}.`;
+  const sector = p.sectors[0] ? `, within the ${p.sectors[0].name} sector` : "";
+  const status =
+    p.status === "ongoing"
+      ? "The programme remains ongoing on the company record."
+      : "The work stands complete on the company record.";
+  return `${scope} The record is held under Capex's ${p.practice_name} practice${sector}. ${status}`;
+}
+
+function WorkBrief({ text }: { text: string }) {
+  return (
+    <section aria-label="The work" data-tone="dark" className="band-espresso">
+      <div className="mx-auto max-w-[1680px] px-6 py-20 md:px-10 md:py-28 lg:px-12 lg:py-32">
+        <Reveal>
+          <SectionRule label="The work, briefly" />
+        </Reveal>
+        <Reveal delay={120}>
+          <p className="mt-10 max-w-[56ch] text-balance font-display text-[21px] font-normal leading-[1.5] tracking-[-0.01em] text-foreground md:text-[28px]">
+            {text}
+          </p>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+/* ==================================================================
+ * 04 — RELATED WORK. Two or three records as editorial rows: sheet ref,
+ * name, location, a verified headline figure where one exists. Then a
+ * quiet continuity line into the register.
+ * ================================================================== */
+
+function RelatedWork({
+  related,
+  next,
+  register,
+  registerLabel,
+  registerTo,
+}: {
+  related: ArchiveProject[];
+  next: ArchiveProject;
+  register: string;
+  registerLabel: string;
+  registerTo: string;
+}) {
+  if (related.length === 0 && !next) return null;
+
+  return (
+    <section aria-label="Related work" data-tone="light" className="paper bg-background">
+      <div className="mx-auto max-w-[1680px] px-6 pb-28 pt-20 md:px-10 md:pb-32 md:pt-28 lg:px-12 lg:pt-32">
+        <Reveal>
+          <SectionRule label="Related work" />
+        </Reveal>
+
         {related.length > 0 && (
-          <section aria-label="Related records" data-tone="light" className="paper bg-background">
-            <div className="mx-auto max-w-[1680px] border-t border-border px-6 py-24 md:px-10 md:py-32 lg:px-12">
-              <Reveal>
-                <p className="eyebrow-sans text-muted-foreground">Related records</p>
-              </Reveal>
-              <div className="mt-10 grid gap-10 md:grid-cols-3 md:gap-8">
-                {related.map((r, i) => (
-                  <Reveal key={r.slug} delay={i * 90}>
-                    <Link
-                      to="/projects/$slug"
-                      params={{ slug: r.slug }}
-                      className="group block"
-                      aria-label={`${r.title} — ${r.city}`}
-                    >
-                      <ClipReveal edge={i % 2 === 0 ? "right" : "left"} ratio="4 / 5">
-                        <SiteImage
-                          src={r.media.src}
-                          sizes="(max-width: 768px) 100vw, 33vw"
-                          alt={r.media.alt}
-                          className="h-full w-full object-cover transition-[filter] duration-700 [filter:saturate(0.88)] group-hover:[filter:saturate(1)]"
-                        />
-                      </ClipReveal>
-                      <div className="mt-5">
-                        <h3 className="font-display text-xl font-normal leading-[1.12] text-foreground/90 transition-colors group-hover:text-foreground md:text-[22px]">
-                          {r.title.replace(" — HVAC", "").replace(" — HVAC & Fire", "")}
-                        </h3>
-                        <p className="mt-1.5 flex items-baseline gap-3 text-xs text-muted-foreground md:text-sm">
-                          <span>
-                            {r.metrics[0]
-                              ? `${r.metrics[0].value}${r.metrics[0].unit ? ` ${r.metrics[0].unit}` : ""} · `
-                              : ""}
-                            {r.city}
-                          </span>
-                          <StatusMark status={r.status} className="!text-[10px]" />
-                        </p>
-                      </div>
-                    </Link>
-                  </Reveal>
-                ))}
-              </div>
-            </div>
-          </section>
+          <Reveal delay={100}>
+            <ul className="mt-12">
+              {related.map((r) => (
+                <li key={r.slug}>
+                  <RelatedRow p={r} />
+                </li>
+              ))}
+            </ul>
+          </Reveal>
         )}
 
-        {/* ---------- 06 · next project — the story's end is the next opening.
-            The next project's reference frame waits under a veil; on hover it
-            rises toward view, the title shifts, the arrow slides. ---------- */}
         {next && (
-          <section
-            aria-label="Next project"
-            data-tone="dark"
-            className="relative overflow-hidden bg-[var(--ink)] text-white"
-          >
+          <Reveal delay={140}>
             <Link
               to="/projects/$slug"
               params={{ slug: next.slug }}
-              className="group block"
-              aria-label={`Next project — ${next.title}`}
+              className="group mt-14 flex flex-wrap items-baseline justify-between gap-x-8 gap-y-3 border-b border-foreground/20 pb-5 transition-colors duration-300 hover:border-foreground"
+              aria-label={`Next project — ${panelTitle(next)}`}
             >
-              {/* the quiet preview — the next project's frame, veiled */}
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-0 hidden lg:block"
-              >
-                <SiteImage
-                  src={next.media.src}
-                  sizes="100vw"
-                  fetchPriority="low"
-                  alt=""
-                  ariaHidden="true"
-                  className={`h-full w-full object-cover object-[60%_50%] opacity-0 transition-all duration-[1100ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02] group-hover:opacity-[0.22] ${cropOf(next)}`}
-                />
-                <div className="absolute inset-0 bg-gradient-to-r from-[var(--ink)] via-[var(--ink)]/60 to-[var(--ink)]/20" />
-              </div>
-              <div className="relative mx-auto max-w-[1680px] px-6 py-24 md:px-10 md:py-32 lg:px-12 lg:py-40">
-                <p className="flex items-baseline gap-6">
-                  <span className="eyebrow-sans text-white/40">Next project</span>
-                  <StatusMark status={next.status} onDark />
-                </p>
-                <div className="mt-10 flex flex-wrap items-end justify-between gap-x-12 gap-y-6">
-                  <h2 className="max-w-[18ch] font-display text-[9vw] font-normal leading-[1.02] tracking-[-0.02em] text-white/85 transition-all duration-500 ease-out group-hover:translate-x-2 group-hover:text-white md:text-[64px]">
-                    {next.title.replace(" — HVAC", "").replace(" — HVAC & Fire", "")}
-                  </h2>
-                  <span className="inline-flex items-center gap-4 pb-2 font-tech text-[11px] uppercase tracking-[0.24em] text-white">
-                    <span className="border-b border-white/40 pb-2 transition-colors group-hover:border-white">
-                      {next.city}, {next.state}
-                    </span>
-                    <span className="text-2xl transition-transform duration-300 group-hover:translate-x-1.5">
-                      →
-                    </span>
-                  </span>
-                </div>
-                <p className="mt-8 max-w-md text-sm leading-[1.8] text-white/40 transition-colors duration-500 group-hover:text-white/60">
-                  {next.scope_line}
-                </p>
-              </div>
+              <span className="font-tech text-[10px] uppercase tracking-[0.2em] text-muted-foreground/60">
+                Next in the {register} register
+              </span>
+              <span className="flex items-baseline gap-5">
+                <span className="max-w-[34ch] font-display text-[22px] font-normal leading-[1.15] tracking-[-0.015em] text-foreground/90 transition-colors duration-300 group-hover:text-foreground md:text-[28px]">
+                  {panelTitle(next)}
+                </span>
+                <Arrow />
+              </span>
             </Link>
-          </section>
+          </Reveal>
         )}
-      </main>
-      <Closing />
+
+        <Reveal delay={180}>
+          <div className="mt-14 flex flex-wrap items-baseline justify-between gap-x-10 gap-y-4 border-t border-border pt-6">
+            <p className="font-tech text-[10px] uppercase tracking-[0.2em] text-muted-foreground/60">
+              The register
+            </p>
+            <div className="flex flex-wrap items-baseline gap-x-10 gap-y-2">
+              <Link
+                to={registerTo}
+                className="eyebrow-sans text-muted-foreground transition-colors hover:text-foreground"
+              >
+                {registerLabel} archive →
+              </Link>
+              <Link
+                to="/projects"
+                className="eyebrow-sans text-muted-foreground transition-colors hover:text-foreground"
+              >
+                All projects →
+              </Link>
+            </div>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function RelatedRow({ p }: { p: ArchiveProject }) {
+  const m = p.metrics[0];
+  const figure = m ? `${m.value}${m.unit ? ` ${m.unit}` : ""}` : null;
+
+  return (
+    <Link
+      to="/projects/$slug"
+      params={{ slug: p.slug }}
+      className="group flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2 border-b border-border py-6 transition-colors duration-300 hover:border-foreground/50"
+      aria-label={`${panelTitle(p)} — ${p.city}, ${p.state}`}
+    >
+      <span className="flex min-w-0 items-baseline gap-5 md:gap-7">
+        <span className="shrink-0 font-tech text-[11px] tracking-[0.12em] text-muted-foreground/55 transition-colors duration-300 group-hover:text-foreground">
+          {p.ref}
+        </span>
+        <span className="min-w-0 font-display text-[22px] font-normal leading-[1.12] tracking-[-0.02em] text-foreground/85 transition-colors duration-300 group-hover:text-foreground md:text-[30px]">
+          {panelTitle(p)}
+        </span>
+      </span>
+      <span className="flex flex-wrap items-baseline gap-x-7 gap-y-1">
+        <span className="font-tech text-[11px] uppercase tracking-[0.16em] text-muted-foreground/70">
+          {p.city}, {p.state}
+        </span>
+        {figure && (
+          <span className="font-tech text-[12px] uppercase tracking-[0.1em] text-[var(--accent)]">
+            {figure}
+          </span>
+        )}
+        <span className="hidden md:inline-flex">
+          <Arrow />
+        </span>
+      </span>
+    </Link>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+
+function SectionRule({ label, right }: { label: string; right?: ReactNode }) {
+  return (
+    <div className="flex flex-wrap items-baseline gap-x-6 gap-y-1">
+      <p className="eyebrow-sans text-muted-foreground">{label}</p>
+      <span aria-hidden="true" className="h-px flex-1 border-t border-border" />
+      {right}
     </div>
+  );
+}
+
+function Arrow({ className = "" }: { className?: string }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={`text-base text-foreground/70 transition-transform duration-300 group-hover:translate-x-1 ${className}`}
+    >
+      →
+    </span>
   );
 }

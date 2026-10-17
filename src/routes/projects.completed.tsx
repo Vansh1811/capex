@@ -1,20 +1,19 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
 import { getProjectsArchive, getSearchCorpus, type ArchiveProject } from "@/lib/site-data";
 import { PUBLIC_QUERY_DEFAULTS } from "@/components/site/SiteChrome";
 import { Closing } from "@/components/site/home/Closing";
-import { Reveal } from "@/components/site/home/Reveal";
+import { RegisterOpening, RegisterClose } from "@/components/site/projects/RegisterPanels";
+import { FilterOverlay } from "@/components/site/projects/ArchiveVocabulary";
 import {
-  ArchiveNav,
-  FilterOverlay,
-  RegisterOverlay,
-} from "@/components/site/projects/ArchiveVocabulary";
-import {
-  CompletedOpening,
-  CompletedField,
-  CompletedClose,
-} from "@/components/site/projects/ArchiveScenes";
+  EmptyRegister,
+  FilteredNotice,
+  FilterTrigger,
+  PanelField,
+  StateLinks,
+  type ArchiveSearch,
+} from "@/components/site/projects/RegisterPanels";
 import { ProjectsExperience } from "@/components/site/projects/ProjectsExperience";
 import { buildSearchCorpus } from "@/components/site/home/search-corpus";
 
@@ -49,7 +48,7 @@ export const Route = createFileRoute("/projects/completed")({
       {
         name: "description",
         content:
-          "The record of Capex's delivered work — completed underground utilities, electrical, CGD, HVAC and fire protection projects across India, each with its documented client, quantity and place.",
+          "The record of Capex's delivered work — completed underground utilities, electrical, CGD, HVAC and fire protection projects, each with its documented client, quantity and place.",
       },
       { property: "og:title", content: "Capex Completed Projects — The Record" },
       { property: "og:type", content: "website" },
@@ -58,10 +57,10 @@ export const Route = createFileRoute("/projects/completed")({
 });
 
 /**
- * THE RECORD — the Completed archive. Every project shown derives from the
- * corpus's single authoritative status field; counts derive at render; the
- * hang is deterministic (see ArchiveScenes.CompletedField). Filter state lives
- * in the URL (shareable); the Register overlay holds the complete index.
+ * THE COMPLETED ARCHIVE — one state of the register, on the shared panel
+ * system. Compact typographic opening, the state links, the quiet filter
+ * layer. Records derive from the corpus's single authoritative status
+ * field; counts derive at render. Filter state lives in the URL.
  */
 function CompletedArchive() {
   const search = Route.useSearch();
@@ -69,7 +68,6 @@ function CompletedArchive() {
   const { data } = useSuspenseQuery(searchQuery);
   const { data: corpusData } = useSuspenseQuery(searchCorpusQuery);
   const [filterOpen, setFilterOpen] = useState(false);
-  const [indexOpen, setIndexOpen] = useState(false);
 
   const corpus = useMemo(
     () =>
@@ -83,26 +81,6 @@ function CompletedArchive() {
       }),
     [corpusData],
   );
-
-  // nav tone follows the room beneath it (dark scenes render the nav light)
-  const [navOverDark, setNavOverDark] = useState(true);
-  useEffect(() => {
-    const scenes = Array.from(document.querySelectorAll<HTMLElement>("#main [data-tone]"));
-    if (scenes.length === 0) return;
-    const visible = new Map<HTMLElement, boolean>();
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) visible.set(e.target as HTMLElement, e.isIntersecting);
-        const live = scenes
-          .filter((s) => visible.get(s))
-          .sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top)[0];
-        if (live) setNavOverDark(live.dataset.tone !== "light");
-      },
-      { rootMargin: "-72px 0px -35% 0px", threshold: 0 },
-    );
-    for (const s of scenes) io.observe(s);
-    return () => io.disconnect();
-  }, [indexOpen]);
 
   const setFilter = (patch: Partial<Search>) =>
     router.navigate({
@@ -173,75 +151,54 @@ function CompletedArchive() {
     },
   ];
 
-  const onPlace = (stateSlug: string) => setFilter({ state: stateSlug });
-
   return (
-    <ProjectsExperience brandWordmark="CAPEX" corpus={corpus} hideNav={true}>
-      <ArchiveNav
-        overDark={navOverDark}
-        brandWordmark="CAPEX"
-        state="completed"
-        completedCount={data.completedCount}
-        ongoingCount={data.ongoingCount}
-        onOpenIndex={() => setIndexOpen(true)}
-        indexActive={indexOpen}
-        onOpenFilter={() => setFilterOpen(true)}
-        filterActive={anyFilter}
+    <ProjectsExperience brandWordmark="CAPEX" corpus={corpus} footer={<Closing />}>
+      <RegisterOpening
+        eyebrow="Projects · State of record"
+        title="Completed"
+        copy="The record of systems built — delivered, commissioned and handed over across infrastructure and buildings. Every project states its documented client, quantity and place."
+        meta={
+          <>
+            <StateLinks
+              current="completed"
+              completedCount={data.completedCount}
+              ongoingCount={data.ongoingCount}
+              search={search as ArchiveSearch}
+            />
+            <FilterTrigger active={anyFilter} onOpen={() => setFilterOpen(true)} />
+          </>
+        }
       />
-      <main id="main">
-        <CompletedOpening
-          total={filtered.length === completed.length ? completed.length : filtered.length}
-          practices={2}
-          onOpenIndex={() => setIndexOpen(true)}
+
+      {anyFilter && (
+        <div className="mx-auto max-w-[1680px] px-6 md:px-10 lg:px-12">
+          <FilteredNotice
+            count={filtered.length}
+            noun="records"
+            onReset={() => setFilter({ practice: undefined, sector: undefined, state: undefined })}
+          />
+        </div>
+      )}
+
+      {filtered.length === 0 ? (
+        <EmptyRegister
+          label="completed"
+          onClear={() => setFilter({ practice: undefined, sector: undefined, state: undefined })}
         />
+      ) : (
+        <div className="mx-auto max-w-[1680px] px-6 pb-20 pt-8 md:px-10 md:pt-10 lg:px-12">
+          <PanelField projects={filtered} />
+        </div>
+      )}
 
-        {/* filtered notice — the archive's quiet state line */}
-        {anyFilter && (
-          <div className="paper mx-auto flex max-w-[1680px] flex-wrap items-baseline gap-6 bg-background px-6 pt-14 md:px-10 lg:px-12">
-            <Reveal>
-              <p className="font-tech text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
-                {filtered.length} project{filtered.length === 1 ? "" : "s"} — filtered
-              </p>
-            </Reveal>
-            <button
-              onClick={() =>
-                setFilter({ practice: undefined, sector: undefined, state: undefined })
-              }
-              className="font-tech text-[11px] uppercase tracking-[0.2em] text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
-            >
-              Reset
-            </button>
-          </div>
-        )}
-
-        {filtered.length === 0 ? (
-          <div className="paper mx-auto max-w-[1680px] bg-background px-6 py-32 md:px-10 lg:px-12">
-            <p className="font-display text-2xl font-normal text-foreground/80">
-              No completed projects match these filters.
-            </p>
-            <button
-              onClick={() =>
-                setFilter({ practice: undefined, sector: undefined, state: undefined })
-              }
-              className="mt-6 font-tech text-[11px] uppercase tracking-[0.24em] text-foreground underline-offset-4 hover:underline"
-            >
-              Clear filters
-            </button>
-          </div>
-        ) : (
-          <CompletedField projects={filtered} total={filtered.length} onPlace={onPlace} />
-        )}
-
-        <CompletedClose ongoingCount={data.ongoingCount} />
-      </main>
-      <Closing />
-      <RegisterOverlay
-        open={indexOpen}
-        onClose={() => setIndexOpen(false)}
-        projects={filtered}
-        stateLabel="Completed"
-        count={filtered.length}
+      <RegisterClose
+        eyebrow="The record continues"
+        heading="What Capex has built. What Capex is building."
+        label="Ongoing"
+        note={`${data.ongoingCount} programmes`}
+        to="/projects/ongoing"
       />
+
       <FilterOverlay
         open={filterOpen}
         onClose={() => setFilterOpen(false)}

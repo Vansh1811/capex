@@ -9,18 +9,25 @@ export type { SearchCorpus };
  * PROJECTS EXPERIENCE CHROME — the Projects sibling of the homepage / atlas
  * chrome. The global editorial nav (CAPEX · PROJECTS · STUDIO · SEARCH)
  * travels unchanged; scenes marked data-tone dark|light drive the nav color.
- * PROJECTS goes straight to the archive (/projects redirects to
- * /projects/completed) — there is no intermediate gateway screen.
+ * The register's introduction and the Ongoing archive are deep-espresso
+ * scenes; the Completed archive and the case study are light-first. The
+ * partner footer renders outside <main> via the `footer` prop.
  */
 export function ProjectsExperience({
   brandWordmark,
   corpus,
   hideNav,
+  initialTone = "light",
+  footer,
   children,
 }: {
   brandWordmark: string;
   corpus: SearchCorpus;
   hideNav?: boolean;
+  /** The first scene's tone — the nav's initial color, before the
+   * observer takes over (avoids an ink-over-espresso first frame). */
+  initialTone?: "light" | "dark";
+  footer?: ReactNode;
   children: ReactNode;
 }) {
   const [searchOpen, setSearchOpen] = useState(false);
@@ -47,7 +54,9 @@ export function ProjectsExperience({
     };
   }, [searchOpen]);
 
-  const [navOverDark, setNavOverDark] = useState(true);
+  // the nav opens in the page's first scene's tone — dark on the register
+  // and Ongoing, ivory on Completed — then follows scroll via the observer
+  const [navOverDark, setNavOverDark] = useState(initialTone !== "light");
   useEffect(() => {
     const scenes = Array.from(
       document.querySelectorAll<HTMLElement>("#main [data-tone], footer[data-tone]"),
@@ -84,6 +93,7 @@ export function ProjectsExperience({
         hideDesktopNav={hideNav}
       />
       <main id="main">{children}</main>
+      {footer}
       <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} corpus={corpus} />
       <StudioMenu open={studioOpen} onClose={() => setStudioOpen(false)} />
     </div>

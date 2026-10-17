@@ -1,28 +1,27 @@
-import { useEffect, useRef, useState, type CSSProperties } from "react";
-import { Link, useNavigate } from "@tanstack/react-router";
+import { useEffect, useRef, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { trapFocus } from "@/lib/focus-trap";
 import { SiteImage } from "@/components/site/SiteImage";
 import type { ArchiveProject } from "@/lib/site-data";
 
 /**
- * PROJECTS SCENE VOCABULARY (2026-09 gateway redesign).
+ * PROJECT REGISTER VOCABULARY (2026-10 panels redesign).
  *
- * Shared by the Completed and Ongoing archives and the case study. The
- * experience inherits the locked homepage's world — ivory paper, deep-earth
- * scenes, eyebrow-sans labels, mono figures of record, the Studio overlay
- * grammar for the Register and Filter layers — and adds the record language
- * of an engineering archive: sheet numbers, hairline rules, one figure of
- * record per project.
+ * Shared primitives for the Projects register, the Completed and Ongoing
+ * archives and the case study. The experience is an information-led,
+ * ivory-paper register: hairline borders, restrained uppercase metadata,
+ * one figure of record per row. Imagery survives only as evidence —
+ * PrintFrame/MediaCaption serve the case study's single works photograph.
  *
- * Imagery comes from the central media registry (project-media.ts). Records
- * with real Capex photography carry "Capex works photograph" captions; only
- * REFERENCE frames carry the "not a documented Capex project" caption — the
- * registry's sourceType decides, never the component.
+ * Captions follow the central media registry (project-media.ts): records
+ * with real Capex photography carry "Capex works photograph" captions;
+ * only REFERENCE frames carry the "not a documented Capex project"
+ * caption — the registry's sourceType decides, never the component.
  */
 
 /* ------------------------------------------------------------------
- * CROP VARIANCE — records sharing a plate get different object-positions.
- * Deterministic per slug; no Math.random, no hydration mismatch.
+ * CROP VARIANCE — deterministic per slug; no Math.random, no hydration
+ * mismatch. Used where a record's photograph renders.
  * ------------------------------------------------------------------ */
 const CROP_POSITIONS = [
   "object-[30%_24%]",
@@ -45,49 +44,40 @@ export function cropOf(p: { slug: string }): string {
 export function StatusMark({
   status,
   onDark = false,
-  pulse = false,
   className = "",
 }: {
   status: "completed" | "ongoing" | "unconfirmed";
   onDark?: boolean;
-  /** Ongoing rooms only — a slow breath, the only moving mark on the page. */
-  pulse?: boolean;
   className?: string;
 }) {
   if (status === "ongoing") {
     return (
       <span
-        className={`inline-flex items-center gap-2.5 font-tech text-[11px] uppercase tracking-[0.22em] ${
+        className={`inline-flex items-center gap-2 font-tech text-[11px] uppercase tracking-[0.2em] ${
           onDark ? "text-white" : "text-foreground"
         } ${className}`}
       >
-        <span aria-hidden="true" className="relative flex h-2 w-2">
-          {pulse && (
-            <span
-              aria-hidden="true"
-              className="absolute inline-flex h-full w-full rounded-full bg-current opacity-40 motion-safe:animate-ping"
-            />
-          )}
-          <span
-            aria-hidden="true"
-            className={`relative inline-flex h-2 w-2 rounded-full ${
-              onDark ? "bg-[var(--accent-display)]" : "bg-[var(--accent)]"
-            }`}
-          />
-        </span>
+        <span
+          aria-hidden="true"
+          className={`inline-block h-1.5 w-1.5 rounded-full ${
+            onDark ? "bg-[var(--accent-display)]" : "bg-[var(--accent)]"
+          }`}
+        />
         Ongoing
       </span>
     );
   }
   return (
     <span
-      className={`inline-flex items-center gap-2.5 font-tech text-[11px] uppercase tracking-[0.22em] ${
-        onDark ? "text-white/55" : "text-muted-foreground"
+      className={`inline-flex items-center gap-2 font-tech text-[11px] uppercase tracking-[0.2em] ${
+        onDark ? "text-white/55" : "text-muted-foreground/70"
       } ${className}`}
     >
       <span
         aria-hidden="true"
-        className={`inline-block h-1.5 w-1.5 rounded-full ${onDark ? "bg-white/55" : "bg-muted-foreground/70"}`}
+        className={`inline-block h-1.5 w-1.5 rounded-full ${
+          onDark ? "bg-white/55" : "bg-muted-foreground/60"
+        }`}
       />
       Completed
     </span>
@@ -112,11 +102,10 @@ export function PrintFrame({
   eager?: boolean;
   tone?: "light" | "dark";
 }) {
-  const real = p.media.sourceType !== "REFERENCE";
   return (
     <div
       style={{ aspectRatio: ratio }}
-      className={`pointer-events-none overflow-hidden bg-[var(--surface)] ${className}`}
+      className={`overflow-hidden bg-[var(--surface)] ${className}`}
     >
       <SiteImage
         src={p.media.src}
@@ -124,10 +113,8 @@ export function PrintFrame({
         eager={eager}
         fetchPriority={eager ? "high" : "auto"}
         alt={p.media.alt}
-        className={`h-full w-full object-cover ${cropOf(p)} transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03] group-focus-visible:scale-[1.03] ${
-          tone === "dark"
-            ? "[filter:saturate(0.85)_brightness(0.94)] group-hover:[filter:saturate(1)]"
-            : "[filter:saturate(0.88)] group-hover:[filter:saturate(1)]"
+        className={`h-full w-full object-cover ${cropOf(p)} ${
+          tone === "dark" ? "[filter:saturate(0.85)_brightness(0.94)]" : "[filter:saturate(0.88)]"
         } ${imgClassName}`}
       />
     </div>
@@ -173,55 +160,7 @@ export function MediaCaption({
   );
 }
 
-/** The "View project →" affordance shared by all compositions. */
-export function ViewProjectAffordance({
-  onDark = false,
-  className = "",
-}: {
-  onDark?: boolean;
-  className?: string;
-}) {
-  return (
-    <span
-      className={`mt-8 inline-flex items-center gap-3 font-tech text-[11px] uppercase tracking-[0.24em] transition-colors ${className} ${
-        onDark ? "text-white" : "text-foreground"
-      }`}
-    >
-      <span
-        className={`border-b pb-1 transition-colors duration-300 ${
-          onDark
-            ? "border-white/30 group-hover:border-white"
-            : "border-border group-hover:border-foreground"
-        }`}
-      >
-        View project
-      </span>
-      <ProjectCtaArrow />
-    </span>
-  );
-}
-
-/** A quiet archive position mark: RECORD 07 / 49. */
-export function ProjectPosition({
-  index,
-  total,
-  onDark = false,
-}: {
-  index: number;
-  total: number;
-  onDark?: boolean;
-}) {
-  return (
-    <span
-      className={`font-tech text-[10px] uppercase tracking-[0.2em] ${
-        onDark ? "text-white/40" : "text-muted-foreground/60"
-      }`}
-    >
-      Record {String(index).padStart(2, "0")} / {total}
-    </span>
-  );
-}
-
+/** A quiet directional mark for register affordances. */
 export function ProjectCtaArrow({ className = "" }: { className?: string }) {
   return (
     <span
@@ -234,8 +173,155 @@ export function ProjectCtaArrow({ className = "" }: { className?: string }) {
 }
 
 /* ------------------------------------------------------------------
- * ARCHIVE NAV — Projects' own bar: brand, the two-state register switch,
- * INDEX + FILTER controls. Tone-adapting like every site nav.
+ * FILTER — a quiet Studio-grammar layer with live counts.
+ * ------------------------------------------------------------------ */
+export function FilterOverlay({
+  open,
+  onClose,
+  facets,
+  active,
+  onApply,
+  onClear,
+}: {
+  open: boolean;
+  onClose: () => void;
+  facets: {
+    key: "practice" | "sector" | "state";
+    label: string;
+    options: { value: string; label: string; count: number }[];
+  }[];
+  active: { practice?: string; sector?: string; state?: string };
+  onApply: (patch: { practice?: string; sector?: string; state?: string }) => void;
+  onClear: () => void;
+}) {
+  const panelRef = useRef<HTMLDivElement>(null);
+  const restoreRef = useRef<HTMLElement | null>(null);
+  const [dissolving, setDissolving] = useState(false);
+  const mounted = open || dissolving;
+  const anyActive = Boolean(active.practice || active.sector || active.state);
+
+  useEffect(() => {
+    if (!open) return;
+    restoreRef.current = document.activeElement as HTMLElement | null;
+    document.documentElement.style.overflow = "hidden";
+    const t = setTimeout(() => {
+      panelRef.current?.querySelector<HTMLElement>("button")?.focus();
+    }, 60);
+    const el = panelRef.current;
+    const release = el ? trapFocus(el) : () => {};
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        onClose();
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => {
+      clearTimeout(t);
+      release();
+      document.removeEventListener("keydown", onKey);
+      document.documentElement.style.overflow = "";
+      restoreRef.current?.focus?.();
+    };
+  }, [open, onClose]);
+
+  useEffect(() => {
+    if (open) return;
+    setDissolving((d) => (d ? d : true));
+  }, [open]);
+  useEffect(() => {
+    if (open || !dissolving) return;
+    const t = setTimeout(() => setDissolving(false), 360);
+    return () => clearTimeout(t);
+  }, [open, dissolving]);
+
+  if (!mounted) return null;
+
+  return (
+    <div
+      ref={panelRef}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Filter projects"
+      aria-hidden={!open || undefined}
+      className={`fixed inset-0 z-[80] flex flex-col overflow-y-auto text-white ${
+        open
+          ? "layer-in bg-[oklch(0.185_0.02_60/0.92)] opacity-100"
+          : "pointer-events-none bg-[oklch(0.185_0.02_60/0.92)] opacity-0 transition-opacity duration-[340ms]"
+      }`}
+    >
+      <div className="flex items-center justify-between px-6 py-5 lg:px-12">
+        <span className="eyebrow-sans text-white/45">Filter</span>
+        <button
+          onClick={onClose}
+          tabIndex={open ? undefined : -1}
+          className="eyebrow-sans text-white/45 transition-colors hover:text-white"
+        >
+          Close · Esc
+        </button>
+      </div>
+
+      <div
+        className="mx-auto w-full max-w-[820px] flex-1 px-6 pb-20 pt-6 md:pt-12"
+        {...(!open ? { inert: true as never } : {})}
+      >
+        {facets.map((f, fi) => (
+          <section
+            key={f.key}
+            className={fi > 0 ? "mt-14" : ""}
+            aria-label={`Filter by ${f.label}`}
+          >
+            <p className="eyebrow-sans text-[10px] text-white/35">{f.label}</p>
+            <ul className="mt-6">
+              {f.options.map((o) => {
+                const isActive = active[f.key] === o.value;
+                return (
+                  <li key={o.value}>
+                    <button
+                      onClick={() => onApply({ [f.key]: isActive ? undefined : o.value })}
+                      tabIndex={open ? undefined : -1}
+                      aria-pressed={isActive}
+                      className="group flex w-full items-baseline justify-between gap-6 border-b border-white/10 py-5 text-left"
+                    >
+                      <span
+                        className={`block font-display text-xl font-normal leading-[1.15] tracking-[-0.01em] transition-colors duration-300 md:text-[26px] ${
+                          isActive ? "text-white" : "text-white/85 group-hover:text-white"
+                        }`}
+                      >
+                        {o.label}
+                      </span>
+                      <span className="shrink-0 font-tech text-sm text-white/35 group-hover:text-white/60">
+                        {o.count}
+                      </span>
+                      {isActive && (
+                        <span className="shrink-0 font-tech text-sm text-[var(--accent-display)]">
+                          ●
+                        </span>
+                      )}
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+        ))}
+
+        {anyActive && (
+          <button
+            onClick={onClear}
+            tabIndex={open ? undefined : -1}
+            className="mt-14 font-tech text-[11px] uppercase tracking-[0.24em] text-white/60 underline-offset-4 hover:text-white hover:underline"
+          >
+            Clear all filters
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------
+ * ARCHIVE NAV — the fixed header for the Completed / Ongoing archives.
  * ------------------------------------------------------------------ */
 export function ArchiveNav({
   overDark,
@@ -250,7 +336,6 @@ export function ArchiveNav({
 }: {
   overDark: boolean;
   brandWordmark: string;
-  /** The archive this nav currently serves. */
   state: "completed" | "ongoing";
   completedCount: number;
   ongoingCount: number;
@@ -599,156 +684,6 @@ export function RegisterOverlay({
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  );
-}
-
-/* ------------------------------------------------------------------
- * FILTER — same Studio-grammar layer as before, now with live counts.
- * ------------------------------------------------------------------ */
-export function FilterOverlay({
-  open,
-  onClose,
-  facets,
-  active,
-  onApply,
-  onClear,
-}: {
-  open: boolean;
-  onClose: () => void;
-  facets: {
-    key: "practice" | "sector" | "state";
-    label: string;
-    options: { value: string; label: string; count: number }[];
-  }[];
-  active: { practice?: string; sector?: string; state?: string };
-  onApply: (patch: { practice?: string; sector?: string; state?: string }) => void;
-  onClear: () => void;
-}) {
-  const panelRef = useRef<HTMLDivElement>(null);
-  const restoreRef = useRef<HTMLElement | null>(null);
-  const [dissolving, setDissolving] = useState(false);
-  const mounted = open || dissolving;
-  const anyActive = Boolean(active.practice || active.sector || active.state);
-
-  useEffect(() => {
-    if (!open) return;
-    restoreRef.current = document.activeElement as HTMLElement | null;
-    document.documentElement.style.overflow = "hidden";
-    const t = setTimeout(() => {
-      panelRef.current?.querySelector<HTMLElement>("button")?.focus();
-    }, 60);
-    const el = panelRef.current;
-    const release = el ? trapFocus(el) : () => {};
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        e.preventDefault();
-        onClose();
-      }
-    };
-    document.addEventListener("keydown", onKey);
-    return () => {
-      clearTimeout(t);
-      release();
-      document.removeEventListener("keydown", onKey);
-      document.documentElement.style.overflow = "";
-      restoreRef.current?.focus?.();
-    };
-  }, [open, onClose]);
-
-  useEffect(() => {
-    if (open) return;
-    setDissolving((d) => (d ? d : true));
-  }, [open]);
-  useEffect(() => {
-    if (open || !dissolving) return;
-    const t = setTimeout(() => setDissolving(false), 360);
-    return () => clearTimeout(t);
-  }, [open, dissolving]);
-
-  if (!mounted) return null;
-
-  return (
-    <div
-      ref={panelRef}
-      role="dialog"
-      aria-modal="true"
-      aria-label="Filter projects"
-      aria-hidden={!open || undefined}
-      className={`fixed inset-0 z-[80] flex flex-col overflow-y-auto text-white ${
-        open
-          ? "layer-in bg-[oklch(0.185_0.02_60/0.9)] opacity-100 backdrop-blur-[10px] backdrop-saturate-[0.9]"
-          : "pointer-events-none bg-[oklch(0.185_0.02_60/0.9)] opacity-0 backdrop-blur-[10px] transition-opacity duration-[340ms]"
-      }`}
-    >
-      <div className="flex items-center justify-between px-6 py-5 lg:px-12">
-        <span className="eyebrow-sans text-white/45">Filter</span>
-        <button
-          onClick={onClose}
-          tabIndex={open ? undefined : -1}
-          className="eyebrow-sans text-white/45 transition-colors hover:text-white"
-        >
-          Close · Esc
-        </button>
-      </div>
-
-      <div
-        className="mx-auto w-full max-w-[820px] flex-1 px-6 pb-20 pt-6 md:pt-12"
-        {...(!open ? { inert: true as never } : {})}
-      >
-        {facets.map((f, fi) => (
-          <section
-            key={f.key}
-            className={fi > 0 ? "mt-14" : ""}
-            aria-label={`Filter by ${f.label}`}
-          >
-            <p className="eyebrow-sans text-[10px] text-white/35">{f.label}</p>
-            <ul className="studio-list mt-6">
-              {f.options.map((o) => {
-                const isActive = active[f.key] === o.value;
-                return (
-                  <li key={o.value}>
-                    <button
-                      onClick={() => onApply({ [f.key]: isActive ? undefined : o.value })}
-                      tabIndex={open ? undefined : -1}
-                      aria-pressed={isActive}
-                      className="group flex w-full items-baseline justify-between gap-6 border-b border-white/10 py-5 text-left"
-                    >
-                      <span className="min-w-0 flex-1">
-                        <span
-                          className={`block font-display text-xl font-normal leading-[1.15] tracking-[-0.01em] transition-colors duration-300 md:text-[26px] ${
-                            isActive ? "text-white" : "text-white/85 group-hover:text-white"
-                          }`}
-                        >
-                          {o.label}
-                        </span>
-                      </span>
-                      <span className="shrink-0 font-tech text-sm text-white/35 group-hover:text-white/60">
-                        {o.count}
-                      </span>
-                      {isActive && (
-                        <span className="shrink-0 font-tech text-sm text-[var(--accent-display)]">
-                          ●
-                        </span>
-                      )}
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
-          </section>
-        ))}
-
-        {anyActive && (
-          <button
-            onClick={onClear}
-            tabIndex={open ? undefined : -1}
-            className="mt-14 font-tech text-[11px] uppercase tracking-[0.24em] text-white/60 underline-offset-4 hover:text-white hover:underline"
-          >
-            Clear all filters
-          </button>
-        )}
       </div>
     </div>
   );

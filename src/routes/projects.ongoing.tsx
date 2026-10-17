@@ -1,20 +1,19 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
 import { getProjectsArchive, getSearchCorpus, type ArchiveProject } from "@/lib/site-data";
 import { PUBLIC_QUERY_DEFAULTS } from "@/components/site/SiteChrome";
 import { Closing } from "@/components/site/home/Closing";
-import { Reveal } from "@/components/site/home/Reveal";
+import { RegisterOpening, RegisterClose } from "@/components/site/projects/RegisterPanels";
+import { FilterOverlay } from "@/components/site/projects/ArchiveVocabulary";
 import {
-  ArchiveNav,
-  FilterOverlay,
-  RegisterOverlay,
-} from "@/components/site/projects/ArchiveVocabulary";
-import {
-  OngoingOpening,
-  OngoingField,
-  OngoingClose,
-} from "@/components/site/projects/ArchiveScenes";
+  EmptyRegister,
+  FilteredNotice,
+  FilterTrigger,
+  PanelField,
+  StateLinks,
+  type ArchiveSearch,
+} from "@/components/site/projects/RegisterPanels";
 import { ProjectsExperience } from "@/components/site/projects/ProjectsExperience";
 import { buildSearchCorpus } from "@/components/site/home/search-corpus";
 
@@ -58,17 +57,18 @@ export const Route = createFileRoute("/projects/ongoing")({
 });
 
 /**
- * THE LIVE PROGRAMME — the Ongoing archive. Distinct rhythm from Completed
- * (the programme line, not the hang): a deep-earth opening, stations sequenced
- * along a vertical rule, the breathing status mark. Same data contract —
- * records derive from the single authoritative status field; no dates, no
- * percentages, no phases.
+ * THE ONGOING ARCHIVE — the other state of the register, the same panel
+ * system. The record stays honest: status is the corpus's single
+ * authoritative "ongoing"; no dates, no percentages, no progress marks
+ * anywhere on the page.
  */
 function OngoingArchive() {
   const search = Route.useSearch();
   const router = useRouter();
   const { data } = useSuspenseQuery(searchQuery);
   const { data: corpusData } = useSuspenseQuery(searchCorpusQuery);
+  const [filterOpen, setFilterOpen] = useState(false);
+
   const corpus = useMemo(
     () =>
       buildSearchCorpus({
@@ -81,27 +81,6 @@ function OngoingArchive() {
       }),
     [corpusData],
   );
-  const [filterOpen, setFilterOpen] = useState(false);
-  const [indexOpen, setIndexOpen] = useState(false);
-
-  const [navOverDark, setNavOverDark] = useState(true);
-  useEffect(() => {
-    const scenes = Array.from(document.querySelectorAll<HTMLElement>("#main [data-tone]"));
-    if (scenes.length === 0) return;
-    const visible = new Map<HTMLElement, boolean>();
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) visible.set(e.target as HTMLElement, e.isIntersecting);
-        const live = scenes
-          .filter((s) => visible.get(s))
-          .sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top)[0];
-        if (live) setNavOverDark(live.dataset.tone !== "light");
-      },
-      { rootMargin: "-72px 0px -35% 0px", threshold: 0 },
-    );
-    for (const s of scenes) io.observe(s);
-    return () => io.disconnect();
-  }, [indexOpen]);
 
   const setFilter = (patch: Partial<Search>) =>
     router.navigate({
@@ -172,67 +151,67 @@ function OngoingArchive() {
   ];
 
   return (
-    <ProjectsExperience brandWordmark="CAPEX" corpus={corpus} hideNav={true}>
-      <ArchiveNav
-        overDark={navOverDark}
-        brandWordmark="CAPEX"
-        state="ongoing"
-        completedCount={data.completedCount}
-        ongoingCount={data.ongoingCount}
-        onOpenIndex={() => setIndexOpen(true)}
-        indexActive={indexOpen}
-        onOpenFilter={() => setFilterOpen(true)}
-        filterActive={anyFilter}
+    <ProjectsExperience
+      brandWordmark="CAPEX"
+      corpus={corpus}
+      initialTone="dark"
+      footer={<Closing />}
+    >
+      {/* the Ongoing archive is a deep-espresso scene end to end —
+          ivory type, warm-gray copy, copper state marks, hairline rules */}
+      <RegisterOpening
+        eyebrow="Projects · State of work"
+        title="Ongoing"
+        tone="dark"
+        copy="Work currently taking shape — the live programme, stated as the company record states it: scope, client and place."
+        note="No completion dates or progress percentages are published — the record carries scope, client and place only."
+        meta={
+          <>
+            <StateLinks
+              current="ongoing"
+              completedCount={data.completedCount}
+              ongoingCount={data.ongoingCount}
+              search={search as ArchiveSearch}
+            />
+            <FilterTrigger active={anyFilter} onOpen={() => setFilterOpen(true)} />
+          </>
+        }
       />
-      <main id="main">
-        <OngoingOpening total={filtered.length} onOpenIndex={() => setIndexOpen(true)} />
 
+      <div data-tone="dark" className="band-espresso">
         {anyFilter && (
-          <div className="mx-auto flex max-w-[1680px] flex-wrap items-baseline gap-6 px-6 pt-14 md:px-10 lg:px-12">
-            <Reveal>
-              <p className="font-tech text-[11px] uppercase tracking-[0.2em] text-white/55">
-                {filtered.length} programme{filtered.length === 1 ? "" : "s"} — filtered
-              </p>
-            </Reveal>
-            <button
-              onClick={() =>
+          <div className="mx-auto max-w-[1680px] px-6 md:px-10 lg:px-12">
+            <FilteredNotice
+              count={filtered.length}
+              noun="programmes"
+              onReset={() =>
                 setFilter({ practice: undefined, sector: undefined, state: undefined })
               }
-              className="font-tech text-[11px] uppercase tracking-[0.2em] text-white/55 underline-offset-4 hover:text-white hover:underline"
-            >
-              Reset
-            </button>
+            />
           </div>
         )}
 
         {filtered.length === 0 ? (
-          <div className="mx-auto max-w-[1680px] bg-[var(--ink)] px-6 py-32 text-white md:px-10 lg:px-12">
-            <p className="font-display text-2xl font-normal text-white/80">
-              No ongoing projects match these filters.
-            </p>
-            <button
-              onClick={() =>
-                setFilter({ practice: undefined, sector: undefined, state: undefined })
-              }
-              className="mt-6 font-tech text-[11px] uppercase tracking-[0.24em] text-white underline-offset-4 hover:underline"
-            >
-              Clear filters
-            </button>
-          </div>
+          <EmptyRegister
+            label="ongoing"
+            onClear={() => setFilter({ practice: undefined, sector: undefined, state: undefined })}
+          />
         ) : (
-          <OngoingField projects={filtered} />
+          <div className="mx-auto max-w-[1680px] px-6 pb-20 pt-8 md:px-10 md:pt-10 lg:px-12">
+            <PanelField projects={filtered} />
+          </div>
         )}
+      </div>
 
-        <OngoingClose completedCount={data.completedCount} />
-      </main>
-      <Closing />
-      <RegisterOverlay
-        open={indexOpen}
-        onClose={() => setIndexOpen(false)}
-        projects={filtered}
-        stateLabel="Ongoing"
-        count={filtered.length}
+      <RegisterClose
+        eyebrow="Delivered work"
+        heading="Every programme here was once a record there."
+        label="Completed"
+        note={`${data.completedCount} records`}
+        to="/projects/completed"
+        tone="dark"
       />
+
       <FilterOverlay
         open={filterOpen}
         onClose={() => setFilterOpen(false)}
