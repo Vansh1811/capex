@@ -13,8 +13,7 @@ import { ContactExperience } from "@/components/site/contact/ContactExperience";
 import { Opening } from "@/components/site/contact/Opening";
 import { Direct } from "@/components/site/contact/Direct";
 import { Enquiry } from "@/components/site/contact/Enquiry";
-import { Where } from "@/components/site/contact/Where";
-import { Interruption } from "@/components/site/contact/Interruption";
+import { Faq } from "@/components/site/contact/Faq";
 import { Closing } from "@/components/site/contact/Closing";
 
 const chromeQuery = queryOptions({
@@ -62,12 +61,12 @@ export const Route = createFileRoute("/contact")({
 
 /**
  * THE OPEN LINE — the Contact page as the natural conclusion of the Capex
- * site journey: atmosphere → conversation → contact → requirement →
- * engineering → project. The quietest movement of the Studio ecosystem: one
- * continuous line from a deep-earth opening to the enquiry form, the open
- * line drawing itself through the locations field, and the same deep ground
- * to close. All contact data is verified (site_settings + the audited
- * record); nothing is invented.
+ * site journey: atmosphere → enquiry → direct line → questions → close.
+ * The quietest movement of the Studio ecosystem: a deep-earth opening into
+ * the enquiry panel (the page's primary action), the compact direct
+ * channels beneath it, the Q&A register on the same warm ground, and the
+ * same deep ground to close. All contact data is verified (site_settings +
+ * the audited record); nothing is invented.
  */
 function ContactPage() {
   const { data: chromeData } = useSuspenseQuery(chromeQuery);
@@ -103,27 +102,24 @@ function ContactPage() {
       <Opening phone={phone} email={email} />
 
       {/* one continuous warm-ivory ground carries the whole conversation:
-          direct channels, then the enquiry itself */}
+          the enquiry in its panel, then the direct channels, then Q&A */}
       <section
         aria-label="Reach Capex directly or send an enquiry"
         data-tone="light"
         className="paper relative text-foreground"
       >
-        <div className="mx-auto max-w-[1440px] px-6 py-24 md:px-10 md:py-32 lg:px-12 lg:py-40">
+        <div className="mx-auto max-w-[1120px] px-6 py-24 md:px-10 md:py-32 lg:py-40">
+          <Enquiry
+            phone={phone}
+            email={email}
+            capabilities={capabilities}
+            practiceIds={practiceIds}
+          />
           <Direct phone={phone} email={email} />
-          <div className="mt-28 md:mt-40">
-            <Enquiry
-              phone={phone}
-              email={email}
-              capabilities={capabilities}
-              practiceIds={practiceIds}
-            />
-          </div>
         </div>
       </section>
 
-      <Where offices={offices} />
-      <Interruption />
+      <Faq offices={offices} />
       <Closing phone={phone} email={email} />
     </ContactExperience>
   );

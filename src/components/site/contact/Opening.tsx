@@ -1,7 +1,7 @@
 import { ClipReveal } from "@/components/site/home/ClipReveal";
 import { Reveal } from "@/components/site/home/Reveal";
 import { useEntrance } from "@/components/site/home/HeroVideo";
-import { SiteImage, publicSets } from "@/components/site/SiteImage" ;
+import { SiteImage, publicSets } from "@/components/site/SiteImage";
 /**
  * Opening (Contact): the first frame of THE OPEN LINE — deep earth, almost
  * black, the beginning of a relationship rather than a request for details.
@@ -15,7 +15,7 @@ import { SiteImage, publicSets } from "@/components/site/SiteImage" ;
 export function Opening({ phone, email }: { phone: string; email: string }) {
   const enter = useEntrance(160);
 
-  return ( 
+  return (
     <section
       aria-label="Contact Capex — start with a conversation"
       data-tone="dark"
