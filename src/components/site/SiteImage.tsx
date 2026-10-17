@@ -28,6 +28,11 @@ export function publicSrcSet(
 
 /** "/uploads/x/plate.jpg" → "/uploads/x/plate.webp" (only for JPEG plates). */
 export function webpFor(src: string): string | undefined {
+  // The .webp sibling convention exists only for /uploads plates (generated
+  // alongside each JPEG). Vite-imported and build-hashed assets have no
+  // sibling file — deriving one would 404 and break the picture (no
+  // fallback once a <source> is selected), so those render JPEG-only.
+  if (!src.startsWith("/uploads/")) return undefined;
   if (!src.endsWith(".jpg") || NO_WEBP.has(src)) return undefined;
   return `${src.slice(0, -4)}.webp`;
 }

@@ -61,7 +61,7 @@ export function buildSearchCorpus(input: {
       href: p.slug ? `/projects/${p.slug}` : "/projects",
     });
   for (const s of input.sectors)
-    docs.push({ kind: "Sector", title: s.name, detail: "Sector", href: "/sectors" });
+    docs.push({ kind: "Sector", title: s.name, detail: "Sector", href: "/services" });
   for (const m of input.people ?? [])
     docs.push({ kind: "Person", title: m.name, detail: m.role, href: "/team" });
   for (const c of input.clients ?? [])

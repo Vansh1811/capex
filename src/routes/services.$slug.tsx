@@ -301,7 +301,8 @@ function CapabilityDetailPage() {
                       ))}
                     </ul>
                     <Link
-                      to="/sectors"
+                      to="/services"
+                      hash="where-we-work"
                       className="mt-6 inline-flex items-center gap-2 font-tech text-[11px] uppercase tracking-[0.2em] text-foreground"
                     >
                       <span className="border-b border-border pb-1">Explore sectors</span>

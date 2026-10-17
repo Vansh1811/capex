@@ -5,7 +5,7 @@
  * PDFs (DOC A "Company Profile" 21pp · DOC B "HVAC & fire profile" 22pp ·
  * DOC C "Electrical & CGD profile" 20pp) or to the already-verified site
  * corpus. Facts owned by other pages (services detail → /services, sector
- * catalogue → /sectors, project register → /projects, roster → /team,
+ * catalogue → /services#where-we-work, project register → /projects, roster → /team,
  * clients → /clients, evidence → /credentials) appear here only as bridges.
  * No legacy statistics (10+ years, 150+ projects, 315+ KM, 24/7) — those
  * are not in the verified record.
@@ -174,8 +174,9 @@ export const STORY = {
 } as const;
 
 /**
- * 06 — Sectors transition. The bridge from About into the Sectors page —
- * no catalogue, no project grid. The sector record lives on /sectors.
+ * 06 — Sectors transition. The bridge from About into the sector explorer —
+ * no catalogue, no project grid. The sector record lives inside the
+ * Capabilities page (/services#where-we-work).
  */
 export const RANGE = {
   eyebrow: "Where the work lives",

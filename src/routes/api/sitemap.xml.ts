@@ -7,8 +7,8 @@ import { PROJECT_CORPUS } from "@/lib/project-corpus";
  * corpora (the single source of which records are published). Static
  * generation-time content; no database involved.
  *
- * Sectors is a single-page atlas — only /sectors is listed, no
- * /sectors/[slug] detail URLs.
+ * Sectors live inside the Capabilities page (/services#where-we-work) —
+ * only /services is listed, no separate sector URLs.
  */
 export const Route = createFileRoute("/api/sitemap/xml")({
   server: {
@@ -22,7 +22,6 @@ export const Route = createFileRoute("/api/sitemap/xml")({
           { loc: "/projects" },
           { loc: "/projects/completed" },
           { loc: "/projects/ongoing" },
-          { loc: "/sectors" },
           { loc: "/about" },
           { loc: "/team" },
           { loc: "/clients" },

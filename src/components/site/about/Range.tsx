@@ -65,7 +65,8 @@ export function Range() {
             </Reveal>
             <Reveal delay={300}>
               <Link
-                to="/sectors"
+                to="/services"
+                hash="where-we-work"
                 className="group mt-12 inline-flex items-center gap-4 border-b border-border pb-3 transition-colors hover:border-foreground"
               >
                 <span className="font-display text-xl font-medium tracking-[-0.01em] md:text-2xl">
