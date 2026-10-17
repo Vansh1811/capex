@@ -56,9 +56,9 @@ export function Manifesto() {
           {/* the complexity — every part, every interface, made to feel simple */}
           <Reveal delay={620}>
             <p className="mt-6 max-w-md text-[15px] leading-[1.8] text-muted-foreground">
-              Every part has a role, every interface has a consequence, and every system has to
-              work together. The work is in making that complexity feel simple when everything is
-              finally in place.
+              Every part has a role, every interface has a consequence, and every system has to work
+              together. The work is in making that complexity feel simple when everything is finally
+              in place.
             </p>
           </Reveal>
           {/* the close — from first drawing to final test, one working system */}

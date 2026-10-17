@@ -140,7 +140,13 @@ export const PEOPLE_CORPUS: PersonRecord[] = [
       "He is a keen planner for project execution.",
     ],
     experience: "20+ Years",
-    focus: ["MEP", "Pipeline Work", "Operations & Maintenance", "Project Execution", "Commissioning"],
+    focus: [
+      "MEP",
+      "Pipeline Work",
+      "Operations & Maintenance",
+      "Project Execution",
+      "Commissioning",
+    ],
   },
   {
     name: "Rajeshwar Boke",

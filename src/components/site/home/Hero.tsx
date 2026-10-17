@@ -49,7 +49,6 @@ export function Hero() {
           2012.
         </p>
       </div>
-
     </section>
   );
 }

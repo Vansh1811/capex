@@ -17,7 +17,13 @@ export type HomeNavProps = {
  * hairline bar over light ones — color adapts to the scene beneath it
  * without ever becoming a heavy UI element.
  */
-export function HomeNav({ overDark, brandWordmark, onOpenSearch, onOpenStudio, hideDesktopNav }: HomeNavProps) {
+export function HomeNav({
+  overDark,
+  brandWordmark,
+  onOpenSearch,
+  onOpenStudio,
+  hideDesktopNav,
+}: HomeNavProps) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -54,7 +60,9 @@ export function HomeNav({ overDark, brandWordmark, onOpenSearch, onOpenStudio, h
             : "border-b border-border bg-background/92 backdrop-blur-[6px]"
         } ${hideDesktopNav ? "lg:pointer-events-none lg:opacity-0" : ""}`}
       >
-        <div className={`mx-auto flex h-20 max-w-[1680px] items-center justify-between px-6 lg:px-12 ${hideDesktopNav ? "lg:hidden" : ""}`}>
+        <div
+          className={`mx-auto flex h-20 max-w-[1680px] items-center justify-between px-6 lg:px-12 ${hideDesktopNav ? "lg:hidden" : ""}`}
+        >
           <Link
             to="/"
             aria-label={`${brandWordmark} — home`}

@@ -35,3 +35,5 @@ slugs.tmp
 *.sw?
 
 Thumbs.db
+.freebuff/
+

@@ -36,9 +36,7 @@ export function Trust() {
               </h2>
             </Reveal>
             <Reveal delay={180}>
-              <p className="mt-10 max-w-lg text-[15px] leading-[1.8] text-white/65">
-                {TRUST.body}
-              </p>
+              <p className="mt-10 max-w-lg text-[15px] leading-[1.8] text-white/65">{TRUST.body}</p>
             </Reveal>
 
             <div className="mt-14 flex flex-wrap gap-x-12 gap-y-6">

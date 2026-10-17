@@ -166,9 +166,9 @@ export function TwoWorlds() {
               </Reveal>
               <Reveal delay={210}>
                 <p className="mt-10 max-w-sm text-[15px] leading-[1.8] text-muted-foreground">
-                  HVAC and VRV plants. Hydrant and sprinkler systems.
-                  Integrated mechanical, electrical and plumbing — engineered, installed and
-                  commissioned by one accountable partner.
+                  HVAC and VRV plants. Hydrant and sprinkler systems. Integrated mechanical,
+                  electrical and plumbing — engineered, installed and commissioned by one
+                  accountable partner.
                 </p>
               </Reveal>
               <Reveal delay={270}>
