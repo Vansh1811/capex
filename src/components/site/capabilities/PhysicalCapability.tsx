@@ -1,96 +1,159 @@
 import { Reveal } from "@/components/site/home/Reveal";
-import { ClipReveal } from "@/components/site/home/ClipReveal";
 import { SiteImage } from "@/components/site/SiteImage";
-import { ReferenceNote } from "@/components/site/capabilities/CapabilitiesExperience";
+import { EQUIPMENT_RIG } from "@/lib/capability-media";
 
 /**
- * PHYSICAL CAPABILITY — BUILT TO DELIVER. The register's abstract
- * disciplines resolve into tonnage: the Drillto trenchless fleet's pullback
- * classes, oversized and architectural, set into the rig frame. The
- * fleet's three numerals run down the frame's quiet edge like a gauge;
- * the remaining register reads as a mono register column, not an
- * equipment table. Verified data only — DOC A p11 / DOC C p5; the rig
- * pictured is reference imagery.
+ * PHYSICAL CAPABILITY — the fleet, stated in tonnage. One real frame of the
+ * company's own HDD rig carries the section; beside it the documented
+ * fleet gauge (32 / 28 / 20-tonne pullback classes, quantities read from
+ * the equipment register itself), closed by the full documented register —
+ * the same technical-index language as the testing & commissioning
+ * register above. Every numeral comes from the company record; the
+ * pictured machine is Capex works photography (DOC C p5).
  */
+
+/** Class labels for the fleet gauge — the register's own classes. */
+const FLEET_LABEL: Record<number, string> = {
+  32: "Pullback class",
+  28: "Mid fleet",
+  20: "Compact fleet",
+};
+
+const num = (i: number) => String(i).padStart(2, "0");
+
 export function PhysicalCapability({
   fleet,
+  equipment,
 }: {
   fleet: { tonnes: number }[];
+  equipment: { item: string; spec: string | null; qty?: string }[];
 }) {
+  /** Quantity for a fleet class, read from the register it appears on. */
+  const qtyFor = (tonnes: number) => {
+    const row = equipment.find(
+      (e) => e.item.startsWith("Drillto") && e.spec?.includes(`${tonnes}-tonne`),
+    );
+    return row?.qty;
+  };
+
   return (
     <section
-      aria-label="Physical capability — built to deliver"
+      id="equipment"
+      aria-label="Physical capability — the trenchless fleet and the documented equipment register"
       data-tone="dark"
-      className="relative bg-[var(--brand)] text-white"
+      className="relative scroll-mt-24 bg-[var(--brand)] text-white"
     >
-      <div className="mx-auto max-w-[1680px] px-6 py-28 md:px-10 md:py-40 lg:px-12 lg:py-48">
-        <div className="grid gap-6 md:grid-cols-12 md:items-end">
-          <Reveal className="md:col-span-8">
+      <div className="mx-auto max-w-[1680px] px-6 py-24 md:px-10 md:py-32 lg:px-12">
+        {/* the statement */}
+        <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
+          <Reveal className="lg:col-span-7">
             <p className="eyebrow-sans text-white/50">Physical capability</p>
-            <h2 className="mt-10 max-w-[14ch] text-balance font-display text-[11vw] font-normal leading-[1.02] tracking-[-0.025em] sm:text-[8vw] lg:text-[min(5.6vw,96px)]">
-              Built to deliver.
+            <h2 className="mt-6 font-display text-[8vw] font-normal leading-[1.08] tracking-[-0.025em] text-white/90 sm:text-[6vw] lg:text-[min(4vw,60px)]">
+              Built to deliver<span className="text-[var(--accent-display)]">.</span>
             </h2>
           </Reveal>
-          <Reveal delay={180} className="md:col-span-4">
-            <p className="max-w-sm text-sm leading-[1.8] text-white/60">
+          <Reveal delay={140} className="lg:col-span-5">
+            <p className="max-w-md text-sm leading-[1.8] text-white/55">
               Capability, stated in tonnage. The trenchless fleet drills crossings under roads, rail
-              and rivers without opening the surface — owned, not rented, on the company&rsquo;s own
-              register.
+              and rivers without opening the surface&nbsp;— owned, not rented, on the
+              company&rsquo;s own register.
             </p>
           </Reveal>
         </div>
 
-        {/* the rig frame — the numeral set into the composition */}
-        <div className="relative mt-16 md:mt-24">
-          <ClipReveal edge="left" ratio="16 / 9" innerClassName="relative">
-            <SiteImage
-              src="/uploads/capabilities/hdd-rig-drillto.jpg"
-              sizes="100vw"
-              width={1600}
-              height={1066}
-              alt="Horizontal directional drilling rig at work — atmospheric reference imagery, not Capex-owned equipment"
-              className="h-full w-full object-cover object-[58%_46%] [filter:saturate(0.85)_contrast(1.05)]"
-            />
-            {/* the pullback numeral — quietly inside the frame, like the About page's tonnage */}
-            <div className="absolute bottom-0 left-0 right-0 flex flex-wrap items-end justify-between gap-4 bg-gradient-to-t from-black/85 via-black/45 to-transparent px-6 pb-6 pt-28 md:px-10 md:pb-10">
-              <span className="font-display text-[22vw] font-normal leading-none tracking-[-0.02em] text-white [text-shadow:0_1px_24px_rgb(0_0_0/45%)] sm:text-[18vw] md:text-[150px] lg:text-[190px]">
-                32
-              </span>
-              <span className="pb-3 font-tech text-[10px] uppercase tracking-[0.24em] text-white/90 md:pb-6">
-                Tonnes · pullback class · trenchless
-              </span>
+        {/* the rig + the fleet gauge */}
+        <div className="mt-12 grid gap-10 lg:grid-cols-12 lg:gap-12">
+          <Reveal className="lg:col-span-7">
+            <div className="relative aspect-[4/3] overflow-hidden bg-black/40">
+              <SiteImage
+                src={EQUIPMENT_RIG.src}
+                sizes="(max-width: 1024px) 100vw, 58vw"
+                alt={EQUIPMENT_RIG.alt}
+                className="absolute inset-0 h-full w-full object-cover object-[62%_52%]"
+              />
             </div>
-          </ClipReveal>
+            <p className="mt-3 font-tech text-[10px] uppercase leading-[1.7] tracking-[0.2em] text-white/40">
+              Capex works photograph — {EQUIPMENT_RIG.subject}
+            </p>
+          </Reveal>
 
-          {/* the fleet gauges — 32 / 28 / 20 down the frame's quiet edge */}
-          <div className="mt-8 grid grid-cols-3 divide-x divide-white/15 border-y border-white/15 md:mt-10">
-            {fleet.map((f, i) => (
-              <div key={f.tonnes} className="px-4 py-5 first:pl-0 md:px-8 md:py-7">
-                <span
-                  className={`block font-display font-normal leading-none tracking-[-0.02em] md:leading-none ${
-                    i === 0
-                      ? "text-[44px] md:text-[72px] lg:text-[92px]"
-                      : "text-[36px] text-white/60 md:text-[58px] lg:text-[72px]"
-                  }`}
+          <Reveal delay={140} className="lg:col-span-5">
+            <ul aria-label="Documented trenchless fleet — pullback classes">
+              {fleet.map((f) => (
+                <li
+                  key={f.tonnes}
+                  className="flex items-baseline justify-between gap-6 border-t border-white/15 py-6 first:border-t md:py-7"
                 >
-                  {f.tonnes}
-                  <span className="ml-1 align-top font-tech text-[11px] tracking-[0.1em] text-white/50">
-                    T
+                  <span className="flex items-baseline gap-5">
+                    <span className="font-display text-[54px] font-normal leading-none tracking-[-0.02em] text-white md:text-[60px]">
+                      {f.tonnes}
+                      <span className="ml-1 align-super font-tech text-[12px] tracking-[0.08em] text-white/45">
+                        T
+                      </span>
+                    </span>
+                    <span className="font-tech text-[10px] uppercase tracking-[0.2em] text-white/45">
+                      {FLEET_LABEL[f.tonnes] ?? "Pullback class"}
+                    </span>
                   </span>
-                </span>
-                <span className="mt-3 block eyebrow-sans text-white/40">
-                  {i === 0 ? "Pullback class" : i === 1 ? "Mid fleet" : "Compact fleet"}
-                </span>
-              </div>
-            ))}
-          </div>
-          <Reveal delay={220}>
-            <ReferenceNote dark className="mt-5">
-              Drillto HDD fleet on the documented register — 32, 28 and 20-tonne pullback machines.
-              Rig pictured is reference imagery, not Capex-owned equipment.
-            </ReferenceNote>
+                  {qtyFor(f.tonnes) && (
+                    <span className="shrink-0 font-tech text-[11px] tracking-[0.1em] text-white/60">
+                      × {qtyFor(f.tonnes)}
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-5 font-tech text-[10px] uppercase leading-[1.9] tracking-[0.18em] text-white/40">
+              Drillto HDD fleet — 32, 28 and 20-tonne pullback machines on the documented register.
+              Rig pictured is Capex works photography from the same records.
+            </p>
           </Reveal>
         </div>
+
+        {/* the documented equipment register — read verbatim from records */}
+        <Reveal delay={200}>
+          <div className="mt-14 border-t border-white/15 pt-8">
+            <div className="flex flex-wrap items-baseline gap-x-6 gap-y-2">
+              <p className="eyebrow-sans text-white/50">The documented register</p>
+              <span aria-hidden="true" className="hidden h-px flex-1 bg-white/10 sm:block" />
+              <span className="font-tech text-[10px] uppercase tracking-[0.2em] text-white/40">
+                {equipment.length} items
+              </span>
+            </div>
+            <ul
+              aria-label="Documented equipment register"
+              className="mt-5 grid gap-x-10 sm:grid-cols-2 lg:grid-cols-4"
+            >
+              {equipment.map((e, i) => (
+                <li key={`${e.item}-${e.spec ?? ""}`} className="border-b border-white/10 py-3.5">
+                  <div className="flex items-baseline justify-between gap-4">
+                    <span className="flex min-w-0 items-baseline gap-3">
+                      <span className="font-tech text-[10px] tracking-[0.1em] text-white/35">
+                        {num(i + 1)}
+                      </span>
+                      <span className="min-w-0 text-[13px] leading-snug text-white/75">
+                        {e.item}
+                      </span>
+                    </span>
+                    {e.qty && (
+                      <span className="shrink-0 font-tech text-[10px] tracking-[0.1em] text-white/50">
+                        × {e.qty}
+                      </span>
+                    )}
+                  </div>
+                  {e.spec && (
+                    <p className="mt-1 pl-[26px] text-[11px] leading-snug text-white/40">
+                      {e.spec}
+                    </p>
+                  )}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-4 font-tech text-[10px] uppercase leading-[1.8] tracking-[0.18em] text-white/35">
+              Equipment register from company records — DOC C p5
+            </p>
+          </div>
+        </Reveal>
       </div>
     </section>
   );

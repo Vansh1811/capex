@@ -2,31 +2,33 @@ import { useEffect, useRef, useState } from "react";
 import { Reveal } from "@/components/site/home/Reveal";
 
 /**
- * THE ENGINEERING LINE — the delivery interruption. A dark room holds the
- * visual interruption (supply vs. delivery), then the verified turnkey
- * sequence draws itself along one continuous hairline as the visitor
- * scrolls: stages reveal progressively, the drawn portion of the line
- * carries a copper tone, and the stage nearest the reader gains contrast.
- * The composition stays fully readable without animation (the full line
- * renders; scroll only lights it). On small screens the line turns
- * vertical and draws downward. Reduced motion: everything renders lit.
+ * THE ENGINEERING LINE — compact. The verified turnkey sequence draws
+ * itself along one continuous hairline as the visitor scrolls:
+ * Engineer → Procure → Execute → Test → Commission → Handover, each
+ * stage carried by wording the company record already uses. Beneath the
+ * line sits the testing & commissioning register — the 10 verified T&C
+ * scopes (DOC A p15 / DOC B p6), a compact technical index rather than
+ * marketing copy. The composition stays fully readable without
+ * animation (the full line renders; scroll only lights it). On small
+ * screens the line turns vertical and draws downward. Reduced motion:
+ * everything renders lit.
  */
 
-/** The verified delivery sequence — the documented turnkey scope of the
- *  Capex contract (engineering practice + supply, installation, testing &
- *  commissioning), compressed with the same wording the homepage's
- *  HowCapexDelivers carries. No invented stages. */
+/** The verified delivery sequence — design & engineering, procurement &
+ *  supply, installation, testing, commissioning, final handover: the
+ *  documented turnkey scope of the Capex contract (DOC A §2-3 / DOC B),
+ *  compressed with the same wording the homepage's HowCapexDelivers
+ *  carries. No invented stages. */
 const STAGES = [
-  { word: "Understand", note: "The brief, the site, the constraint" },
   { word: "Engineer", note: "Design & engineering" },
-  { word: "Supply", note: "Procurement & supply" },
-  { word: "Installation", note: "Installation" },
-  { word: "Testing", note: "Testing" },
-  { word: "Commissioning", note: "Commissioning & handover" },
+  { word: "Procure", note: "Procurement & supply" },
+  { word: "Execute", note: "Installation" },
+  { word: "Test", note: "Testing" },
+  { word: "Commission", note: "Commissioning" },
+  { word: "Handover", note: "Final handover" },
 ] as const;
 
-export function DeliveryLine() {
-  const sectionRef = useRef<HTMLElement>(null);
+export function DeliveryLine({ commissioning }: { commissioning: string[] }) {
   const lineRef = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState(0);
 
@@ -63,32 +65,31 @@ export function DeliveryLine() {
 
   return (
     <section
-      ref={sectionRef}
-      aria-label="The delivery line — the turnkey scope"
+      id="delivery"
+      aria-label="The delivery line — the turnkey scope and its testing & commissioning register"
       data-tone="dark"
-      className="relative bg-[var(--ink)] text-white"
+      className="relative scroll-mt-24 bg-[var(--ink)] text-white"
     >
-      <div className="mx-auto max-w-[1680px] px-6 py-28 md:px-10 md:py-40 lg:px-12 lg:py-48">
-        {/* the interruption */}
-        <Reveal>
-          <p className="eyebrow-sans text-white/50">The engineering line</p>
-        </Reveal>
-        <div className="mt-12 grid gap-10 lg:grid-cols-12">
-          <Reveal delay={80} className="lg:col-span-6">
-            <h2 className="font-display text-[10.5vw] font-normal leading-[1.04] tracking-[-0.025em] text-white/90 sm:text-[8vw] lg:text-[min(4.8vw,76px)]">
-              We don&rsquo;t just supply systems.
+      <div className="mx-auto max-w-[1680px] px-6 py-24 md:px-10 md:py-32 lg:px-12">
+        {/* the interruption — one compact statement */}
+        <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
+          <Reveal className="lg:col-span-7">
+            <p className="eyebrow-sans text-white/50">The engineering line</p>
+            <h2 className="mt-6 font-display text-[8vw] font-normal leading-[1.08] tracking-[-0.025em] text-white/90 sm:text-[6vw] lg:text-[min(4vw,60px)]">
+              We don&rsquo;t just supply systems.{" "}
+              <span className="text-[var(--accent-display)]">We take them through delivery.</span>
             </h2>
           </Reveal>
-          <Reveal delay={200} className="lg:col-span-6 lg:pt-4">
-            <h2 className="font-display text-[10.5vw] font-normal leading-[1.04] tracking-[-0.025em] sm:text-[8vw] lg:text-[min(4.8vw,76px)]">
-              <span className="text-white/90">We take them</span>{" "}
-              <span className="text-[var(--accent-display)]">through delivery.</span>
-            </h2>
+          <Reveal delay={140} className="lg:col-span-5">
+            <p className="max-w-md text-sm leading-[1.8] text-white/55">
+              The full scope under one accountable contract — each stage carried by the same
+              partner, from the first site reading to the handover certificate.
+            </p>
           </Reveal>
         </div>
 
         {/* the line — horizontal at lg+, vertical on small screens */}
-        <div ref={lineRef} className="relative mt-24 md:mt-32">
+        <div ref={lineRef} className="relative mt-16 md:mt-20">
           {/* the ground hairline — always fully rendered (readable without
               animation); the lit portion overlays it as the visitor scrolls */}
           <div
@@ -117,7 +118,7 @@ export function DeliveryLine() {
               return (
                 <li
                   key={s.word}
-                  className="relative pl-10 pb-12 lg:pb-0 lg:pl-0 lg:pt-16"
+                  className="relative pl-10 pb-10 lg:pb-0 lg:pl-0 lg:pt-14"
                   style={{ transitionDelay: `${i * 60}ms` }}
                 >
                   {/* the node */}
@@ -148,7 +149,7 @@ export function DeliveryLine() {
                       {String(i + 1).padStart(2, "0")}
                     </p>
                     <p
-                      className={`mt-2 font-display text-[28px] font-normal leading-[1.02] tracking-[-0.02em] transition-colors duration-500 md:text-[34px] lg:text-[30px] xl:text-[34px] ${
+                      className={`mt-2 font-display text-[24px] font-normal leading-[1.02] tracking-[-0.02em] transition-colors duration-500 md:text-[28px] lg:text-[24px] xl:text-[28px] ${
                         lit ? "text-white" : "text-white/55"
                       }`}
                     >
@@ -168,11 +169,34 @@ export function DeliveryLine() {
           </ol>
         </div>
 
+        {/* the testing & commissioning register — the verified scopes,
+            rendered as a technical index, never paraphrased */}
         <Reveal delay={200}>
-          <p className="mt-14 max-w-md text-sm leading-[1.8] text-white/55">
-            The full scope under one accountable contract — each stage carried by the same partner,
-            from the first site reading to the handover certificate.
-          </p>
+          <div className="mt-14 border-t border-white/15 pt-8">
+            <div className="flex flex-wrap items-baseline gap-x-6 gap-y-2">
+              <p className="eyebrow-sans text-white/50">Testing &amp; commissioning register</p>
+              <span aria-hidden="true" className="hidden h-px flex-1 bg-white/10 sm:block" />
+              <span className="font-tech text-[10px] uppercase tracking-[0.2em] text-white/40">
+                {commissioning.length} scopes
+              </span>
+            </div>
+            <ul
+              aria-label="Verified testing & commissioning scopes"
+              className="mt-5 grid gap-x-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5"
+            >
+              {commissioning.map((c, i) => (
+                <li key={c} className="flex items-baseline gap-3 border-b border-white/10 py-3">
+                  <span className="font-tech text-[10px] tracking-[0.1em] text-white/35">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="text-[13px] leading-snug text-white/75">{c}</span>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-4 font-tech text-[10px] uppercase leading-[1.8] tracking-[0.18em] text-white/35">
+              T&amp;C scope from company records — DOC A p15 / DOC B p6
+            </p>
+          </div>
         </Reveal>
       </div>
     </section>

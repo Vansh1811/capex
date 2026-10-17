@@ -355,5 +355,24 @@ export const EQUIPMENT_REGISTER: { item: string; spec: string | null; qty?: stri
 /** The Drillto trenchless fleet — the three pullback classes, for the oversized numeral. */
 export const HDD_FLEET: { tonnes: number }[] = [{ tonnes: 32 }, { tonnes: 28 }, { tonnes: 20 }];
 
+/**
+ * The testing & commissioning register — the 10 verified T&C scopes,
+ * transcribed verbatim (DOC A p15 / DOC B p6; Phase 1 extraction
+ * main.txt lines 803-812). Rendered as the technical index inside the
+ * delivery section — never paraphrased, never extended.
+ */
+export const TESTING_COMMISSIONING_SCOPE: string[] = [
+  "Air & Water Balancing",
+  "Functional Performance Testing",
+  "Control System Verification",
+  "HVAC Commissioning",
+  "Cleanroom Testing",
+  "Sound & Vibration Testing",
+  "Fume Hood Testing",
+  "Duct Leakage Testing",
+  "Cooling Tower Performance Testing",
+  "Pre-Construction Plan Review",
+];
+
 export const SERVICES_SOURCE_NOTE =
   "Service register transcribed from the Phase 6B entity seeds (DOC A §2/p5/p11-12/p15/p17, DOC B p3/p6/p10, DOC C); project relationships from the published archive corpus.";

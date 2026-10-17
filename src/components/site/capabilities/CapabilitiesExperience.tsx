@@ -96,7 +96,7 @@ export function ReferenceNote({
 }: {
   className?: string;
   dark?: boolean;
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
     <p

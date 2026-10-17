@@ -1,14 +1,21 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
-import { getNavChrome, getSearchCorpus, getCapabilitiesPage } from "@/lib/site-data";
+import {
+  getNavChrome,
+  getSearchCorpus,
+  getCapabilitiesPage,
+  getSectorsAtlas,
+  getProjectsArchive,
+} from "@/lib/site-data";
 import { PUBLIC_QUERY_DEFAULTS } from "@/components/site/SiteChrome";
 import { buildSearchCorpus, type SearchCorpus } from "@/components/site/home/search-corpus";
 import { CapabilitiesExperience } from "@/components/site/capabilities/CapabilitiesExperience";
 import { Opening } from "@/components/site/capabilities/Opening";
-import { TwoPractices } from "@/components/site/capabilities/TwoPractices";
-import { DisciplineIndex } from "@/components/site/capabilities/DisciplineIndex";
-import { PhysicalCapability } from "@/components/site/capabilities/PhysicalCapability";
+import { CapabilityDirectory } from "@/components/site/capabilities/CapabilityDirectory";
+import { DeliveryLine } from "@/components/site/capabilities/DeliveryLine";
+import { ProjectEvidence } from "@/components/site/capabilities/ProjectEvidence";
+import { EnvironmentsRegister } from "@/components/site/capabilities/EnvironmentsRegister";
 import { CapabilitiesClosing } from "@/components/site/capabilities/CapabilitiesClosing";
 
 const chromeQuery = queryOptions({
@@ -29,12 +36,26 @@ const capabilitiesQuery = queryOptions({
   ...PUBLIC_QUERY_DEFAULTS,
 });
 
+const sectorsQuery = queryOptions({
+  queryKey: ["public", "sectors-atlas"],
+  queryFn: () => getSectorsAtlas(),
+  ...PUBLIC_QUERY_DEFAULTS,
+});
+
+const archiveQuery = queryOptions({
+  queryKey: ["public", "projects-archive"],
+  queryFn: () => getProjectsArchive(),
+  ...PUBLIC_QUERY_DEFAULTS,
+});
+
 export const Route = createFileRoute("/services/")({
   loader: ({ context }) =>
     Promise.all([
       context.queryClient.ensureQueryData(chromeQuery),
       context.queryClient.ensureQueryData(searchCorpusQuery),
       context.queryClient.ensureQueryData(capabilitiesQuery),
+      context.queryClient.ensureQueryData(sectorsQuery),
+      context.queryClient.ensureQueryData(archiveQuery),
     ]),
   component: CapabilitiesPage,
   head: () => ({
@@ -43,9 +64,9 @@ export const Route = createFileRoute("/services/")({
       {
         name: "description",
         content:
-          "How the work gets built — nine disciplines across two integrated practices: UG utilities, electrical & CGD below the street; MEP, HVAC & fire protection within the building. Turnkey supply, installation, testing & commissioning.",
+          "What Capex engineers — nine disciplines across two integrated practices: UG utilities, electrical & CGD below the street; MEP, HVAC & fire protection within the building. Turnkey supply, installation, testing & commissioning — and the sectors where the work stands.",
       },
-      { property: "og:title", content: "Capabilities Capex — How the work gets built" },
+      { property: "og:title", content: "Capabilities Capex — What we engineer" },
       { property: "og:type", content: "website" },
     ],
   }),
@@ -55,6 +76,8 @@ function CapabilitiesPage() {
   const { data: chromeData } = useSuspenseQuery(chromeQuery);
   const { data: corpusData } = useSuspenseQuery(searchCorpusQuery);
   const { data } = useSuspenseQuery(capabilitiesQuery);
+  const { data: atlasData } = useSuspenseQuery(sectorsQuery);
+  const { data: archiveData } = useSuspenseQuery(archiveQuery);
   const settings = chromeData.settings;
 
   const corpus: SearchCorpus = useMemo(
@@ -70,21 +93,18 @@ function CapabilitiesPage() {
     [corpusData],
   );
 
-  // The register's shared emphasis — one source for the practice rooms and
-  // the discipline index so hover states never fight each other.
-  const [activePractice, setActivePractice] = useState<1 | 2 | null>(null);
-  const [activeSlug, setActiveSlug] = useState<string | null>(null);
-
   return (
     <CapabilitiesExperience brandWordmark={settings.brand_wordmark || "CAPEX"} corpus={corpus}>
-      <Opening serviceCount={data.services.length} practiceCount={data.practices.length} />
-      <TwoPractices
-        practices={data.practices}
-        activeNumber={activePractice}
-        onActive={setActivePractice}
-      />
-      <DisciplineIndex services={data.services} activeSlug={activeSlug} onActive={setActiveSlug} />
-      <PhysicalCapability fleet={data.fleet} />
+      {/* A — compact opening */}
+      <Opening />
+      {/* B — the capability directory (centrepiece, interaction model) */}
+      <CapabilityDirectory services={data.services} />
+      {/* C — the engineering line + verified T&C register */}
+      <DeliveryLine commissioning={data.commissioning} />
+      {/* D — selected project evidence + the environments register */}
+      <ProjectEvidence projects={archiveData.projects} published={archiveData.published} />
+      <EnvironmentsRegister atlas={atlasData} />
+      {/* F — deliberate closing */}
       <CapabilitiesClosing serviceCount={data.services.length} />
     </CapabilitiesExperience>
   );

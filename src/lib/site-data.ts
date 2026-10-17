@@ -22,6 +22,7 @@ import {
   PRACTICE_CORPUS,
   HDD_FLEET,
   EQUIPMENT_REGISTER,
+  TESTING_COMMISSIONING_SCOPE,
   SERVICES_SOURCE_NOTE,
   type ServiceRecord,
 } from "@/lib/services-corpus";
@@ -335,6 +336,8 @@ export type CapabilitiesPageData = {
   services: CapabilityService[];
   fleet: { tonnes: number }[];
   equipment: { item: string; spec: string | null; qty?: string }[];
+  /** The 10 verified testing & commissioning scopes (DOC A p15 / DOC B p6). */
+  commissioning: string[];
   sourceNote: string;
   source: "database" | "corpus";
 };
@@ -395,6 +398,7 @@ function composeCapabilities(): CapabilitiesPageData {
     services,
     fleet: HDD_FLEET,
     equipment: EQUIPMENT_REGISTER,
+    commissioning: TESTING_COMMISSIONING_SCOPE,
     sourceNote: SERVICES_SOURCE_NOTE,
     source: "corpus",
   };
@@ -530,7 +534,17 @@ export type PeopleRoster = {
 export const getPeopleRoster = createServerFn({ method: "GET" }).handler(async () => {
   return {
     people: PEOPLE_CORPUS.map(
-      ({ name, role, group, practice, practice_label, profile, experience, focus, responsibility }) => ({
+      ({
+        name,
+        role,
+        group,
+        practice,
+        practice_label,
+        profile,
+        experience,
+        focus,
+        responsibility,
+      }) => ({
         name,
         role,
         group,
