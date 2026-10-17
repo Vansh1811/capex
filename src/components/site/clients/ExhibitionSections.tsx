@@ -1,18 +1,8 @@
-import {
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-  type KeyboardEvent as ReactKeyboardEvent,
-} from "react";
+import { useEffect, useRef, useState, type KeyboardEvent as RKeyboardEvent } from "react";
 import { useEntrance } from "@/components/site/home/HeroVideo";
 import { Reveal } from "@/components/site/home/Reveal";
 import type { ClientsPageClient } from "@/lib/site-data";
-import {
-  EXHIBITION_CATEGORIES,
-  exhibitionLogo,
-  type ExhibitionCategoryId,
-} from "@/components/site/clients/exhibition";
+import { exhibitionLogo, type ExhibitionCategoryId } from "@/components/site/clients/exhibition";
 
 /* ============================================================
  * 01 — CINEMATIC HERO (dark deep-earth, existing Capex image)
@@ -135,7 +125,7 @@ export function ExhibitionHero() {
 }
 
 /* ============================================================
- * 02 — LOGO SHOWCASE (quiet moving ribbon, warm beige)
+ * 02 — LOGO EXHIBITION (one dark field; a defined ivory rail)
  * ============================================================ */
 
 /**
@@ -167,8 +157,8 @@ function RibbonMark({
   const src = exhibitionLogo(slug);
   const { failed, onFail, ref } = useLogoFallback();
   // Fade each mark in the moment its file arrives instead of popping a blank
-  // slot mid-scroll. The slot keeps a reserved aspect (LOGO_DIMS) so the
-  // strip never reflows while images stream in.
+  // slot mid-scroll. The slot keeps a fixed box so the strip never reflows
+  // while images stream in.
   const [ready, setReady] = useState(false);
   useEffect(() => {
     const el = ref.current;
@@ -186,11 +176,12 @@ function RibbonMark({
         height={dims?.[1]}
         loading="eager"
         decoding="async"
-        fetchPriority="high"
         draggable={false}
         onError={onFail}
         onLoad={() => setReady(true)}
-        className={`object-contain transition-opacity duration-500 ${ready ? "opacity-70" : "opacity-0"} ${className}`}
+        className={`object-contain transition-[opacity,filter] duration-500 grayscale hover:grayscale-0 ${
+          ready ? "opacity-100" : "opacity-0"
+        } ${className}`}
       />
     );
   }
@@ -200,7 +191,7 @@ function RibbonMark({
   return (
     <span
       title={name}
-      className="max-w-[150px] truncate text-center font-display text-[15px] font-medium leading-[1.15] tracking-[-0.01em] text-foreground/70 transition-opacity duration-300 hover:opacity-100 md:max-w-[170px] md:text-base"
+      className="text-center font-display text-[14px] font-medium leading-[1.15] tracking-[-0.01em] text-foreground/70"
     >
       {name}
     </span>
@@ -238,95 +229,95 @@ const LOGO_DIMS: Record<string, [number, number]> = {
   ultratech: [580, 320],
 };
 
+/**
+ * THE LOGO EXHIBITION — the marks ride a single ivory rail that runs
+ * edge-to-edge between the two dark fields. Nothing is blended: the deep
+ * earth above and below is the same --brand-deep as the hero and the
+ * measures register, the rail is one clearly bordered surface, and the
+ * marks sit at one consistent height with air between them. The rail only
+ * carries clients whose official mark is verified; a client without an
+ * asset stays in the index below and does not ride.
+ */
 export function LogoShowcase({ clients }: { clients: ClientsPageClient[] }) {
-  // Ribbon order follows the registry; EVERY client rides the ribbon.
-  // Verified logo file where one exists, elegant type where it doesn't —
-  // so no company from the CLIENT LIST wall is missing from the moving strip.
   const ribbon = clients;
 
   return (
-    <section
-      aria-label="Clients"
-      data-tone="light"
-      className="relative overflow-hidden bg-[var(--surface)] text-foreground"
-    >
-      {/* Precise architectural tonal transition from the dark hero (16-20px band) */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 z-20 h-4 md:h-5"
-        style={{
-          background:
-            "linear-gradient(to bottom, var(--brand-deep) 0%, color-mix(in oklab, var(--brand-deep) 50%, var(--surface)) 50%, var(--surface) 100%)",
-        }}
-      />
-      {/* Precise architectural tonal transition into the dark section below */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-4 md:h-5"
-        style={{
-          background:
-            "linear-gradient(to top, var(--brand-deep) 0%, color-mix(in oklab, var(--brand-deep) 50%, var(--surface)) 50%, var(--surface) 100%)",
-        }}
-      />
+    <>
+      {/* The label row — the exhibition states itself, on the deep earth. */}
+      <section
+        aria-label="The clientele — official client marks"
+        data-tone="dark"
+        className="bg-[var(--brand-deep)] text-white"
+      >
+        <div className="mx-auto max-w-[1680px] px-6 pb-10 pt-16 md:px-10 md:pb-12 md:pt-20 lg:px-12">
+          <Reveal>
+            <div className="flex flex-wrap items-baseline justify-between gap-x-10 gap-y-3">
+              <p className="eyebrow-sans text-white/50">The clientele</p>
+              <p className="font-tech text-[10px] uppercase tracking-[0.2em] text-white/40">
+                {ribbon.length} official marks
+              </p>
+            </div>
+          </Reveal>
+        </div>
+      </section>
 
-      <div className="group relative">
-        <div
-          className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 md:w-16"
-          style={{
-            background:
-              "linear-gradient(to right, var(--surface) 0%, color-mix(in oklab, var(--surface) 0%, transparent) 100%)",
-          }}
-        />
-        <div
-          className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 md:w-16"
-          style={{
-            background:
-              "linear-gradient(to left, var(--surface) 0%, color-mix(in oklab, var(--surface) 0%, transparent) 100%)",
-          }}
-        />
-        <div
-          tabIndex={0}
-          role="region"
-          aria-label="Client showcase"
-          className="overflow-hidden py-7 focus-visible:outline focus-visible:outline-2 focus-visible:outline-inset md:py-9 motion-reduce:overflow-x-auto"
-        >
+      {/* The rail — geometry, not gradient: one bordered exhibition region,
+          continuous with the dark fields holding it. Judged light for the
+          chrome so the nav inverts while the rail is beneath it. */}
+      <section
+        aria-label="Official client marks"
+        data-tone="light"
+        className="border-y border-white/10 bg-[var(--surface-elevated)] text-foreground"
+      >
+        <div className="group relative">
           <div
-            className="animate-marquee flex w-max items-center hover:[animation-play-state:paused] group-focus-within:[animation-play-state:paused]"
-            style={{ animationDuration: `${ribbon.length * 2}s` }}
+            tabIndex={0}
+            role="region"
+            aria-label="Client logo exhibition"
+            className="overflow-hidden py-6 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-[var(--accent)] md:py-7 motion-reduce:overflow-x-auto"
           >
-            {[0, 1].map((half) => (
-              <div
-                key={half}
-                aria-hidden={half === 1}
-                className={`flex shrink-0 items-center ${half === 1 ? "motion-reduce:hidden" : ""}`}
-              >
-                {ribbon.map((c) => (
-                  <span key={c.slug} className="flex shrink-0 items-center">
-                    <span className="flex h-14 w-[214px] items-center justify-center px-8 md:h-16 md:w-[266px] md:px-12">
-                      <RibbonMark
-                        slug={c.slug}
-                        name={c.name}
-                        className="h-auto max-h-9 w-auto max-w-[150px] grayscale hover:grayscale-0 md:max-h-11 md:max-w-[170px]"
+            <div
+              className="animate-marquee flex w-max items-center hover:[animation-play-state:paused] group-focus-within:[animation-play-state:paused]"
+              style={{ animationDuration: `${ribbon.length * 4.4}s` }}
+            >
+              {[0, 1].map((half) => (
+                <div
+                  key={half}
+                  aria-hidden={half === 1}
+                  className={`flex shrink-0 items-center ${half === 1 ? "motion-reduce:hidden" : ""}`}
+                >
+                  {ribbon.map((c) => (
+                    <span key={c.slug} className="flex shrink-0 items-center">
+                      <span className="flex h-10 w-[188px] items-center justify-center px-7 md:h-14 md:w-[236px] md:px-9">
+                        <RibbonMark
+                          slug={c.slug}
+                          name={c.name}
+                          className="h-auto max-h-7 w-auto max-w-[118px] md:max-h-9 md:max-w-[148px]"
+                        />
+                      </span>
+                      <span
+                        aria-hidden="true"
+                        className="h-6 w-px shrink-0 bg-foreground/10 md:h-8"
                       />
                     </span>
-                    <span aria-hidden="true" className="h-8 w-px shrink-0 bg-foreground/10" />
-                  </span>
-                ))}
-              </div>
-            ))}
+                  ))}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-      <p className="sr-only">
-        {ribbon.length} clients in a moving showcase (logos where verified, names otherwise). Motion
-        pauses on hover and is disabled under reduced-motion settings.
-      </p>
-    </section>
+
+        <p className="sr-only">
+          {ribbon.length} official client marks in a continuous exhibition. Motion pauses on hover
+          and is disabled under reduced-motion settings.
+        </p>
+      </section>
+    </>
   );
 }
 
 /* ============================================================
- * 03 — THE INDEX (four categories, one active at a time)
+ * 03 — THE CLIENT EXHIBITION (editorial selector + shared register)
  * ============================================================ */
 
 export type IndexCategory = {
@@ -338,86 +329,47 @@ export type IndexCategory = {
 };
 
 /**
- * THE INDEX — a drawer of four catalogues, read as a register.
- *
- * The selection is marked by a copper cursor that slides between positions
- * rather than blinking in and out, and the register line beneath the row says
- * what the set under the reader's attention holds — counted names, taken from
- * the resolved clients themselves. Resting on a category previews it; the
- * click (or an arrow, or Home/End) opens it in the exhibition below. Nothing
- * is hidden behind the preview and no number is asserted: a count is a count
- * of the rows that will render.
+ * One grounded line per category — it describes the composition of the
+ * verified name set this category actually holds. Never a separate claim.
  */
-export function CategoryIndex({
-  active,
-  onChange,
-  categories,
-}: {
-  active: ExhibitionCategoryId;
-  onChange: (id: ExhibitionCategoryId) => void;
-  categories: IndexCategory[];
-}) {
-  const itemRefs = useRef<(HTMLButtonElement | null)[]>([]);
-  /** The set the reader is looking into — hover or focus previews it. */
-  const [peek, setPeek] = useState<ExhibitionCategoryId | null>(null);
-  const [cursor, setCursor] = useState<{ left: number; width: number; top: number } | null>(null);
+const CATEGORY_LINES: Record<ExhibitionCategoryId, string> = {
+  "it-technology": "Global consultancies, product engineering and enterprise technology occupiers.",
+  corporates:
+    "The broadest sweep of the register — aviation, insurance, finance, logistics, publishing and consumer names.",
+  "oil-gas-industries":
+    "Hydrocarbons and allied industry — city gas distribution, pipelines, refining and the manufacturers around them.",
+  "builders-developers":
+    "The built environment — project houses, developers and landmark commercial towers.",
+};
 
-  const activeIndex = Math.max(
-    0,
-    categories.findIndex((c) => c.id === active),
-  );
-  const shown = categories.find((c) => c.id === (peek ?? active)) ?? categories[activeIndex];
+/**
+ * THE CLIENT EXHIBITION — the index as a curated register, not four boxes.
+ * A spine of four selectable categories (number, name, verified count, a
+ * one-line whisper of its first names) holds the left column behind one
+ * architectural rule; the field on the right carries one category at a
+ * time at full size — the ghost numeral from the drawing sheets, the
+ * category title, its grounded line, and the complete verified list set
+ * as wall text over hairline rules. Tabs pattern: roving focus, arrow
+ * keys, activation on click or Enter; every list stays in the DOM, so no
+ * name is ever out of reach of the page or a screen reader.
+ */
+export function ClientExhibition({ categories }: { categories: IndexCategory[] }) {
+  const [active, setActive] = useState<ExhibitionCategoryId>(categories[0]?.id ?? "it-technology");
+  const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const total = categories.reduce((n, c) => n + c.clients.length, 0);
 
-  // The cursor is measured, never assumed: the four labels have different
-  // widths, and on small screens the row scrolls underneath it.
-  useLayoutEffect(() => {
-    let live = true;
-    const measure = () => {
-      const el = itemRefs.current[activeIndex];
-      if (!live || !el) return;
-      // The row wraps between md and lg — the cursor rides the item's own
-      // baseline rather than the container's, so it stays under the label.
-      setCursor({
-        left: el.offsetLeft,
-        width: el.offsetWidth,
-        top: el.offsetTop + el.offsetHeight,
-      });
-    };
-    measure();
-    window.addEventListener("resize", measure);
-    // The web fonts land after first paint and change every width in the row.
-    void document.fonts?.ready.then(measure);
-    return () => {
-      live = false;
-      window.removeEventListener("resize", measure);
-    };
-  }, [activeIndex, categories]);
-
-  const open = (index: number) => {
-    const next = categories[(index + categories.length) % categories.length];
-    if (!next) return;
-    onChange(next.id);
-    setPeek(null);
-    itemRefs.current[index]?.focus();
+  /** Roving focus across the spine; activation stays deliberate. */
+  const onTabKey = (e: RKeyboardEvent<HTMLButtonElement>, i: number) => {
+    const last = categories.length - 1;
+    let next: number | null = null;
+    if (e.key === "ArrowDown" || e.key === "ArrowRight") next = i === last ? 0 : i + 1;
+    else if (e.key === "ArrowUp" || e.key === "ArrowLeft") next = i === 0 ? last : i - 1;
+    else if (e.key === "Home") next = 0;
+    else if (e.key === "End") next = last;
+    if (next === null) return;
+    e.preventDefault();
+    tabRefs.current[next]?.focus();
   };
-
-  const onKeyDown = (event: ReactKeyboardEvent<HTMLDivElement>) => {
-    const moves: Record<string, number | "first" | "last"> = {
-      ArrowRight: 1,
-      ArrowDown: 1,
-      ArrowLeft: -1,
-      ArrowUp: -1,
-      Home: "first",
-      End: "last",
-    };
-    const move = moves[event.key];
-    if (move === undefined) return;
-    event.preventDefault();
-    open(move === "first" ? 0 : move === "last" ? categories.length - 1 : activeIndex + move);
-  };
-
-  const names = shown ? shown.clients.slice(0, 4).map((c) => c.name) : [];
-  const rest = (shown?.clients.length ?? 0) - names.length;
 
   return (
     <section
@@ -425,140 +377,163 @@ export function CategoryIndex({
       data-tone="light"
       className="paper bg-background text-foreground"
     >
-      <div className="mx-auto max-w-[1680px] px-6 pb-4 pt-24 md:px-10 md:pt-32 lg:px-12">
+      <div className="mx-auto max-w-[1680px] px-6 pb-28 pt-24 md:px-10 md:pb-36 md:pt-32 lg:px-12">
         <Reveal>
-          <div className="flex items-baseline gap-6">
+          <div className="flex flex-wrap items-baseline justify-between gap-x-10 gap-y-3">
             <p className="eyebrow-sans text-muted-foreground">The index</p>
-            <span className="h-px flex-1 border-t border-border" aria-hidden="true" />
+            <p className="font-tech text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+              {total} direct clients
+              <span className="hidden sm:inline">
+                {" "}
+                <span className="text-muted-foreground/50">·</span> counted from the records
+              </span>
+            </p>
           </div>
+          <div aria-hidden="true" className="mt-6 h-px bg-border md:mt-8" />
         </Reveal>
+
         <Reveal delay={100}>
-          {/* Horizontal on desktop; clean horizontal scroll on small screens.
-              The page itself never overflows — only this strip scrolls. */}
-          <div className="-mx-6 overflow-x-auto px-6 md:mx-0 md:overflow-visible md:px-0">
+          <div className="mt-10 grid gap-10 md:mt-14 lg:grid-cols-12 lg:gap-0">
+            {/* The spine — four categories as selectable register lines.
+                Extended to full column height on desktop, the drawn rule
+                splits the composition and holds the reading order. */}
             <div
-              role="group"
-              aria-label="Select a client category"
-              onKeyDown={onKeyDown}
-              onMouseLeave={() => setPeek(null)}
-              onBlur={(event) => {
-                if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
-                  setPeek(null);
-                }
-              }}
-              className="relative mt-8 flex min-w-max items-stretch gap-x-10 gap-y-4 pb-2 md:min-w-0 md:flex-wrap md:pb-0 lg:gap-x-14"
+              role="tablist"
+              aria-label="Client categories — select a category to open its register"
+              className="border-b border-border lg:col-span-4 lg:border-b-0 lg:border-r lg:pr-10 xl:pr-14"
             >
-              {/* The cursor — the copper mark of the catalogue now open. */}
-              {cursor ? (
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute left-0 h-px bg-[var(--accent)] transition-[transform,width,top] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
-                  style={{
-                    transform: `translateX(${cursor.left}px)`,
-                    width: `${cursor.width}px`,
-                    top: `${cursor.top}px`,
-                  }}
-                />
-              ) : null}
               {categories.map((c, i) => {
-                const isActive = c.id === active;
+                const on = c.id === active;
                 return (
                   <button
                     key={c.id}
                     ref={(el) => {
-                      itemRefs.current[i] = el;
+                      tabRefs.current[i] = el;
                     }}
+                    role="tab"
                     type="button"
-                    aria-pressed={isActive}
-                    onMouseEnter={() => setPeek(c.id)}
-                    onFocus={() => setPeek(c.id)}
-                    onClick={() => {
-                      onChange(c.id);
-                      setPeek(null);
-                    }}
-                    className={`group relative min-h-[44px] py-2 text-left transition-colors duration-300 ${
-                      isActive
-                        ? "text-foreground"
-                        : "text-muted-foreground/65 hover:text-foreground"
+                    id={`tab-${c.id}`}
+                    aria-selected={on}
+                    aria-controls={`panel-${c.id}`}
+                    tabIndex={on ? 0 : -1}
+                    onClick={() => setActive(c.id)}
+                    onKeyDown={(e) => onTabKey(e, i)}
+                    className={`group relative block w-full border-t border-border py-4 text-left transition-colors duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-[var(--accent)] md:py-5 ${
+                      on ? "bg-[var(--surface)]" : "hover:bg-[var(--surface)]/60"
                     }`}
                   >
-                    <span className="flex items-baseline gap-3">
-                      <span
-                        className={`font-tech text-[11px] tracking-[0.1em] transition-colors duration-300 ${
-                          isActive ? "text-foreground" : "text-muted-foreground/50"
-                        }`}
-                      >
-                        {c.n}
-                      </span>
-                      <span className="eyebrow-sans">{c.label}</span>
-                    </span>
-                    {/* The target line — a hairline under whichever catalogue
-                        the pointer or keyboard is considering; the cursor above
-                        marks the one actually open. */}
+                    {/* the register's copper marker — the same hairline the
+                        figures strip rides, here on the active category */}
                     <span
                       aria-hidden="true"
-                      className="absolute inset-x-0 bottom-0 h-px bg-transparent transition-colors duration-300 group-hover:bg-border group-focus-visible:bg-border/70"
+                      className={`absolute inset-x-0 -top-px h-px origin-left bg-[var(--accent)] transition-transform duration-500 ease-out ${
+                        on ? "scale-x-100" : "scale-x-0"
+                      }`}
                     />
+                    <span className="flex items-baseline justify-between gap-x-4">
+                      <span className="flex min-w-0 items-baseline gap-3 md:gap-4">
+                        <span
+                          className={`font-tech text-[11px] tracking-[0.14em] transition-colors duration-300 ${
+                            on ? "text-[var(--accent)]" : "text-muted-foreground/60"
+                          }`}
+                        >
+                          {c.n}
+                        </span>
+                        <span
+                          className={`min-w-0 font-display text-[18px] leading-[1.18] tracking-[-0.02em] transition-colors duration-300 md:text-[22px] ${
+                            on
+                              ? "text-foreground"
+                              : "text-foreground/40 group-hover:text-foreground/75"
+                          }`}
+                        >
+                          {c.label}
+                        </span>
+                      </span>
+                      <span
+                        className={`shrink-0 font-tech text-[10px] tabular-nums tracking-[0.08em] transition-colors duration-300 ${
+                          on ? "text-muted-foreground" : "text-muted-foreground/50"
+                        }`}
+                      >
+                        {c.clients.length}
+                        <span className="sr-only"> clients</span>
+                      </span>
+                    </span>
+                    {/* a whisper of the category's own names — the preview
+                        the selection will open in full */}
+                    <span
+                      aria-hidden="true"
+                      className={`mt-1.5 block truncate text-[12px] leading-snug transition-colors duration-300 ${
+                        on ? "text-muted-foreground/80" : "text-muted-foreground/55"
+                      }`}
+                    >
+                      {c.clients
+                        .slice(0, 3)
+                        .map((cl) => cl.name)
+                        .join(" · ")}{" "}
+                      …
+                    </span>
                   </button>
                 );
               })}
             </div>
-          </div>
 
-          {/* The register line — what the set under attention holds. The count
-              is a count of the rows that will render, not a claim beside them. */}
-          <div className="mt-5 flex min-h-[16px] items-baseline gap-3">
-            {shown ? (
-              <p key={shown.id} className="animate-reveal flex min-w-0 items-baseline gap-3">
-                <span className="shrink-0 font-tech text-[10px] uppercase tracking-[0.18em] text-foreground/70">
-                  {shown.clients.length} {shown.clients.length === 1 ? "name" : "names"}
-                </span>
-                <span className="min-w-0 truncate font-tech text-[11px] tracking-[0.02em] text-muted-foreground">
-                  {names.length > 0 ? names.join(" · ") : "No verified names in this set"}
-                  {rest > 0 ? ` +${rest}` : ""}
-                </span>
-              </p>
-            ) : null}
+            {/* The register field — one category at a time, set large. */}
+            <div className="relative lg:col-span-8 lg:pl-10 xl:pl-14">
+              {categories.map((c) => {
+                const on = c.id === active;
+                return (
+                  <div
+                    key={c.id}
+                    role="tabpanel"
+                    id={`panel-${c.id}`}
+                    aria-labelledby={`tab-${c.id}`}
+                    tabIndex={0}
+                    hidden={!on}
+                    className="lg:min-h-[520px]"
+                  >
+                    <div key={on ? "on" : "off"} className={on ? "index-in" : undefined}>
+                      {/* the ghost numeral — a drawing-sheet echo, stating
+                          which register is open, behind the field's type */}
+                      <span
+                        aria-hidden="true"
+                        className="pointer-events-none absolute right-0 top-0 -z-10 hidden select-none font-display text-[clamp(88px,16vw,216px)] leading-none tracking-[-0.045em] text-foreground/[0.055] lg:block"
+                      >
+                        {c.n}
+                      </span>
+                      <div className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2">
+                        <h3 className="font-display text-[24px] font-normal leading-[1.08] tracking-[-0.02em] text-foreground md:text-[30px] lg:text-[34px]">
+                          {c.label}
+                        </h3>
+                        <p className="font-tech text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+                          {c.clients.length} {c.clients.length === 1 ? "name" : "names"}
+                        </p>
+                      </div>
+                      <p className="mt-3 max-w-[58ch] text-[13px] leading-[1.7] text-muted-foreground md:text-sm">
+                        {CATEGORY_LINES[c.id]}
+                      </p>
+                      <div aria-hidden="true" className="mt-7 h-px bg-border md:mt-8" />
+                      {/* the names, as wall text — hairline rules under
+                          each set row, hairline rules between the columns */}
+                      <ul
+                        aria-label={`${c.label} clients`}
+                        className="mt-2 columns-1 gap-x-10 [column-rule:1px_solid_var(--border)] sm:columns-2 xl:columns-3"
+                      >
+                        {c.clients.map((cl) => (
+                          <li
+                            key={cl.slug}
+                            className="break-inside-avoid border-b border-border/60 py-2.5 font-display text-[15.5px] leading-[1.35] tracking-[-0.012em] text-foreground/90 md:py-3 md:text-[17px]"
+                          >
+                            {cl.name}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </Reveal>
-      </div>
-    </section>
-  );
-}
-
-/* ============================================================
- * 04 — ACTIVE CLIENT EXHIBITION (editorial list, no image plate)
- * ============================================================ */
-
-export function ClientExhibition({
-  clients,
-  categoryLabel,
-  categoryN,
-}: {
-  clients: ClientsPageClient[];
-  categoryLabel: string;
-  categoryN: string;
-}) {
-  return (
-    <section
-      aria-label={`${categoryLabel} — client exhibition`}
-      data-tone="light"
-      className="paper bg-background text-foreground"
-    >
-      <div className="mx-auto max-w-[1680px] px-6 pb-28 pt-10 md:px-10 md:pt-14 lg:px-12 lg:pb-40">
-        <div className="mt-10">
-          <ul aria-label={`${categoryLabel} clients`}>
-            {clients.map((c) => {
-              return (
-                <li key={c.slug} className="border-b border-border py-6 text-left md:py-7">
-                  <span className="block font-display text-[26px] font-normal leading-[1.08] tracking-[-0.02em] text-foreground sm:text-[32px] md:text-[40px] lg:text-[44px] xl:text-[52px]">
-                    {c.name}
-                  </span>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
       </div>
     </section>
   );

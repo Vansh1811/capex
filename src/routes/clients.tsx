@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
 import {
@@ -8,23 +8,18 @@ import {
   getSignatureMeasures,
 } from "@/lib/site-data";
 import { PUBLIC_QUERY_DEFAULTS } from "@/components/site/SiteChrome";
-import { Footer } from "@/components/site/Footer";
 import { buildSearchCorpus, type SearchCorpus } from "@/components/site/home/search-corpus";
 import { ClientsExperience } from "@/components/site/clients/ClientsExperience";
 import { ClientsClosing } from "@/components/site/clients/Vocabulary";
 import {
   ExhibitionHero,
   LogoShowcase,
-  CategoryIndex,
   ClientExhibition,
   type IndexCategory,
 } from "@/components/site/clients/ExhibitionSections";
 import { TheWorkMeasured } from "@/components/site/clients/TheWorkMeasured";
 import { ClientVoices } from "@/components/site/clients/ClientVoices";
-import {
-  EXHIBITION_CATEGORIES,
-  type ExhibitionCategoryId,
-} from "@/components/site/clients/exhibition";
+import { EXHIBITION_CATEGORIES, exhibitionLogo } from "@/components/site/clients/exhibition";
 
 const chromeQuery = queryOptions({
   queryKey: ["public", "chrome"],
@@ -73,9 +68,10 @@ export const Route = createFileRoute("/clients")({
 
 /**
  * CLIENT EXHIBITION — the Clients page as a premium editorial exhibition.
- * Hero → logo showcase → the index → one active category exhibition → footer.
- * Only verified direct clients appear; only verified project imagery appears,
- * joined through the corpus record. No relationship explorer, no counts wall.
+ * Hero → the logo rail → the measures register → the four-panel index →
+ * client voices → closing. Only verified direct clients appear; only
+ * verified logo assets ride the rail; only verified project imagery
+ * appears, joined through the corpus record.
  */
 function ClientsPage() {
   const { data: chromeData } = useSuspenseQuery(chromeQuery);
@@ -98,19 +94,23 @@ function ClientsPage() {
   );
 
   // Verified direct clients only — the exhibition is about CLIENTS.
+  // The moving rail carries the clients whose official mark is verified;
+  // a client without an asset stays indexed below and does not ride.
   const bySlug = useMemo(() => new Map(data.clients.map((c) => [c.slug, c])), [data]);
   const ribbonClients = useMemo(
     () =>
       EXHIBITION_CATEGORIES.flatMap((cat) =>
-        cat.slugs.map((s) => bySlug.get(s)).filter((c) => c !== undefined),
+        cat.slugs.flatMap((s) => {
+          const c = bySlug.get(s);
+          return c && exhibitionLogo(c.slug) !== null ? [c] : [];
+        }),
       ),
     [bySlug],
   );
 
-  const [categoryId, setCategoryId] = useState<ExhibitionCategoryId>("it-technology");
-  // The index and the exhibition read the same resolved set: the verified
-  // direct clients the registry actually carries, per category — never a slug
-  // that resolves to nothing.
+  // The index and the panels read the same resolved set: the verified
+  // direct clients the registry actually carries, per category — never a
+  // slug that resolves to nothing.
   const indexCategories: IndexCategory[] = useMemo(
     () =>
       EXHIBITION_CATEGORIES.map((c) => ({
@@ -124,8 +124,6 @@ function ClientsPage() {
       })),
     [bySlug],
   );
-  const category = indexCategories.find((c) => c.id === categoryId) ?? indexCategories[0];
-  const exhibitionClients = category.clients;
 
   const footerData = {
     brandWordmark: settings.brand_wordmark || "CAPEX",
@@ -148,13 +146,7 @@ function ClientsPage() {
       <ExhibitionHero />
       <LogoShowcase clients={ribbonClients} />
       <TheWorkMeasured measures={measures} />
-      <CategoryIndex active={categoryId} onChange={setCategoryId} categories={indexCategories} />
-      <ClientExhibition
-        key={category.id}
-        clients={exhibitionClients}
-        categoryLabel={category.label}
-        categoryN={category.n}
-      />
+      <ClientExhibition categories={indexCategories} />
       <ClientVoices />
       <ClientsClosing />
     </ClientsExperience>
