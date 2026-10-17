@@ -56,12 +56,13 @@ export const Route = createFileRoute("/credentials")({
 
 /**
  * PROOF OF PRACTICE — the Credentials page as the evidentiary movement of
- * the Studio ecosystem: the register (typographic, interactive — select an
- * entry for its evidence sheet), the registration geography, the record's
- * dated milestones, the verification desk, and the confirming close. Every
- * figure is the verified company record — DB-first with the audited corpus
- * fallback; nothing is invented, and gated rows (ISO 9001, Make in India)
- * can never render.
+ * the Studio ecosystem: a typeset company-records introduction flowing
+ * directly into the register (a stable archival index — select an entry
+ * for its evidence sheet), the registration geography, the record's dated
+ * milestones, and the verification desk as the register's counterpart,
+ * closing on the confirming statement. Every figure is the verified company
+ * record — DB-first with the audited corpus fallback; nothing is invented,
+ * and gated rows (ISO 9001, Make in India) can never render.
  */
 function CredentialsPage() {
   const { data: chromeData } = useSuspenseQuery(chromeQuery);
@@ -85,17 +86,12 @@ function CredentialsPage() {
     [corpusData],
   );
 
-  const statutory = register.credentials.filter((c) => c.kind === "statutory");
-  const certifications = register.credentials.length - statutory.length;
-  const cin = statutory.find((c) => c.title === "Certificate of Incorporation")?.number ?? "";
+  const cin =
+    register.credentials.find((c) => c.title === "Certificate of Incorporation")?.number ?? "";
 
   return (
     <CredentialsExperience brandWordmark={settings.brand_wordmark || "CAPEX"} corpus={corpus}>
-      <Opening
-        registrations={statutory.length}
-        certifications={certifications}
-        gstStates={register.gstStates.length}
-      />
+      <Opening entries={register.credentials.length} />
       <TheRegister
         credentials={register.credentials}
         sourceNote={register.sourceNote}

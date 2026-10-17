@@ -173,7 +173,7 @@ export function EvidenceSheet({
                 </p>
                 <p className="mt-3 text-[13px] leading-[1.75] text-muted-foreground">
                   The certificate behind this entry is held on file. Procurement and
-                  vendor-emablement teams can request it through the verification desk.
+                  vendor-enablement teams can request it through the verification desk.
                 </p>
               </div>
             )}

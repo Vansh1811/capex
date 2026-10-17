@@ -1,20 +1,26 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "@tanstack/react-router";
 import { Reveal } from "@/components/site/home/Reveal";
 import type { RegisterCredential } from "@/lib/site-data";
 import { EvidenceSheet } from "./EvidenceSheet";
 
 /**
- * THE REGISTER (Credentials): the primary archive — large typographic
- * records, not cards, not a table. Each row is an index entry in an archival
- * document: registration number large enough to read, type and jurisdiction
- * in support, a VERIFY affordance, a rule beneath. Selecting a row opens the
- * EvidenceSheet — a document panel clipped up from the register, anchored
- * right on desktop and full-width on mobile — where the number is the
- * largest fact in the room and metadata reveals in sequence. Keyboard
- * visitors get the same interaction (Enter/Space), Esc closes, focus
- * returns to the row.
+ * THE REGISTER (Credentials): the primary archive — a typeset index in the
+ * drawing-sheet grammar, not cards, not a spreadsheet. Each entry is one
+ * keyboard-operable row on a stable four-column grid: the index mark, the
+ * class of record (kind · jurisdiction · recorded year), the registration
+ * itself with its identifier set beneath in IBM Plex Mono, and the VERIFY
+ * affordance right-aligned. Hairline rules separate entries; the hover is
+ * restrained — a faint ink tint, a copper tick at the margin, the action
+ * advancing. Selecting a row opens the EvidenceSheet, a document panel
+ * clipped up from the register (anchored right on desktop, full-width on
+ * mobile), where the number is the largest fact in the room. Esc closes;
+ * focus returns to the row. Identifiers stay verbatim, never restyled.
  */
+
+/** The register's column rhythm — shared by the key row and every entry. */
+const REGISTER_GRID = "md:grid-cols-[3.25rem_9.5rem_minmax(0,1fr)_auto]";
+const REGISTER_GAP = "md:gap-x-6 lg:gap-x-10";
+
 export function TheRegister({
   credentials,
   sourceNote,
@@ -57,27 +63,25 @@ export function TheRegister({
       data-tone="light"
       className="paper relative text-foreground"
     >
-      <div className="mx-auto max-w-[1440px] px-6 py-24 md:px-10 md:py-32 lg:px-12 lg:py-40">
-        {/* the archival head — index notation, file mark, date line */}
+      <div className="mx-auto max-w-[1440px] px-6 pb-24 md:px-10 md:pb-32 lg:px-12 lg:pb-40">
+        {/* the column key — the archive's index notation (desktop only) */}
         <Reveal>
-          <div className="flex flex-wrap items-baseline justify-between gap-4 border-b border-foreground/15 pb-8">
-            <h2 className="font-display text-[10.5vw] font-normal leading-[1.02] tracking-[-0.025em] sm:text-[8vw] lg:text-[min(5.4vw,84px)]">
-              The register.
-            </h2>
-            <p className="eyebrow-sans text-muted-foreground/70">
-              {credentials.length} entries of record
-            </p>
+          <div
+            className={`hidden pb-3 font-tech text-[9px] uppercase tracking-[0.22em] text-muted-foreground/50 md:grid ${REGISTER_GRID} ${REGISTER_GAP}`}
+          >
+            <span>No.</span>
+            <span>Class of record</span>
+            <span>Registration of record</span>
+            <span>Action</span>
           </div>
-        </Reveal>
-        <Reveal delay={100}>
-          <p className="mt-6 font-tech text-[10px] uppercase leading-[1.7] tracking-[0.2em] text-muted-foreground/55">
-            File ref CCEPL/REG · transcribed from certificates of record · verify any entry against
-            the source
-          </p>
         </Reveal>
 
         {/* the index */}
-        <div role="list" aria-label="Registrations of record">
+        <div
+          role="list"
+          aria-label="Registrations of record"
+          className="border-t border-foreground/15"
+        >
           {credentials.map((c, i) => (
             <RegisterRow
               key={c.n}
@@ -112,9 +116,9 @@ export function TheRegister({
 }
 
 /**
- * One register row: an index entry. The number is the fact; the type and
- * jurisdiction support it. The whole row is one button — no nested
- * interactive dead ends — with a VERIFY caret that arrives on hover/focus.
+ * One register row: an index entry on the shared column grid. The class of
+ * record lines up in its own column on desktop and folds above the title
+ * on mobile; the identifier sits beneath the name; VERIFY holds the right.
  */
 const RegisterRow = ({
   c,
@@ -127,7 +131,7 @@ const RegisterRow = ({
   onOpen: () => void;
   ref?: React.RefCallback<HTMLButtonElement>;
 }) => (
-  <Reveal delay={delay} className="border-b border-foreground/15">
+  <Reveal delay={delay}>
     <button
       type="button"
       ref={ref}
@@ -135,38 +139,53 @@ const RegisterRow = ({
       onClick={onOpen}
       aria-haspopup="dialog"
       aria-label={`${c.title}, number ${c.number}, ${c.jurisdiction}. Open evidence view`}
-      className="group relative grid w-full grid-cols-[2.5rem_1fr] items-baseline gap-x-4 py-8 text-left transition-colors duration-300 md:grid-cols-[4rem_minmax(0,1fr)_auto] md:gap-x-8 md:py-10 lg:py-12"
+      className={`group relative grid w-full grid-cols-[2.25rem_1fr] items-baseline gap-x-4 border-b border-foreground/15 py-7 text-left transition-colors duration-300 hover:bg-foreground/[0.035] focus-visible:bg-foreground/[0.035] md:py-8 lg:py-9 ${REGISTER_GRID} ${REGISTER_GAP}`}
     >
-      {/* the index mark — a registration tick that draws on hover/focus */}
+      {/* the margin tick — copper, metered, arrives on hover/focus */}
       <span
         aria-hidden="true"
-        className="absolute left-0 top-1/2 hidden h-px w-2 -translate-y-1/2 bg-accent/0 transition-colors duration-300 group-hover:bg-accent md:block"
+        className="absolute left-0 top-1/2 hidden h-px w-3 -translate-y-1/2 bg-accent/0 transition-colors duration-300 group-hover:bg-accent md:block"
       />
-      {/* index number */}
-      <span className="font-tech text-xs tracking-[0.15em] text-muted-foreground/60 transition-colors duration-300 group-hover:text-accent">
+      {/* index mark */}
+      <span className="font-tech text-[11px] tracking-[0.15em] text-muted-foreground/60 transition-colors duration-300 group-hover:text-accent">
         {String(c.n).padStart(2, "0")}
       </span>
 
-      {/* the record */}
+      {/* class of record — its own column on desktop */}
+      <span className="hidden md:block md:self-center">
+        <span className="block font-tech text-[10px] uppercase leading-[1.5] tracking-[0.2em] text-muted-foreground/70">
+          {c.kind === "membership" ? "Membership" : "Registration"}
+        </span>
+        <span className="mt-1.5 block font-tech text-[10px] uppercase leading-[1.5] tracking-[0.14em] text-muted-foreground/50">
+          {c.jurisdiction}
+        </span>
+        {c.issued_at ? (
+          <span className="mt-1.5 block font-tech text-[10px] uppercase leading-[1.5] tracking-[0.14em] text-muted-foreground/50">
+            Recorded {c.issued_at.slice(0, 4)}
+          </span>
+        ) : null}
+      </span>
+
+      {/* registration of record — name primary, identifier beneath */}
       <span className="min-w-0">
-        <span className="block font-tech text-[10px] uppercase tracking-[0.22em] text-muted-foreground/70">
+        <span className="mb-3 block font-tech text-[10px] uppercase leading-[1.6] tracking-[0.18em] text-muted-foreground/70 md:hidden">
           {c.kind === "membership" ? "Membership" : "Registration"} · {c.jurisdiction}
           {c.issued_at ? ` · recorded ${c.issued_at.slice(0, 4)}` : ""}
         </span>
-        <span className="mt-3 block font-display text-2xl font-normal leading-[1.12] tracking-[-0.015em] sm:text-3xl lg:text-[2.6rem]">
+        <span className="block font-display text-[1.4rem] font-normal leading-[1.15] tracking-[-0.015em] sm:text-[1.6rem] lg:text-[1.8rem]">
           {c.title}
         </span>
-        <span className="mt-3 block break-all font-tech text-xl tracking-[0.04em] text-foreground/85 transition-colors duration-300 group-hover:text-foreground sm:text-2xl md:text-[1.75rem]">
+        <span className="mt-2.5 block break-all font-tech text-[13px] tracking-[0.05em] text-foreground/70 transition-colors duration-300 group-hover:text-foreground md:text-sm">
           {c.number}
         </span>
       </span>
 
-      {/* verify affordance */}
-      <span className="col-span-2 mt-4 flex items-center gap-3 font-tech text-[10px] uppercase tracking-[0.24em] text-muted-foreground/60 transition-colors duration-300 group-hover:text-accent md:col-span-1 md:mt-0 md:justify-self-end md:self-center">
+      {/* the action — VERIFY, advancing on hover */}
+      <span className="col-span-2 mt-5 flex items-center gap-3 font-tech text-[10px] uppercase tracking-[0.24em] text-muted-foreground/60 transition-colors duration-300 group-hover:text-accent md:col-span-1 md:mt-0 md:justify-self-end md:self-center">
         Verify
         <span
           aria-hidden="true"
-          className="inline-block transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1.5"
+          className="inline-block transition-transform duration-300 group-hover:translate-x-1.5"
         >
           →
         </span>
@@ -174,5 +193,3 @@ const RegisterRow = ({
     </button>
   </Reveal>
 );
-
-/** Grid columns: 24-48px index + fluid record + verify right. */
